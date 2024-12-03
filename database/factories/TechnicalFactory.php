@@ -30,7 +30,7 @@ class TechnicalFactory extends Factory
             'Qualification' => $this->faker->randomNumber(1),
             'ID_supplier' => $this->faker->ean13(),
             'Availability' => $this->faker->randomElement([0, 1]),
-            'GeographicalCoordinates' => $this->faker->latitude(),
+            'GeographicalCoordinates' => $this->faker->latitude() . ':' . $this->faker->longitude(),
             'Create_date' => now(),
             'Update_date' => now(),
         ];
