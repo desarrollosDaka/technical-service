@@ -29,10 +29,6 @@ return new class extends Migration
             $table->float('total_cost')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            // Otra tabla para las visitas, esas visitas son el "resolution" del callService
-            // QUe servicio hizo, fecha, imagenes,
-
-            // tabla Comentarios (Tecnico y cliente)
         });
     }
 
