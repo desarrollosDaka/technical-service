@@ -21,7 +21,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return HttpResponse
      */
-    public function login(Request $request)
+    public function login(Request $request): HttpResponse
     {
         try {
             $validated = $request->validate([
@@ -41,5 +41,16 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return $this->error($e->getMessage(), Response::HTTP_UNAUTHORIZED);
         }
+    }
+
+    /**
+     * Current user
+     *
+     * @param Request $request
+     * @return HttpResponse
+     */
+    public function user(Request $request): HttpResponse
+    {
+        return $this->success($request->user());
     }
 }

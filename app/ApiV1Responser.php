@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
 use \Illuminate\Http\Response as HttpResponse;
 
@@ -15,11 +16,11 @@ trait ApiV1Responser
      * @param array $headers
      * @return HttpResponse
      */
-    public function success(array $data, int $status = Response::HTTP_OK, array $headers = []): HttpResponse
+    public function success(array|Model $data, int $status = Response::HTTP_OK, array $headers = []): HttpResponse
     {
         return response(
             content: [
-                'data' => $data
+                'data' => is_array($data) ? $data : $data->toArray()
             ],
             status: $status,
             headers: array_merge(['Content-Type' => 'application/json'], $headers)
