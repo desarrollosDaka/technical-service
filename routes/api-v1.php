@@ -10,5 +10,6 @@ Route::prefix('v1')->group(function () {
     // Authenticated routes
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/user', [AuthController::class, 'user']);
+        Route::apiResource('/tickets', App\Http\Controllers\Api\V1\TicketController::class);
     });
 });

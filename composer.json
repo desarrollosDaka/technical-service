@@ -14,7 +14,8 @@
         "laravel/pulse": "^1.2",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "spatie/laravel-medialibrary": "^11.10"
+        "spatie/laravel-medialibrary": "^11.10",
+        "spatie/laravel-query-builder": "^6.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
