@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('customer_name')->nullable();
             $table->tinyInteger('status', unsigned: true)->default(TicketStatus::class);
             $table->float('total_cost')->nullable();
+            $table->json('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

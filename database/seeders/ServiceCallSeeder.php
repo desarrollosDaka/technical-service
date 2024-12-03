@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ServiceCall;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ServiceCallSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        ServiceCall::factory()->count(50)->create();
     }
 }
