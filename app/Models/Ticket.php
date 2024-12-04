@@ -52,6 +52,6 @@ class Ticket extends Model
      */
     public function serviceCall(): BelongsTo
     {
-        return $this->belongsTo(ServiceCall::class);
+        return $this->belongsTo(ServiceCall::class, 'service_call_id');
     }
 }
