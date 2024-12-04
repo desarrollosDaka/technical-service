@@ -92,6 +92,6 @@ class Technical extends Authenticatable
      */
     public function tickets(): HasMany
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Ticket::class, 'technical_id');
     }
 }

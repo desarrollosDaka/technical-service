@@ -42,7 +42,7 @@ class Ticket extends Model
      */
     public function technical(): BelongsTo
     {
-        return $this->belongsTo(Technical::class);
+        return $this->belongsTo(Technical::class, 'technical_id');
     }
 
     /**
