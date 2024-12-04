@@ -23,7 +23,7 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request)
     {
         $request->user()->tickets()->create($request->validated());
-        return $this->success($request->all(), Response::HTTP_CREATED);
+        return $this->success($request->validate(), Response::HTTP_CREATED);
     }
 
     /**
