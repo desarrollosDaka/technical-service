@@ -18,7 +18,7 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): Response
     {
         return $this->success(
             QueryBuilder::for(Ticket::class)
@@ -27,7 +27,15 @@ class TicketController extends Controller
                     'customer_name',
                     AllowedFilter::exact('status'),
                 ])
+                ->allowedSorts([
+                    'title',
+                    'created_at',
+                    'diagnosis_date',
+                    'solution_date',
+                ])
+                ->defaultSort('-created_at')
                 ->simplePaginate()
+                ->appends($request->query())
         );
     }
 
@@ -45,9 +53,9 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ticket $ticket)
     {
-        //
+        return $ticket;
     }
 
     /**
