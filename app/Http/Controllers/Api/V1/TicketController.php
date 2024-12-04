@@ -65,7 +65,7 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Ticket $ticket)
+    public function update(UpdateRequest $request, Ticket $ticket): Response
     {
         return $this->success(
             $ticket->update($request->validated())
@@ -75,8 +75,9 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Ticket $ticket): Response
     {
-        //
+        Gate::authorize('delete', $ticket);
+        return $this->success($ticket->delete());
     }
 }

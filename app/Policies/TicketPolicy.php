@@ -46,7 +46,7 @@ class TicketPolicy
      */
     public function delete(User|Technical $user, Ticket $ticket): bool
     {
-        return false;
+        return $ticket->technical_id === $user->getKey();
     }
 
     /**
