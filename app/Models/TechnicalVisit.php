@@ -4,10 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TechnicalVisit extends Model
 {
     /** @use HasFactory<\Database\Factories\TechnicalVisitsFactory> */
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'ticket_id',
+        'visit_date',
+        'observations',
+        'meta',
+    ];
+
+    protected $casts = [
+        'visit_date' => 'date',
+        'meta' => 'array',
+    ];
+
+    /**
+     * Ticket de la visita
+     *
+     * @return BelongsTo
+     */
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Ticket::class);
+    }
 }

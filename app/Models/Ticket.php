@@ -6,6 +6,7 @@ use App\Enums\Ticket\Status as TicketStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
@@ -53,5 +54,15 @@ class Ticket extends Model
     public function serviceCall(): BelongsTo
     {
         return $this->belongsTo(ServiceCall::class, 'service_call_id');
+    }
+
+    /**
+     * Visitas realizadas en este ticket
+     *
+     * @return HasMany
+     */
+    public function visits(): HasMany
+    {
+        return $this->hasMany(TechnicalVisit::class);
     }
 }

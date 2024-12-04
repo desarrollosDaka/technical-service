@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreRequest as StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
-use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -37,7 +36,7 @@ class TicketController extends Controller
                     'diagnosis_date',
                     'solution_date',
                 ])
-                ->allowedIncludes(['technical', 'serviceCall'])
+                ->allowedIncludes(['technical', 'serviceCall', 'visits'])
                 ->defaultSort('-created_at')
                 ->where('technical_id', $request->user()->getKey())
                 ->simplePaginate()
@@ -64,7 +63,7 @@ class TicketController extends Controller
         Gate::authorize('view', $ticket);
         return $this->success(
             QueryBuilder::for(Ticket::class)
-                ->allowedIncludes(['technical', 'serviceCall'])
+                ->allowedIncludes(['technical', 'serviceCall', 'visits'])
                 ->find($ticket->getKey())
         );
     }
