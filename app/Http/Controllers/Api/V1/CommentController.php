@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\Comment\CommentableModel;
 use App\Http\Controllers\Controller;
@@ -44,7 +44,7 @@ class CommentController extends Controller
             QueryBuilder::for(Comment::class)
                 ->allowedSorts(['created_at'])
                 ->defaultSort(['-created_at'])
-                ->allowedIncludes(['commentator'])
+                ->allowedIncludes(['commentator', 'commentable'])
                 ->where('commentable_id', $record->id)
                 ->where('commentable_type', get_class($record))
                 ->simplePaginate()
