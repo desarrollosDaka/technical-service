@@ -22,7 +22,11 @@ class TechnicalVisitPolicy
      */
     public function view(User|Technical $user, TechnicalVisit $technicalVisit): bool
     {
-        return false;
+        return $technicalVisit
+            ->ticket()
+            ->select(['id', 'technical_id'])
+            ->firstOrFail()
+            ->technical_id === $user->getKey();
     }
 
     /**

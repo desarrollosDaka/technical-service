@@ -10,6 +10,7 @@ use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class TechnicalVisitController extends Controller
 {
@@ -18,7 +19,7 @@ class TechnicalVisitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $request->validate([
             'ticket_id' => 'required',
@@ -45,17 +46,28 @@ class TechnicalVisitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): Response
     {
-        return $request->validated();
+        return $this->success(
+            TechnicalVisit::create([
+                ...$request->validated(),
+                'technical_id' => $request->user()->getKey(),
+            ]),
+            Response::HTTP_CREATED
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(TechnicalVisit $technicalVisit)
+    public function show(TechnicalVisit $technicalVisit): Response
     {
-        //
+        Gate::authorize('view', $technicalVisit);
+        return $this->success(
+            QueryBuilder::for(TechnicalVisit::class)
+                ->allowedIncludes(['ticket'])
+                ->find($technicalVisit->getKey())
+        );
     }
 
     /**
