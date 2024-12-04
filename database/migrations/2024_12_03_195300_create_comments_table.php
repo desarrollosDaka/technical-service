@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create((new Comment)->getTable(), function (Blueprint $table) {
             $table->id();
             $table->morphs('commentable');
             $table->string('commentator_model')->nullable()->comment('Si esta vació se esta asumiendo que lo hizo el usuario.');
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists((new Comment)->getTable());
     }
 };

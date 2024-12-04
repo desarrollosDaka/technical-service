@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Comments extends Model
+class Comment extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentsFactory> */
     use HasFactory, SoftDeletes;
