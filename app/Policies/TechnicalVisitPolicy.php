@@ -14,7 +14,7 @@ class TechnicalVisitPolicy
      */
     public function viewAny(User|Technical $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
