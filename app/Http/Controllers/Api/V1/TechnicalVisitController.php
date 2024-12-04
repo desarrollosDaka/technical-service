@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\ApiV1Responser;
+use App\Traits\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalVisit\StoreRequest;
 use App\Http\Requests\TechnicalVisit\UpdateRequest;

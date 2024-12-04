@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\ApiV1Responser;
+use App\Traits\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Models\Technical;
 use Exception;
