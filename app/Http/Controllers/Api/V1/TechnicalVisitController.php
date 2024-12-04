@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\ApiV1Responser;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TechnicalVisit\StoreRequest;
 use App\Models\TechnicalVisit;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -44,9 +45,9 @@ class TechnicalVisitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        return $request->validated();
     }
 
     /**
