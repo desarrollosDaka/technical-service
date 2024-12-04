@@ -23,16 +23,30 @@ class CommentController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'ticket_id' => 'required',
+            'commentable_type' => [
+                'required',
+                Rule::in(
+                    array_map(fn($enum) => $enum->name, CommentableModel::cases())
+                )
+            ],
+            'commentable_id' => 'required',
         ]);
+
+        $record = match ($request->commentable_type) {
+            CommentableModel::Ticket->name =>
+            $request->user()
+                ? Ticket::where('id', $request->commentable_id)->where('technical_id', $request->user()->getKey())->firstOrFail()
+                : Ticket::find($request->commentable_id),
+            default => null,
+        };
 
         return $this->success(
             QueryBuilder::for(Comment::class)
                 ->allowedSorts(['created_at'])
                 ->defaultSort(['-created_at'])
                 ->allowedIncludes(['commentator'])
-                ->where('commentable_id', $request->ticket_id)
-                ->where('commentable_type', Ticket::class)
+                ->where('commentable_id', $record->id)
+                ->where('commentable_type', get_class($record))
                 ->simplePaginate()
         );
     }
