@@ -16,12 +16,18 @@ trait ApiV1Responser
      * @param array $headers
      * @return HttpResponse
      */
-    public function success(array|Model $data, int $status = Response::HTTP_OK, array $headers = []): HttpResponse
+    public function success(mixed $data, int $status = Response::HTTP_OK, array $headers = []): HttpResponse
     {
+        $dataResponse = $data;
+
+        if (is_array($data) && !isset($data['data'])) {
+            $dataResponse = ['data' => $data];
+        } else if ($data instanceof Model) {
+            $dataResponse = $data->toArray();
+        }
+
         return response(
-            content: [
-                'data' => is_array($data) ? $data : $data->toArray()
-            ],
+            content: $dataResponse,
             status: $status,
             headers: array_merge(['Content-Type' => 'application/json'], $headers)
         );

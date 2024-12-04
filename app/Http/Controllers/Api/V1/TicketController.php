@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreRequest as StoreTicketRequest;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 class TicketController extends Controller
@@ -15,7 +18,18 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index()
+    {
+        return $this->success(
+            QueryBuilder::for(Ticket::class)
+                ->allowedFilters([
+                    'title',
+                    'customer_name',
+                    AllowedFilter::exact('status'),
+                ])
+                ->simplePaginate()
+        );
+    }
 
     /**
      * Store a newly created resource in storage.
