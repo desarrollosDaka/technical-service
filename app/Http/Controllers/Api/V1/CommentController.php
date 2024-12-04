@@ -44,7 +44,7 @@ class CommentController extends Controller
     {
         $request->validate([
             'comment' => 'required',
-            'commentable_model' => [
+            'commentable_type' => [
                 'required',
                 Rule::in(
                     array_map(fn($enum) => $enum->name, CommentableModel::cases())
@@ -53,7 +53,7 @@ class CommentController extends Controller
             'commentable_id' => 'required',
         ]);
 
-        $record = match ($request->commentable_model) {
+        $record = match ($request->commentable_type) {
             CommentableModel::Ticket->name => Ticket::find($request->commentable_id),
             default => null,
         };
@@ -65,7 +65,7 @@ class CommentController extends Controller
         $comment = $record->comments()->create([
             'comment' => $request->comment,
             'commentator_id' => $request->user() ? $request->user()->getKey() : null,
-            'commentator_model' => $request->user() ? get_class($request->user()) : null,
+            'commentator_type' => $request->user() ? get_class($request->user()) : null,
         ]);
 
         return $this->success($comment, Response::HTTP_CREATED);

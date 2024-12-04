@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Technical;
+use App\Models\TechnicalVisit;
+use App\Models\Ticket;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +15,9 @@ class TechnicalSeeder extends Seeder
      */
     public function run(): void
     {
-        Technical::factory()->count(50)->create();
+        Technical::factory()
+            ->count(20)
+            ->has(Ticket::factory()->count(5)->hasVisits(5))
+            ->create();
     }
 }

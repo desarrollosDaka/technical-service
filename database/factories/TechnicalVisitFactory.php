@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TechnicalVisits>
  */
-class TechnicalVisitsFactory extends Factory
+class TechnicalVisitFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class TechnicalVisitsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'visit_date' => $this->faker->date(),
+            'observations' => $this->faker->text(),
         ];
     }
 }
