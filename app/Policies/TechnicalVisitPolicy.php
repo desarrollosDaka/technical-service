@@ -42,7 +42,7 @@ class TechnicalVisitPolicy
      */
     public function update(User|Technical $user, TechnicalVisit $technicalVisit): bool
     {
-        return false;
+        return $this->view($user, $technicalVisit);
     }
 
     /**
@@ -50,7 +50,7 @@ class TechnicalVisitPolicy
      */
     public function delete(User|Technical $user, TechnicalVisit $technicalVisit): bool
     {
-        return false;
+        return $this->view($user, $technicalVisit);
     }
 
     /**

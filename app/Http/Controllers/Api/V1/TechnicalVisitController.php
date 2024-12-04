@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalVisit\StoreRequest;
+use App\Http\Requests\TechnicalVisit\UpdateRequest;
 use App\Models\TechnicalVisit;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -73,9 +74,11 @@ class TechnicalVisitController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TechnicalVisit $technicalVisit)
+    public function update(UpdateRequest $request, TechnicalVisit $technicalVisit)
     {
-        //
+        return $this->success(
+            $technicalVisit->update($request->validated())
+        );
     }
 
     /**
@@ -83,6 +86,7 @@ class TechnicalVisitController extends Controller
      */
     public function destroy(TechnicalVisit $technicalVisit)
     {
-        //
+        Gate::authorize('delete', $technicalVisit);
+        return $this->success($technicalVisit->delete());
     }
 }
