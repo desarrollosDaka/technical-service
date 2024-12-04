@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create((new Comment)->getTable(), function (Blueprint $table) {
             $table->id();
             $table->morphs('commentable');
-            $table->string('commentator_model')->nullable()->comment('Si esta vació se esta asumiendo que lo hizo el usuario.');
+            $table->string('commentator_type')->nullable()->comment('Si esta vació se esta asumiendo que lo hizo el usuario.');
             $table->unsignedBigInteger('commentator_id')->nullable()->comment('Apuntaría al id del técnico, MASTER_TECHNICIAN:ID_user');
             $table->text('comment');
             $table->softDeletes();

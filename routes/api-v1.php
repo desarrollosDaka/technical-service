@@ -13,7 +13,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/user', [AuthController::class, 'user']);
         Route::apiResource('/tickets', App\Http\Controllers\Api\V1\TicketController::class);
         Route::apiResource('/technical-visits', App\Http\Controllers\Api\V1\TechnicalVisitController::class);
+        Route::apiResource('/comments', CommentController::class)->only(['index', 'store']);
     });
-
-    Route::apiResource('/comments', CommentController::class)->only(['index', 'store']);
+    Route::apiResource('/guest-comments', CommentController::class)->only(['index', 'store']);
 });

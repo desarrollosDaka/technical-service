@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Ticket;
 use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class CommentController extends Controller
     {
         $request->validate([
             'comment' => 'required',
-            'commentable_type' => [
+            'commentable_model' => [
                 'required',
                 Rule::in(
                     array_map(fn($enum) => $enum->name, CommentableModel::cases())
@@ -52,7 +53,7 @@ class CommentController extends Controller
             'commentable_id' => 'required',
         ]);
 
-        $record = match ($request->commentable_type) {
+        $record = match ($request->commentable_model) {
             CommentableModel::Ticket->name => Ticket::find($request->commentable_id),
             default => null,
         };
@@ -64,7 +65,7 @@ class CommentController extends Controller
         $comment = $record->comments()->create([
             'comment' => $request->comment,
             'commentator_id' => $request->user() ? $request->user()->getKey() : null,
-            'commentator_type' => $request->user() ? get_class($request->user()) : null,
+            'commentator_model' => $request->user() ? get_class($request->user()) : null,
         ]);
 
         return $this->success($comment, Response::HTTP_CREATED);
