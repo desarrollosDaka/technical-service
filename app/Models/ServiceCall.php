@@ -15,4 +15,6 @@ class ServiceCall extends Model
     protected $primaryKey = 'callID';
 
     protected $fillable = [];
+
+    public $timestamps = false;
 }

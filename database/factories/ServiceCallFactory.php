@@ -21,7 +21,7 @@ class ServiceCallFactory extends Factory
             'customer' => $this->faker->randomElement(['V', 'E', 'J']) . '-' . $this->faker->randomNumber(8),
             'custmrName' => $this->faker->name(),
             'contctCode' => $this->faker->randomNumber(8),
-            'resolTime' => $this->faker->randomNumber(10),
+            'resolTime' => $this->faker->randomNumber(8),
             'free_1' => $this->faker->date(),
             'free_2' => $this->faker->sentence(),
             'origin' => $this->faker->randomElement(['DAEWOO', 'LENOVO', 'SAMSUNG']),
