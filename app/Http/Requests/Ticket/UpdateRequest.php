@@ -25,11 +25,11 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'diagnosis_date' => 'nullable',
+            'title' => 'nullable|max:255',
+            'diagnosis_date' => 'nullable|date',
             'diagnosis_detail' => 'nullable',
             'customer_name' => 'nullable|max:255',
-            'solution_date' => 'nullable',
+            'solution_date' => 'nullable|date',
             'solution_detail' => 'nullable',
             'status' => [
                 'nullable',
