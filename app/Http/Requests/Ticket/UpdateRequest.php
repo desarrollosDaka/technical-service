@@ -2,18 +2,19 @@
 
 namespace App\Http\Requests\Ticket;
 
-use App\Models\Ticket;
+use App\Enums\Ticket\Status as TicketStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return (bool) Gate::authorize('create', Ticket::class);
+        return (bool) Gate::authorize('update', $this->ticket);
     }
 
     /**
@@ -28,7 +29,12 @@ class StoreRequest extends FormRequest
             'diagnosis_date' => 'nullable',
             'diagnosis_detail' => 'nullable',
             'customer_name' => 'nullable|max:255',
-            'service_call_id' => 'required',
+            'solution_date' => 'nullable',
+            'solution_detail' => 'nullable',
+            'status' => [
+                'nullable',
+                Rule::enum(TicketStatus::class)
+            ],
             'meta' => 'nullable|json',
         ];
     }

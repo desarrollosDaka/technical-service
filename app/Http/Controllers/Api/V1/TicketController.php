@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreRequest as StoreTicketRequest;
+use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +22,7 @@ class TicketController extends Controller
      */
     public function index(Request $request): Response
     {
+        Gate::authorize('viewAny');
         return $this->success(
             QueryBuilder::for(Ticket::class)
                 ->allowedFilters([
@@ -42,7 +45,7 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTicketRequest $request)
+    public function store(StoreTicketRequest $request): Response
     {
         return $this->success(
             $request->user()->tickets()->create($request->validated()),
@@ -53,17 +56,20 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show(Ticket $ticket): Response
     {
-        return $ticket;
+        Gate::authorize('view', $ticket);
+        return $this->success($ticket);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, Ticket $ticket)
     {
-        //
+        return $this->success(
+            $ticket->update($request->validated())
+        );
     }
 
     /**

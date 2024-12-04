@@ -23,7 +23,7 @@ trait ApiV1Responser
         if (is_array($data) && !isset($data['data'])) {
             $dataResponse = ['data' => $data];
         } else if ($data instanceof Model) {
-            $dataResponse = $data->toArray();
+            $dataResponse = ['data' => $data->toArray()];
         }
 
         return response(
