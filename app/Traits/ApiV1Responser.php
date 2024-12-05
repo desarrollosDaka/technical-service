@@ -20,8 +20,8 @@ trait ApiV1Responser
     {
         $dataResponse = $data;
 
-        if (is_array($data) && !isset($data['data'])) {
-            $dataResponse = ['data' => $data];
+        if (is_array($data)) {
+            $dataResponse = !isset($data['data']) ? ['data' => $data] : $data;
         } else if ($data instanceof Model) {
             $dataResponse = ['data' => $data->toArray()];
         }
@@ -41,10 +41,10 @@ trait ApiV1Responser
      * @param array $headers
      * @return HttpResponse
      */
-    public function error(string $message, int $status = Response::HTTP_BAD_REQUEST, array $headers = []): HttpResponse
+    public function error(string|array $message, int $status = Response::HTTP_BAD_REQUEST, array $headers = []): HttpResponse
     {
         return response(
-            content: [
+            content: is_array($message) ? $message : [
                 'data' => $message
             ],
             status: $status,
