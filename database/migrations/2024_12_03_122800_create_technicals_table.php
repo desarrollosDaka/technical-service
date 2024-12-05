@@ -34,7 +34,6 @@ return new class extends Migration
             $table->dateTime('Create_date')->nullable();
             $table->integer('Update_user')->nullable();
             $table->dateTime('Update_date')->nullable();
-            $table->timestamps();
         });
     }
 
