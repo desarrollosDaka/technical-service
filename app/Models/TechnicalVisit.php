@@ -12,6 +12,11 @@ class TechnicalVisit extends Model
     /** @use HasFactory<\Database\Factories\TechnicalVisitsFactory> */
     use HasFactory, SoftDeletes;
 
+    /**
+     * Fillable
+     *
+     * @var array
+     */
     protected $fillable = [
         'ticket_id',
         'visit_date',
@@ -19,6 +24,11 @@ class TechnicalVisit extends Model
         'meta',
     ];
 
+    /**
+     * Casts
+     *
+     * @var array
+     */
     protected $casts = [
         'visit_date' => 'date',
         'meta' => 'array',

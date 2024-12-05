@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TechnicalVisitController extends Controller
 {
-    use ApiV1Responser;
-
     /**
      * Display a listing of the resource.
      */

@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CommentController extends Controller
 {
-    use ApiV1Responser;
-
     /**
      * Display a listing of the resource.
      */

@@ -18,6 +18,7 @@ class TechnicalFactory extends Factory
     public function definition(): array
     {
         return [
+            'ID_user' => $this->faker->randomNumber(8),
             'Name_user_comercial' => $this->faker->company(),
             'User_name' => $this->faker->name(),
             'Email' => $this->faker->email(),

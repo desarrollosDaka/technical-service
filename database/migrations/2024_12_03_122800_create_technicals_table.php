@@ -13,7 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create((new Technical)->getTable(), function (Blueprint $table) {
-            $table->id('ID_user');
+            $table->id();
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->unsignedBigInteger('ID_user');
             $table->string('Name_user_comercial')->nullable();
             $table->string('Services')->nullable();
             $table->string('User_name')->nullable();

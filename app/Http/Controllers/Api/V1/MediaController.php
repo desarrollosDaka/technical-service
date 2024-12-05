@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaController extends Controller
 {
-    use ApiV1Responser;
-
     /**
      * Verifica la permisología sobre un modelo
      *

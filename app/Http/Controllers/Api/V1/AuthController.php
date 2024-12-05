@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    use ApiV1Responser;
-
     /**
      * Login por medio de sanctum
      *

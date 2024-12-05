@@ -19,6 +19,8 @@ Route::prefix('v1')->group(function () {
 
     Route::apiResource('/guest-comments', CommentController::class)->only(['index', 'store']);
 
-    Route::apiResource('/service-calls', App\Http\Controllers\Api\V1\ServiceCallController::class)
-        ->middleware(BackendToken::class);
+    Route::group(['middleware' => BackendToken::class], function () {
+        Route::apiResource('/service-calls', App\Http\Controllers\Api\V1\ServiceCallController::class);
+        Route::apiResource('/technicians', App\Http\Controllers\Api\V1\TechnicalController::class);
+    });
 });

@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TicketController extends Controller
 {
-    use ApiV1Responser;
-
     /**
      * Display a listing of the resource.
      */
