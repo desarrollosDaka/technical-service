@@ -87,6 +87,7 @@ class TechnicalVisitController extends Controller
     public function destroy(TechnicalVisit $technicalVisit)
     {
         Gate::authorize('delete', $technicalVisit);
-        return $this->success($technicalVisit->delete());
+        $technicalVisit->delete();
+        return $this->success(['data' => 'deleted']);
     }
 }

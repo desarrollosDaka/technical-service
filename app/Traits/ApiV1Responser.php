@@ -5,6 +5,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
 use \Illuminate\Http\Response as HttpResponse;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 
 trait ApiV1Responser
 {
@@ -22,7 +23,7 @@ trait ApiV1Responser
 
         if (is_array($data)) {
             $dataResponse = !isset($data['data']) ? ['data' => $data] : $data;
-        } else if ($data instanceof Model) {
+        } else if ($data instanceof Model || $data instanceof MediaCollection) {
             $dataResponse = ['data' => $data->toArray()];
         }
 
