@@ -8,6 +8,7 @@
     <title>{{ isset($title) ? $title . ' | ' . config('app.name') : config('app.name') }}</title>
     <meta name="description" content="{{ isset($description) ? $description : config('app.name') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <wireui:scripts />
 </head>
 
 <body>
