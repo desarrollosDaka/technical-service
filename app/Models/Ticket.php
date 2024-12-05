@@ -9,12 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\File;
 
-class Ticket extends Model
+class Ticket extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\TicketFactory> */
-    use HasFactory, SoftDeletes, Commentable;
+    use HasFactory, SoftDeletes, Commentable, InteractsWithMedia;
 
+    /**
+     * Fillable
+     *
+     * @var array
+     */
     protected $fillable = [
         'technical_id',
         'service_call_id',
@@ -29,6 +37,11 @@ class Ticket extends Model
         'meta',
     ];
 
+    /**
+     * Casts
+     *
+     * @var array
+     */
     protected $casts = [
         'meta' => 'array',
         'status' => TicketStatus::class,
@@ -36,6 +49,17 @@ class Ticket extends Model
         'solution_date' => 'datetime',
         'total_cost' => 'float',
     ];
+
+    /**
+     * Media collections
+     *
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('diagnosis')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png']);
+    }
 
     /**
      * Técnico encargado del ticket
