@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\CreateTickets;
 use App\Models\ServiceCall;
+use App\Models\Ticket;
 use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +25,13 @@ class ServiceCallController extends Controller
      */
     public function store(Request $request): Response
     {
-        return $this->insertMany($request, new ServiceCall);
+        return $this->insertMany(
+            $request,
+            new ServiceCall,
+            function ($inserts): void {
+                // CreateTickets::dispatch($inserts);
+            }
+        );
     }
 
     /**

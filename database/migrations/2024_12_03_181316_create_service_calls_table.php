@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create((new ServiceCall)->getTable(), function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('app_status')->default(ServiceCallStatus::New->value);
+            $table->tinyInteger('app_status')->default(ServiceCallStatus::Open->value);
             $table->timestamps();
             $table->softDeletes();
 

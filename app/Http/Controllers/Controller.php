@@ -11,19 +11,26 @@ abstract class Controller
 {
     use ApiV1Responser;
 
-    public function insertMany(Request $request, Model $model): Response
-    {
+    public function insertMany(
+        Request $request,
+        Model $model,
+        callable $afterCreate = null
+    ): Response {
         $request->validate([
             'elements' => 'required|array',
         ]);
 
         try {
-            $model::insert(
-                array_map(
-                    fn($element) => array_merge($element, ['created_at' => now(), 'updated_at' => now()]),
-                    $request->elements
-                )
+            $insertData = array_map(
+                fn($element) => array_merge($element, ['created_at' => now(), 'updated_at' => now()]),
+                $request->elements
             );
+
+            $model::insert($insertData);
+
+            if ($afterCreate) {
+                $afterCreate($insertData);
+            }
 
             return $this->success(['data' => 'created'], Response::HTTP_CREATED);
         } catch (\Throwable $th) {
