@@ -8,6 +8,7 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
+        require("./vendor/wireui/wireui/tailwind.config.js"),
     ],
     theme: {
         extend: {

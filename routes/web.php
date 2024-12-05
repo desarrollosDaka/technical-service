@@ -3,9 +3,7 @@
 use App\Models\Technical;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'pages.index');
 
 Route::get('/technical', function () {
     if (app()->environment('local')) {
