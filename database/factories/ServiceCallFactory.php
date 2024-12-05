@@ -17,6 +17,7 @@ class ServiceCallFactory extends Factory
     public function definition(): array
     {
         return [
+            'callID' => $this->faker->randomNumber(8),
             'subject' => $this->faker->sentence(),
             'customer' => $this->faker->randomElement(['V', 'E', 'J']) . '-' . $this->faker->randomNumber(8),
             'custmrName' => $this->faker->name(),

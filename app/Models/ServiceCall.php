@@ -4,17 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ServiceCall extends Model
 {
     /** @use HasFactory<\Database\Factories\ServiceCallFactory> */
-    use HasFactory;
-
-    protected $table = 'service_calls';
-
-    protected $primaryKey = 'callID';
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [];
-
-    public $timestamps = false;
 }

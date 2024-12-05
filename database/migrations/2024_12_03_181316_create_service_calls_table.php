@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ServiceCall\Status as ServiceCallStatus;
 use App\Models\ServiceCall;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,7 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create((new ServiceCall)->getTable(), function (Blueprint $table) {
-            $table->id('callID');
+            $table->id();
+            $table->tinyInteger('app_status')->default(ServiceCallStatus::New->value);
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->unsignedBigInteger('callID');
             $table->string('subject')->nullable();
             $table->string('customer')->nullable();
             $table->string('custmrName')->nullable();
