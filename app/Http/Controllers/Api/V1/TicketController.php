@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreRequest as StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,7 +39,17 @@ class TicketController extends Controller
                     'diagnosis_date',
                     'solution_date',
                 ])
-                ->allowedIncludes(['technical', 'serviceCall', 'visits'])
+                ->allowedIncludes([
+                    'technical',
+                    'serviceCall',
+                    'visits',
+                    AllowedInclude::callback('media', function (MorphMany $query) {
+                        if (request()->has('collection_name')) {
+                            return $query->where('collection_name', request('collection_name'));
+                        }
+                        return $query;
+                    }),
+                ])
                 ->defaultSort('-created_at')
                 ->where('technical_id', $request->user()->getKey())
                 ->simplePaginate()
