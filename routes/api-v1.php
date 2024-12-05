@@ -16,5 +16,6 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/comments', CommentController::class)->only(['index', 'store']);
         Route::apiResource('/media', MediaController::class)->except(['update']);
     });
+
     Route::apiResource('/guest-comments', CommentController::class)->only(['index', 'store']);
 });
