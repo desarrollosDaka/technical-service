@@ -1,3 +1,14 @@
-<x-layouts.main>
-    <h1 class="text-4xl font-black">Badge</h1>
+<x-layouts.main bodyClass="h-screen overflow-hidden min-h-[800px]">
+    <main class="bg-cover bg-right bg-no-repeat w-full h-screen bg-black" style="background-image: url(/img/header.webp)">
+        <div class="container pt-16 px-3">
+            <div class="bg-white/90 md:bg-white/50 rounded-xl p-6 md:w-1/2 text-center md:text-left">
+                <h1 class="font-bold text-lg lg:text-2xl mb-4">
+                    <span class="md:block">{{ __('Bienvenido al servicio técnico de ') }}</span>
+                    <span class="md:block text-secondary-100">{{ __('Tiendas Daka') }}</span>
+                </h1>
+                <p class="mb-5 text-xs md:text-base">{{ __('Consulta el estado de tu servicio técnico, detalles del ticket, comentarios de los técnicos y más.') }}</p>
+
+            </div>
+        </div>
+    </main>
 </x-layouts.main>

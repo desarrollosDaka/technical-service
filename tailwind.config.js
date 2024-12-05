@@ -17,6 +17,9 @@ export default {
         "./vendor/wireui/wireui/src/Components/**/*.php",
     ],
     theme: {
+        container: {
+            center: true,
+        },
         extend: {
             fontFamily: {
                 sans: ['Inter', 'Figtree', ...defaultTheme.fontFamily.sans],

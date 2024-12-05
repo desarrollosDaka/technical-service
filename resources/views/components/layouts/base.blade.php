@@ -1,3 +1,7 @@
+@props([
+    'bodyClass' => '',
+])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -11,7 +15,7 @@
     <wireui:scripts />
 </head>
 
-<body>
+<body class="{{ $bodyClass }}">
     {{ $slot }}
 </body>
 
