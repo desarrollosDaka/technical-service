@@ -34,6 +34,6 @@ class ServiceCall extends Model
 
         $keyBy = 'service_call_for:' . request()->ip();
 
-        return self::$instance = Cache::get($keyBy, false);
+        return self::$instance = Cache::get($keyBy, null);
     }
 }

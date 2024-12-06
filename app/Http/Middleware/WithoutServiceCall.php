@@ -16,7 +16,7 @@ class WithoutServiceCall
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!ServiceCall::current()) {
+        if (ServiceCall::current()) {
             return redirect()->route('ticket.show');
         }
 
