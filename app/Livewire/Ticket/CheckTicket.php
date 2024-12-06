@@ -89,7 +89,7 @@ class CheckTicket extends Component
                 <div class="grid md:grid-cols-5 gap-4 mb-4">
                     <div class="flex gap-2 grid-cols-5 md:col-span-3">
                         <x-select
-                            label="{{ __('Documento') }}"
+                            label="{{ __('Tipo de documento') }}"
                             :options="[
                                 ['label' => 'V - Venezolano', 'value' => 'V'],
                                 ['label' => 'J - Jurídico', 'value' => 'J'],
@@ -101,7 +101,7 @@ class CheckTicket extends Component
                             wire:model="data.identification_type"
                         />
                         <x-input
-                            label="{{ __('Numero de documento') }}"
+                            label="{{ __('Número de documento') }}"
                             wire:model="data.identification_number"
                             type="number"
                         />

@@ -38,7 +38,7 @@ class DetailsTicket extends Component
     public function render(): string
     {
         return <<<'BLADE'
-            <main class="flex flex-wrap md:flex-nowrap gap-4 pt-6 md:pt-12">
+            <main class="flex flex-wrap md:flex-nowrap gap-4">
                 <section class="w-full md:w-60 flex flex-col gap-2 md:gap-5">
                     @foreach($buttons as $tab => $label)
                         <x-button.my
@@ -85,6 +85,9 @@ class DetailsTicket extends Component
                                 </tr>
                             </tbody>
                         </table>
+
+                    @elseif($selectedTab === 'comments')
+                        <livewire:comment />
                     @endif
                 </section>
             </main>
