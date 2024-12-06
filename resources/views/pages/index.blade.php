@@ -4,10 +4,10 @@
             <div class="bg-white/90 md:bg-white/50 rounded-xl p-6 md:w-1/2 text-center md:text-left">
                 <h1 class="font-bold text-lg lg:text-2xl mb-4">
                     <span class="md:block">{{ __('Bienvenido al servicio técnico de ') }}</span>
-                    <span class="md:block text-secondary-100">{{ __('Tiendas Daka') }}</span>
+                    <span class="md:block font-black text-secondary-100 md:text-[1.3em]">{{ __('Tiendas Daka') }}</span>
                 </h1>
                 <p class="mb-5 text-xs md:text-base">{{ __('Consulta el estado de tu servicio técnico, detalles del ticket, comentarios de los técnicos y más.') }}</p>
-
+                <livewire:ticket.check-ticket />
             </div>
         </div>
     </main>
