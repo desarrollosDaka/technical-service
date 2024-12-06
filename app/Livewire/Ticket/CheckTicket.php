@@ -3,6 +3,7 @@
 namespace App\Livewire\Ticket;
 
 use App\Models\ServiceCall;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -61,7 +62,8 @@ class CheckTicket extends Component
                 throw new \Exception(__('No existe la llamada de servicio'));
             }
 
-            dd($serviceCall);
+            Cache::put('service_call_for:' . request()->ip(), $serviceCall, 60 * 24);
+            redirect()->route('ticket.show');
         } catch (\Throwable $th) {
             $this->errorsFeedback = [
                 'display' => true,
@@ -85,7 +87,7 @@ class CheckTicket extends Component
         return <<<'BLADE'
             <form wire:submit="send">
                 <div class="grid md:grid-cols-5 gap-4 mb-4">
-                    <div class="flex gap-2 grid-cols-5 col-span-3">
+                    <div class="flex gap-2 grid-cols-5 md:col-span-3">
                         <x-select
                             label="{{ __('Documento') }}"
                             :options="[
@@ -104,7 +106,7 @@ class CheckTicket extends Component
                             type="number"
                         />
                     </div>
-                    <x-input label="{{ __('Número del servicio') }}" wire:model="data.service_call_id"  type="number" class="col-span-2" />
+                    <x-input label="{{ __('Número del servicio') }}" wire:model="data.service_call_id"  type="number" class="md:col-span-2" />
                 </div>
                 <x-button primary label="{{ __('Consultar') }}" class="w-full !text-secondary-100 font-black uppercase mb-4" type="submit" />
 
