@@ -1,0 +1,7 @@
+{
+    "ticket.status.1": "Abierto",
+    "ticket.status.2": "Cerrado",
+    "ticket.status.3": "Rechazado por el técnico",
+    "ticket.status.4": "En progreso",
+    "ticket.status.5": "En pausa"
+}

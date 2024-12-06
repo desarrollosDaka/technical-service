@@ -18,6 +18,8 @@ class Ticket extends Model implements HasMedia
     /** @use HasFactory<\Database\Factories\TicketFactory> */
     use HasFactory, SoftDeletes, Commentable, InteractsWithMedia;
 
+    public static ?Ticket $instance = null;
+
     /**
      * Fillable
      *
@@ -49,6 +51,19 @@ class Ticket extends Model implements HasMedia
         'solution_date' => 'datetime',
         'total_cost' => 'float',
     ];
+
+    public static function current(): ?Ticket
+    {
+        if (self::$instance) {
+            return self::$instance;
+        }
+
+        if (!ServiceCall::current()) {
+            return false;
+        }
+
+        return self::$instance = self::where('service_call_id', ServiceCall::current()->id)->first();
+    }
 
     /**
      * Media collections
