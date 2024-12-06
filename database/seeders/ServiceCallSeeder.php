@@ -13,6 +13,6 @@ class ServiceCallSeeder extends Seeder
      */
     public function run(): void
     {
-        ServiceCall::factory()->count(50)->create();
+        ServiceCall::factory()->count(10)->create();
     }
 }
