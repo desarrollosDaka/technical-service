@@ -17,6 +17,7 @@
 
 <body class="{{ $bodyClass }}">
     {{ $slot }}
+    @yield('scripts')
 </body>
 
 </html>

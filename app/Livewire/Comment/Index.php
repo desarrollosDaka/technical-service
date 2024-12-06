@@ -35,6 +35,17 @@ class Index extends Component
     }
 
     /**
+     * Refrescar los comentarios para comprobar nuevos
+     *
+     * @return void
+     */
+    public function refreshComments(): void
+    {
+        $this->comments = Ticket::current()->comments()->get()->toArray();
+        $this->dispatch('miEvento');
+    }
+
+    /**
      * Enviar nuevo comentario
      *
      * @return void
@@ -68,35 +79,6 @@ class Index extends Component
      */
     public function render()
     {
-        return <<<'BLADE'
-            <section>
-                <ul class="rounded-xl h-[65vh] max-h-[65vh] text-sm overflow-auto" wire:poll.10s>
-                    @foreach($comments as $comment)
-                        <li
-                            class="mb-4"
-                        >
-                            <div
-                                class="w-fit max-w-72 p-3 rounded-xl bg-secondary-200"
-                            >
-                                {{ $comment['comment'] }}
-                            </div>
-                        </li>
-                    @endforeach
-                </ul>
-                <form class="mt-2 flex flex-wrap md:flex-nowrap items-start gap-3" wire:submit="send">
-                    <x-textarea
-                        placeholder="{{ __('Deja tu comentario con el servicio técnico') }}"
-                        class="w-full md:w-11/12"
-                        wire:model="comment"
-                    />
-                    <x-button
-                        primary
-                        type="submit"
-                        label="{{ __('Enviar') }}"
-                        class="w-full md:w-auto font-bold !text-secondary-100"
-                    />
-                </form>
-            </section>
-        BLADE;
+        return view('livewire.comment.index');
     }
 }
