@@ -52,7 +52,40 @@ class DetailsTicket extends Component
                     @endforeach
                 </section>
                 <section class="w-full">
-                    {{ ticket()->id }}
+                    @if($selectedTab === 'details')
+                        <table class="w-full ">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <p class="my-2 text-left">{{ __('Cliente') }}</p>
+                                    </th>
+                                    <td>{{ ticket()->customer_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left">
+                                        <p class="my-2">{{ __('Estado') }}</p>
+                                    </th>
+                                    <td>{{ ticket()->status->getLabel() }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left">
+                                        <p class="my-2 min-w-44">
+                                            {{ __('Fecha de diagnóstico') }}
+                                        </p>
+                                    </th>
+                                    <td>{{ ticket()->diagnosis_date ? ticket()->diagnosis_date->format('d/m/Y') : __('Sin fechar de diagnostico') }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left">{{ __('Diagnóstico') }}</th>
+                                    <td>
+                                        <p class="my-2 text-sm">
+                                            {{ ticket()->diagnosis_detail }}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endif
                 </section>
             </main>
         BLADE;
