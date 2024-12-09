@@ -94,6 +94,8 @@ class CheckTicket extends Component
                                 ['label' => 'V - Venezolano', 'value' => 'V'],
                                 ['label' => 'J - Jurídico', 'value' => 'J'],
                                 ['label' => 'E - Extranjero', 'value' => 'E'],
+                                ['label' => 'C - Comuna', 'value' => 'C'],
+                                ['label' => 'G - Gubernamental', 'value' => 'G'],
                             ]"
                             option-label="label"
                             option-value="value"

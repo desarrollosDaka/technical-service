@@ -89,6 +89,8 @@ class DetailsTicket extends Component
                         <div>
                             <livewire:ticket.calendar
                                 :drag-and-drop-enabled="false"
+                                 initialYear="2019"
+                                initialMonth="12"
                             />
                         </div>
                     @elseif($selectedTab === 'comments')
