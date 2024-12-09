@@ -9,6 +9,7 @@ use App\Models\Ticket;
 use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,8 @@ class CommentController extends Controller
                 : Ticket::find($request->commentable_id),
             default => null,
         };
+
+        Gate::authorize('update', $record);
 
         return $this->success(
             QueryBuilder::for(Comment::class)
@@ -73,6 +76,8 @@ class CommentController extends Controller
         if (!$record) {
             return abort(Response::HTTP_NOT_FOUND, __('Record not found'));
         }
+
+        Gate::authorize('update', $record);
 
         $comment = $record->comments()->create([
             'comment' => $request->comment,
