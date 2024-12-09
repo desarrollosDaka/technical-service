@@ -115,6 +115,11 @@ class DetailsTicket extends Component
                                         <h3 class="font-semibold">{{ $visit->title }}</h3>
                                         <p class="text-sm text-gray-600">{{  $visit->visit_date->format('d/m/Y') }}</p>
                                         <p class="text-sm mt-3">{{ $visit->observations }}</p>
+                                        <div class="flex items-center gap-3 mt-3 pt-4 border-t">
+                                            <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                            <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                            <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                        </div>
                                     </li>
                                 @endforeach
                             </ul>
