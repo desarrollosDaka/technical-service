@@ -17,6 +17,7 @@ class TechnicalVisitFactory extends Factory
     public function definition(): array
     {
         return [
+            'title' => $this->faker->sentence(),
             'visit_date' => $this->faker->date(),
             'observations' => $this->faker->text(),
         ];

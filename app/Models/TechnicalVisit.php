@@ -18,6 +18,7 @@ class TechnicalVisit extends Model
      * @var array
      */
     protected $fillable = [
+        'title',
         'ticket_id',
         'visit_date',
         'observations',

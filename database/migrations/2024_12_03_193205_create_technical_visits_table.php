@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create((new TechnicalVisit)->getTable(), function (Blueprint $table) {
             $table->comment('La taba de visitas, sera la que se usara para formar el campo ServiceCall:resolution');
             $table->id();
+            $table->string('title');
             $table->foreignIdFor(\App\Models\Ticket::class)->constrained()->cascadeOnDelete();
             $table->timestamp('visit_date')->nullable();
             $table->text('observations')->nullable()->comment('Recordar poder adjuntar imágenes (max: 5)');

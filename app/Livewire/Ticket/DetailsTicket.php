@@ -39,7 +39,7 @@ class DetailsTicket extends Component
     {
         return <<<'BLADE'
             <main class="flex flex-wrap md:flex-nowrap gap-4">
-                <section class="w-full md:w-60 flex flex-col gap-2 md:gap-5">
+                <section class="w-full md:w-60 min-w-60 flex flex-col gap-2 md:gap-5">
                     @foreach($buttons as $tab => $label)
                         <x-button.my
                             wire:click="setTab('{{ $tab }}')"
@@ -53,7 +53,7 @@ class DetailsTicket extends Component
                 </section>
                 <section class="w-full">
                     @if($selectedTab === 'details')
-                        <table class="w-full ">
+                        <table class="w-full">
                             <tbody>
                                 <tr>
                                     <th>
@@ -85,7 +85,12 @@ class DetailsTicket extends Component
                                 </tr>
                             </tbody>
                         </table>
-
+                    @elseif($selectedTab === 'visits')
+                        <div>
+                            <livewire:ticket.calendar
+                                :drag-and-drop-enabled="false"
+                            />
+                        </div>
                     @elseif($selectedTab === 'comments')
                         <livewire:comment />
                     @endif
