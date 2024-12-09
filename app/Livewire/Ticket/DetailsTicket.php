@@ -74,6 +74,12 @@ class DetailsTicket extends Component
                             <tbody>
                                 <tr>
                                     <th>
+                                        <p class="my-2 text-left">{{ __('ID del ticket') }}</p>
+                                    </th>
+                                    <td>{{ ticket()->id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         <p class="my-2 text-left">{{ __('Cliente') }}</p>
                                     </th>
                                     <td>{{ ticket()->customer_name }}</td>
@@ -105,11 +111,11 @@ class DetailsTicket extends Component
                     @elseif($selectedTab === 'visits')
                         <div>
                             <section class="flex items-center justify-center gap-3">
-                                <x-button outline secondary x-on:click="displayCalendarMode = 'calendar'" label="{{ __('Modo calendario') }}" />
-                                <x-button outline secondary x-on:click="displayCalendarMode = 'list'" label="{{ __('Ver listado') }}" />
+                                <x-button outline primary x-on:click="displayCalendarMode = 'calendar'" label="{{ __('Modo calendario') }}" />
+                                <x-button outline primary x-on:click="displayCalendarMode = 'list'" label="{{ __('Ver listado') }}" />
                             </section>
                             <livewire:ticket.calendar :visits="$visits" />
-                            <ul class="pt-6">
+                            <ul class="pt-6" x-show="displayCalendarMode === 'list'">
                                 @foreach($visits as $visit)
                                     <li class="block w-full bg-slate-100 rounded-xl p-3 mb-6">
                                         <h3 class="font-semibold">{{ $visit->title }}</h3>
