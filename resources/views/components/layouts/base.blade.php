@@ -11,12 +11,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ isset($title) ? $title . ' | ' . config('app.name') : config('app.name') }}</title>
     <meta name="description" content="{{ isset($description) ? $description : config('app.name') }}">
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <wireui:scripts />
 </head>
 
 <body class="{{ $bodyClass }}">
     {{ $slot }}
+    @livewireScriptConfig
     @yield('scripts')
 </body>
 
