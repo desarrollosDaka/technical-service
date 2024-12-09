@@ -25,6 +25,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => 'required|max:255',
             'visit_date' => 'required|date',
             'ticket_id' => [
                 'required',

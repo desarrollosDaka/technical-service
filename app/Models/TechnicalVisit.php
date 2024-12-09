@@ -31,7 +31,7 @@ class TechnicalVisit extends Model
      * @var array
      */
     protected $casts = [
-        'visit_date' => 'date',
+        'visit_date' => 'datetime',
         'meta' => 'array',
     ];
 

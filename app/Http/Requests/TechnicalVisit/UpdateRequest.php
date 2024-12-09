@@ -23,6 +23,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => 'required|max:255',
             'visit_date' => 'nullable|date',
             'observations' => 'nullable',
             'meta' => 'nullable|json',

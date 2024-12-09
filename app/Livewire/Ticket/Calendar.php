@@ -23,7 +23,9 @@ class Calendar extends LivewireCalendar
         return Ticket::current()->visits->map(function (TechnicalVisit $visit) {
             return [
                 'id' => $visit->id,
-                'title' => $visit->
+                'title' => $visit->title,
+                'description' => $visit->observations,
+                'date' => $visit->visit_date->toDateTimeString(),
             ];
         });
     }
