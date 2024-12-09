@@ -4,7 +4,7 @@
 ])
 
 @php
-    $classes = $outline ? 'text-primary-600 hover:text-primary-600 border-primary-500 hover:bg-primary-500/40' : 'text-secondary-100 bg-primary-500 hover:bg-primary-600 border-primary-500';
+    $classes = $outline ? 'btn-primary-outline' : 'text-secondary-100 bg-primary-500 hover:bg-primary-600 border-primary-500';
 
     if ($loading || str_contains($attributes->get('class'), 'loading')) {
         $attributes = $attributes->merge([

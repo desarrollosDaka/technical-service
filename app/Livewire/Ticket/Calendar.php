@@ -17,19 +17,13 @@ class Calendar extends Component
      */
     public Collection $visits;
 
-    public function events(): Collection
+    /**
+     * Render
+     *
+     * @return void
+     */
+    public function render()
     {
-        return Ticket::current()
-            ->visits()
-            ->orderBy('visit_date', 'asc')
-            ->get()
-            ->map(function (TechnicalVisit $visit) {
-                return [
-                    'id' => $visit->id,
-                    'title' => $visit->title,
-                    'description' => $visit->observations,
-                    'date' => $visit->visit_date->toDateTimeString(),
-                ];
-            });
+        return view('livewire.ticket.calendar');
     }
 }

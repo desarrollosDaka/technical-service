@@ -5,3 +5,7 @@
 body {
     @apply text-gray-800;
 }
+
+.btn-primary-outline {
+    @apply text-primary-600 hover:text-primary-600 border-primary-500 hover:bg-primary-500/40;
+}
