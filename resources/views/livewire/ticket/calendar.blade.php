@@ -1,4 +1,4 @@
-<div x-show="displayCalendarMode === 'calendar'" x-data="calendar">
+<div x-show="displayCalendarMode === 'calendar'" x-data="calendar({ visits: {{ $visits->toJson() }} })">
     <div id="calendar-container-visits" wire:ignore>
     </div>
     <x-modal name="simpleModal" blur="sm">
@@ -19,37 +19,3 @@
         </x-card>
     </x-modal>
 </div>
-
-@script
-    <script>
-        Alpine.data('calendar', () => ({
-            modal: {
-                title: '',
-                description: '',
-            },
-            init() {
-                const calendarEl = this.$el.querySelector('#calendar-container-visits');
-                const visits = @json($visits);
-                const calendar = new Calendar(calendarEl, {
-                    plugins: [multiMonthPlugin],
-                    locale: esLocale,
-                    initialView: 'multiMonthYear',
-                    themeSystem: 'minty',
-                    events: visits.map(visit => ({
-                        title: visit.title,
-                        start: visit.visit_date,
-                        description: visit.observations,
-                    })),
-                    eventClick: (info) => {
-                        $openModal('simpleModal');
-                        document.getElementById('modal-title').textContent = info.event.title;
-                        document.getElementById('modal-description').textContent = info.event.extendedProps.description;
-                        document.getElementById('modal-date').textContent = info.event._instance.range.start.toLocaleDateString();
-                    }
-                });
-
-                calendar.render();
-            }
-        }));
-    </script>
-@endscript
