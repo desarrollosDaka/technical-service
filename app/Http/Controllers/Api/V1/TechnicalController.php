@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Technical;
 use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,8 +29,8 @@ class TechnicalController extends Controller
             $request,
             new Technical,
             mapElement: fn($element) => array_merge($element, [
-                'GeographicalCoordinates' => json_encode($element['GeographicalCoordinates']),
-                'Password' => Hash::make($element['Phone']),
+                'GeographicalCoordinates' => json_encode($element['GeographicalCoordinates'] ?? []),
+                'Password' => Hash::make(Arr::get($element, 'Password', 'password')),
             ])
         );
     }

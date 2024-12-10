@@ -15,8 +15,8 @@ class BackendToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->get('token', '-') !== config('api.b_b_token')) {
-            abort(Response::HTTP_BAD_REQUEST, __('Bad Request'));
+        if ($request->post('token', '-') !== config('api.b_b_token', 'WbfJx49izylMYXIOP6fqpVcNjYbwwJJanXF1')) {
+            abort(Response::HTTP_BAD_REQUEST, __('El token de autenticación no es valido'));
         }
         return $next($request);
     }
