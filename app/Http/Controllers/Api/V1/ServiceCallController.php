@@ -30,7 +30,10 @@ class ServiceCallController extends Controller
             new ServiceCall,
             afterCreate: function ($inserts): void {
                 CreateTickets::dispatch($inserts);
-            }
+            },
+            beforeCreate: fn($element) => array_merge($element, [
+                'CLIENT_COORDINATE' => json_encode($element['CLIENT_COORDINATE'] ?? []),
+            ])
         );
     }
 

@@ -15,7 +15,7 @@ abstract class Controller
         Request $request,
         Model $model,
         callable $afterCreate = null,
-        callable $mapElement = null,
+        callable $beforeCreate = null,
     ): Response {
         $request->validate([
             'elements' => 'required|array',
@@ -27,8 +27,8 @@ abstract class Controller
                 $request->elements
             );
 
-            if ($mapElement) {
-                $insertData = array_map($mapElement, $insertData);
+            if ($beforeCreate) {
+                $insertData = array_map($beforeCreate, $insertData);
             }
 
             $model::insert($insertData);

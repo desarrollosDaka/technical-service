@@ -28,7 +28,7 @@ class TechnicalController extends Controller
         return $this->insertMany(
             $request,
             new Technical,
-            mapElement: fn($element) => array_merge($element, [
+            beforeCreate: fn($element) => array_merge($element, [
                 'GeographicalCoordinates' => json_encode($element['GeographicalCoordinates'] ?? []),
                 'Password' => Hash::make(Arr::get($element, 'Phone', 'password')),
             ])
