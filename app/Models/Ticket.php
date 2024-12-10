@@ -59,7 +59,7 @@ class Ticket extends Model implements HasMedia
         }
 
         if (!ServiceCall::current()) {
-            return false;
+            return null;
         }
 
         return self::$instance = self::where('service_call_id', ServiceCall::current()->id)->first();

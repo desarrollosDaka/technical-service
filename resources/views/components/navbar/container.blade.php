@@ -3,8 +3,8 @@
         <a href="/" wire:navigate class="block w-24">
             <img src="{{ asset('img/logo.webp') }}" alt="{{ __('Logo Daka') }}">
         </a>
-        {{-- @if (ticket())
+        @if (ticket())
             <livewire:ticket.close-ticket />
-        @endif --}}
+        @endif
     </div>
 </navbar>
