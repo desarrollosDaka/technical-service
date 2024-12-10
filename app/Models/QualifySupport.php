@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class QualifySupport extends Model
@@ -14,4 +15,14 @@ class QualifySupport extends Model
         'comment',
         'ticket_id',
     ];
+
+    /**
+     * Ticket del soporte
+     *
+     * @return BelongsTo
+     */
+    public function ticket(): BelongsTo
+    {
+        return $this->belongsTo(Ticket::class);
+    }
 }

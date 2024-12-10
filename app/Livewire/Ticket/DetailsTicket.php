@@ -74,6 +74,12 @@ class DetailsTicket extends Component
                             <tbody>
                                 <tr>
                                     <th>
+                                        <p class="my-2 text-left">{{ __('Calificar soporte') }}</p>
+                                    </th>
+                                    <td><livewire:ticket.qualify /></td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         <p class="my-2 text-left">{{ __('ID del ticket') }}</p>
                                     </th>
                                     <td>{{ ticket()->id }}</td>
