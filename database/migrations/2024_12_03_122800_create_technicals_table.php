@@ -33,7 +33,9 @@ return new class extends Migration
             $table->bigInteger('ID_rol')->nullable();
             $table->string('ID_supplier')->nullable();
             $table->integer('Availability')->nullable();
-            $table->string('GeographicalCoordinates')->nullable();
+            $table->json('GeographicalCoordinates')->nullable();
+            $table->string('Latitude')->nullable();
+            $table->string('Length')->nullable();
             $table->integer('Create_user')->nullable();
             $table->dateTime('Create_date')->nullable();
             $table->integer('Update_user')->nullable();

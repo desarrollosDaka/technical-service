@@ -14,7 +14,8 @@ abstract class Controller
     public function insertMany(
         Request $request,
         Model $model,
-        callable $afterCreate = null
+        callable $afterCreate = null,
+        callable $mapElement = null,
     ): Response {
         $request->validate([
             'elements' => 'required|array',
@@ -25,6 +26,10 @@ abstract class Controller
                 fn($element) => array_merge($element, ['created_at' => now(), 'updated_at' => now()]),
                 $request->elements
             );
+
+            if ($mapElement) {
+                $insertData = array_map($mapElement, $insertData);
+            }
 
             $model::insert($insertData);
 

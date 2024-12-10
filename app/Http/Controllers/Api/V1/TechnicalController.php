@@ -23,7 +23,12 @@ class TechnicalController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->insertMany($request, new Technical);
+        return $this->insertMany($request, new Technical, mapElement: function ($element) {
+            return [
+                ...$element,
+                'GeographicalCoordinates' => json_encode($element['GeographicalCoordinates']),
+            ];
+        });
     }
 
     /**

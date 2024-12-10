@@ -63,6 +63,7 @@ class Technical extends Authenticatable
         'Qualification' => 'integer',
         'Create_date' => 'datetime',
         'Update_date' => 'datetime',
+        'GeographicalCoordinates' => 'array',
     ];
 
     /**
