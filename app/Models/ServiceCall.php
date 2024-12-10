@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ServiceCall\Status as ServiceCallStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 
@@ -45,5 +46,15 @@ class ServiceCall extends Model
     public function technical()
     {
         return $this->belongsTo(Technical::class, 'ASSIGNED_TECHNICIAN');
+    }
+
+    /**
+     * Ticket del service call
+     *
+     * @return HasOne
+     */
+    public function ticket(): HasOne
+    {
+        return $this->hasOne(Ticket::class);
     }
 }

@@ -26,13 +26,15 @@ class Ticket extends Model implements HasMedia
      * @var array
      */
     protected $fillable = [
+        'title',
         'technical_id',
         'service_call_id',
-        'title',
         'diagnosis_date',
         'diagnosis_detail',
         'solution_date',
         'solution_detail',
+        'reject_date',
+        'reject_detail',
         'customer_name',
         'status',
         'total_cost',
@@ -49,6 +51,7 @@ class Ticket extends Model implements HasMedia
         'status' => TicketStatus::class,
         'diagnosis_date' => 'datetime',
         'solution_date' => 'datetime',
+        'reject_date' => 'datetime',
         'total_cost' => 'float',
     ];
 

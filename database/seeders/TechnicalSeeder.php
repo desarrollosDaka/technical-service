@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ServiceCall;
 use App\Models\Technical;
 use App\Models\TechnicalVisit;
 use App\Models\Ticket;
@@ -17,7 +18,6 @@ class TechnicalSeeder extends Seeder
     {
         Technical::factory()
             ->count(20)
-            ->has(Ticket::factory()->count(5)->hasVisits(5))
             ->create();
     }
 }

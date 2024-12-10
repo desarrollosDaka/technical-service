@@ -18,10 +18,15 @@ return new class extends Migration
             $table->unsignedBigInteger('technical_id')->comment('Se relaciona con technicals:ID_user');
             $table->unsignedBigInteger('service_call_id')->comment('Se relaciona con service_calls:callID');
             $table->string('title');
+
             $table->timestamp('diagnosis_date')->nullable()->comment('Fecha en el que el técnico realizo el diagnostico');
             $table->text('diagnosis_detail')->nullable()->comment('Los detalles del diagnostico, acordar subir también imágenes (max: 5)');
+
             $table->timestamp('solution_date')->nullable()->comment('Fecha en el que el técnico realizo la solución, o finaliza el ticket');
             $table->text('solution_detail')->nullable()->comment('Los detalles de la solución, acordar subir también imágenes (max: 5)');
+
+            $table->timestamp('reject_date')->nullable()->comment('Fecha en el que el técnico rechaza el ticket');
+            $table->text('reject_detail')->nullable()->comment('Los detalles de la rechazo, acordar subir también imágenes (max: 5)');
             // Nombre del articulo (ItemName)
             // ID del articulo (itemCode)
             $table->string('customer_name')->nullable();
