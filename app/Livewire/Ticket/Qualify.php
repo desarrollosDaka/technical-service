@@ -14,15 +14,11 @@ class Qualify extends Component
     public int $star = 0;
 
     /**
-     * Rating
+     * Comentarios adicionales
      *
-     * @param integer $star
-     * @return void
+     * @var string
      */
-    public function setRating(int $star): void
-    {
-        $this->star = $star;
-    }
+    public string $comment = '';
 
     /**
      * Send
@@ -31,7 +27,7 @@ class Qualify extends Component
      */
     public function send()
     {
-        # code...
+        dd($this->star, $this->comment);
     }
 
     public function render()
