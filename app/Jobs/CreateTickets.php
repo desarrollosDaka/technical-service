@@ -8,6 +8,7 @@ use App\Models\ServiceCall;
 use App\Models\Ticket;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Arr;
 
 class CreateTickets implements ShouldQueue
 {
@@ -35,6 +36,7 @@ class CreateTickets implements ShouldQueue
             }
 
             Ticket::create([
+                'title' => Arr::get($insert, 'itemName', $insert['subject']),
                 'service_call_id' => $serviceCall->getKey(),
                 'customer_name' => $insert['custmrName'],
                 'technical_id' => $insert['ASSIGNED_TECHNICIAN'],
