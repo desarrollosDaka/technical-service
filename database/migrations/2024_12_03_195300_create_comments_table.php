@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('commentator_type')->nullable()->comment('Si esta vació se esta asumiendo que lo hizo el usuario.');
             $table->unsignedBigInteger('commentator_id')->nullable()->comment('Apuntaría al id del técnico, MASTER_TECHNICIAN:ID_user');
             $table->text('comment');
-            $table->json('meta');
+            $table->json('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
