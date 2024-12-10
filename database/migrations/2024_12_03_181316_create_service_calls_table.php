@@ -60,6 +60,7 @@ return new class extends Migration
             $table->string('resolution')->nullable();
             $table->string('Scl1NxtLn')->nullable();
             $table->integer('Scl2NxtLn')->nullable();
+            $table->string('Scl3NxtLn')->nullable();
             $table->integer('Sc3NxtLn')->nullable();
             $table->string('Scl4NxtLn')->nullable();
             $table->string('Scl5NxtLn')->nullable();
