@@ -36,4 +36,14 @@ class ServiceCall extends Model
 
         return self::$instance = Cache::get($keyBy, null);
     }
+
+    /**
+     * Técnico de la llamada de servicio
+     *
+     * @return void
+     */
+    public function technical()
+    {
+        return $this->belongsTo(Technical::class, 'ASSIGNED_TECHNICIAN');
+    }
 }
