@@ -4,6 +4,7 @@ use App\Http\Middleware\CurrentServiceCall;
 use App\Http\Middleware\WithoutServiceCall;
 use App\Models\ServiceCall;
 use App\Models\Technical;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.index')
@@ -23,6 +24,13 @@ Route::get('/technical', function () {
 Route::get('/service-calls', function () {
     if (app()->hasDebugModeEnabled()) {
         return ServiceCall::latest()->limit(50)->get();
+    }
+    return 'Oops!';
+});
+
+Route::get('/tickets', function () {
+    if (app()->hasDebugModeEnabled()) {
+        return Ticket::latest()->limit(50)->get();
     }
     return 'Oops!';
 });
