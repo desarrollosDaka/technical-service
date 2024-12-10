@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Technical;
 use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class TechnicalController extends Controller
@@ -23,12 +24,14 @@ class TechnicalController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->insertMany($request, new Technical, mapElement: function ($element) {
-            return [
-                ...$element,
+        return $this->insertMany(
+            $request,
+            new Technical,
+            mapElement: fn($element) => array_merge($element, [
                 'GeographicalCoordinates' => json_encode($element['GeographicalCoordinates']),
-            ];
-        });
+                'Password' => Hash::make($element['Phone']),
+            ])
+        );
     }
 
     /**
