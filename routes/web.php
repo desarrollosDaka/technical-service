@@ -16,21 +16,21 @@ Route::view('/show-ticket', 'pages.ticket.show')
 
 Route::get('/technical', function () {
     if (app()->hasDebugModeEnabled()) {
-        return Technical::latest()->limit(50)->get();
+        return Technical::orderBy('id', 'DESC')->limit(50)->get();
     }
     return 'Oops!';
 });
 
 Route::get('/service-calls', function () {
     if (app()->hasDebugModeEnabled()) {
-        return ServiceCall::latest()->limit(50)->get();
+        return ServiceCall::orderBy('id', 'DESC')->limit(50)->get();
     }
     return 'Oops!';
 });
 
 Route::get('/tickets', function () {
     if (app()->hasDebugModeEnabled()) {
-        return Ticket::latest()->limit(50)->get();
+        return Ticket::orderBy('id', 'DESC')->limit(50)->get();
     }
     return 'Oops!';
 });

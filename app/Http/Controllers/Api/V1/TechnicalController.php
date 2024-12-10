@@ -32,7 +32,7 @@ class TechnicalController extends Controller
                 $GeographicalCoordinates = json_encode($element['GeographicalCoordinates'] ?? []);
 
                 return array_merge($element, [
-                    // 'GeographicalCoordinates' => $GeographicalCoordinates,
+                    'GeographicalCoordinates' => $GeographicalCoordinates,
                     'Password' => Hash::make(Arr::get($element, 'Phone', 'password')),
                 ]);
             }
