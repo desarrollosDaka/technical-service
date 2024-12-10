@@ -30,7 +30,7 @@ class TechnicalController extends Controller
             new Technical,
             mapElement: fn($element) => array_merge($element, [
                 'GeographicalCoordinates' => json_encode($element['GeographicalCoordinates'] ?? []),
-                'Password' => Hash::make(Arr::get($element, 'Password', 'password')),
+                'Password' => Hash::make(Arr::get($element, 'Phone', 'password')),
             ])
         );
     }
