@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\ServiceCall\Status as ServiceCallStatus;
+use App\Enums\Ticket\Status as TicketStatus;
 use App\Models\ServiceCall;
 use App\Models\Ticket;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,11 +37,12 @@ class CreateTickets implements ShouldQueue
             Ticket::create([
                 'service_call_id' => $serviceCall->getKey(),
                 'customer_name' => $insert['custmrName'],
-                'technical_id' => '', // TODO: Asignar tecnico
+                'technical_id' => $insert['ASSIGNED_TECHNICIAN'],
+                'status' => TicketStatus::Progress,
             ]);
 
             $serviceCall->update([
-                'app_status' => ServiceCallStatus::InProgress,
+                'app_status' => ServiceCallStatus::Progress,
             ]);
         }
     }

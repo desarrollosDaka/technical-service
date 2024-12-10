@@ -26,7 +26,7 @@ return new class extends Migration
             // ID del articulo (itemCode)
             $table->string('customer_name')->nullable();
             $table->tinyInteger('status', unsigned: true)->default(TicketStatus::Open->value);
-            $table->float('total_cost')->nullable();
+            $table->float('total_cost')->default(0);
             $table->json('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();

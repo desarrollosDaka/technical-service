@@ -2,6 +2,7 @@
 
 use App\Enums\ServiceCall\Status as ServiceCallStatus;
 use App\Models\ServiceCall;
+use App\Models\Technical;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -94,6 +95,7 @@ return new class extends Migration
             $table->string('RemSent')->nullable();
             $table->integer('RemTime')->nullable();
             $table->integer('Location')->nullable();
+            $table->json('CLIENT_COORDINATE')->nullable();
             $table->string('AddrName')->nullable();
             $table->string('AddrType')->nullable();
             $table->string('Street')->nullable();
@@ -151,6 +153,8 @@ return new class extends Migration
             $table->string('U_F_ENVIO_CDD')->nullable();
             $table->string('U_BM_NUMDOC')->nullable();
             $table->string('U_BM_SUCDEST')->nullable();
+            $table->boolean('U_FORANEO')->default(true);
+            $table->foreignIdFor(Technical::class, 'ASSIGNED_TECHNICIAN');
         });
     }
 

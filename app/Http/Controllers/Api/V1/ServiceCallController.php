@@ -28,8 +28,8 @@ class ServiceCallController extends Controller
         return $this->insertMany(
             $request,
             new ServiceCall,
-            function ($inserts): void {
-                // CreateTickets::dispatch($inserts);
+            afterCreate: function ($inserts): void {
+                CreateTickets::dispatch($inserts);
             }
         );
     }
