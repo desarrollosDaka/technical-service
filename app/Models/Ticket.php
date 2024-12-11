@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\Ticket\Status as TicketStatus;
+use App\Livewire\Ticket\Qualify;
 use App\Traits\Commentable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -107,5 +109,15 @@ class Ticket extends Model implements HasMedia
     public function visits(): HasMany
     {
         return $this->hasMany(TechnicalVisit::class);
+    }
+
+    /**
+     * Calificación del soporte
+     *
+     * @return void
+     */
+    public function qualify(): HasOne
+    {
+        return $this->hasOne(QualifySupport::class);
     }
 }
