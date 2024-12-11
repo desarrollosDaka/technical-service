@@ -7,7 +7,7 @@
 
     <x-modal name="qualification" title="{{ __('Calificar soporte') }}">
         <x-card title="{{ __('Calificar soporte') }}">
-            <p class="text-neutral-600 text-sm md:max-w-[65%] text-center mx-auto mb-6">¡{{ __('Para tiendas DAKA es importante conocer su opinion de nuestro servicio técnico') }}!</p>
+            <p class="text-neutral-600 text-sm md:max-w-[65%] text-center mx-auto mb-6">¡{{ __('Para tiendas DAKA es importante conocer tu opinion de nuestro servicio técnico') }}!</p>
 
             <div class="flex items-center flex-col mb-6">
                 <div class="flex justify-center items-center">
