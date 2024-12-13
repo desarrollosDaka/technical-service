@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return $this->success(Product::all());
+        return $this->success(Product::orderByDesc('id')->get());
     }
 
     /**
