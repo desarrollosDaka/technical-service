@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -74,5 +75,15 @@ class Technical extends Authenticatable
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'technical_id');
+    }
+
+    /**
+     * Todas las visitas de un técnico
+     *
+     * @return HasManyThrough
+     */
+    public function visits(): HasManyThrough
+    {
+        return $this->hasManyThrough(TechnicalVisit::class, Ticket::class);
     }
 }

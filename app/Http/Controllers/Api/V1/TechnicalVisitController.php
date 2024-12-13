@@ -21,8 +21,20 @@ class TechnicalVisitController extends Controller
     public function index(Request $request): Response
     {
         $request->validate([
-            'ticket_id' => 'required',
+            'ticket_id' => 'nullable',
         ]);
+
+        if (!$request->has('ticket_id')) {
+            return $this->success(
+                QueryBuilder::for(TechnicalVisit::class)
+                    ->allowedFilters(['visit_date'])
+                    ->allowedSorts(['visit_date', 'created_at'])
+                    ->defaultSort('-created_at')
+                    ->allowedIncludes(['ticket'])
+                    ->simplePaginate()
+                    ->appends($request->query())
+            );
+        }
 
         $ticket = Ticket::where('id', $request->ticket_id)
             ->where('technical_id', $request->user()->getKey())
