@@ -92,7 +92,7 @@
         <script>
             Echo.channel(`App.Models.Ticket.{{ ticket()->id }}`)
                 .listen('NewComment', (e) => {
-                    console.log(e);
+                    $wire.dispatch('new-comment');
                 });
         </script>
     @endscript

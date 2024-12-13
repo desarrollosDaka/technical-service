@@ -4,6 +4,7 @@ namespace App\Livewire\Comment;
 
 use App\Models\Comment;
 use App\Models\Ticket;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -39,10 +40,11 @@ class Index extends Component
      *
      * @return void
      */
+    #[On('new-comment')]
     public function refreshComments(): void
     {
         $this->comments = Ticket::current()->comments()->get()->toArray();
-        $this->dispatch('miEvento');
+        $this->dispatch('refreshedComment');
     }
 
     /**

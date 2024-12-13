@@ -29,12 +29,20 @@
     </form>
     @script
         <script>
-            $wire.on('miEvento', () => {
-                const commentsContainer = $wire.el.querySelector('ul');
-                if (commentsContainer) {
-                    commentsContainer.scrollTop = commentsContainer.scrollHeight;
-                }
+            const commentsContainer = $wire.el.querySelector('ul');
+
+            const scrollToBottom = () => {
+                setTimeout(() => {
+                    if (commentsContainer) {
+                        commentsContainer.scrollTop = commentsContainer.scrollHeight;
+                    }
+                }, 200);
+            }
+
+            $wire.on('refreshedComment', () => {
+                scrollToBottom();
             });
+            scrollToBottom();
         </script>
     @endscript
 </section>
