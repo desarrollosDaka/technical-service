@@ -36,6 +36,7 @@ class Qualify extends Component
      */
     public function mount(): void
     {
+        validateTicketAndServiceCall();
         $this->previousQualify = Ticket::current()->qualify;
 
         $this->star = $this->previousQualify ? $this->previousQualify->qualification : 0;

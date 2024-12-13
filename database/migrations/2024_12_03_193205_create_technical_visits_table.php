@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Visit\Type;
 use App\Models\TechnicalVisit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,10 +16,13 @@ return new class extends Migration
         Schema::create((new TechnicalVisit)->getTable(), function (Blueprint $table) {
             $table->comment('La taba de visitas, sera la que se usara para formar el campo ServiceCall:resolution');
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
+            $table->tinyInteger('type')->default(Type::Visit->value);
             $table->foreignIdFor(\App\Models\Ticket::class)->constrained()->cascadeOnDelete();
             $table->timestamp('visit_date')->nullable();
             $table->text('observations')->nullable()->comment('Recordar poder adjuntar imágenes (max: 5)');
+            $table->json('reprogramming')->nullable()->comment('Guardar un Arreglo: { "old_date", "new_date", "responsible", "reason" }');
+
             $table->json('meta')->nullable()->comment('Dentro del meta puede ir información adicional en un estilo dinámico');
             $table->softDeletes();
             $table->timestamps();

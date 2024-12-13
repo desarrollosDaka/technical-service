@@ -22,3 +22,11 @@ function ticket(): ?Ticket
 {
     return Ticket::current();
 }
+
+
+function validateTicketAndServiceCall()
+{
+    if (!serviceCall() || !ticket()) {
+        return redirect()->route('index');
+    }
+}
