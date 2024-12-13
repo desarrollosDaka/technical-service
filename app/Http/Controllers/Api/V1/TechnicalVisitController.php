@@ -25,15 +25,7 @@ class TechnicalVisitController extends Controller
         ]);
 
         if (!$request->has('ticket_id')) {
-            return $this->success(
-                QueryBuilder::for(TechnicalVisit::class)
-                    ->allowedFilters(['visit_date'])
-                    ->allowedSorts(['visit_date', 'created_at'])
-                    ->defaultSort('-created_at')
-                    ->allowedIncludes(['ticket'])
-                    ->simplePaginate()
-                    ->appends($request->query())
-            );
+            return $this->success($request->user()->visits);
         }
 
         $ticket = Ticket::where('id', $request->ticket_id)
