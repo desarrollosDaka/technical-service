@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Visit\Type as VisitType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,8 @@ class TechnicalVisit extends Model
         'visit_date',
         'observations',
         'meta',
+        'reprogramming',
+        'type',
     ];
 
     /**
@@ -33,6 +36,8 @@ class TechnicalVisit extends Model
     protected $casts = [
         'visit_date' => 'datetime',
         'meta' => 'array',
+        'reprogramming' => 'array',
+        'type' => VisitType::class,
     ];
 
     /**

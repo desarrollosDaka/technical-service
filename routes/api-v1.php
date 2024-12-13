@@ -14,6 +14,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/user', [AuthController::class, 'update']);
         Route::apiResource('/tickets', App\Http\Controllers\Api\V1\TicketController::class);
         Route::apiResource('/technical-visits', App\Http\Controllers\Api\V1\TechnicalVisitController::class);
+        Route::patch('/technical-visits/{technicalVisit}/reprogramming', [App\Http\Controllers\Api\V1\TechnicalVisitController::class, 'reprogramming']);
         Route::apiResource('/comments', CommentController::class)->only(['index', 'store']);
         Route::apiResource('/media', App\Http\Controllers\Api\V1\MediaController::class)->except(['update']);
     });
