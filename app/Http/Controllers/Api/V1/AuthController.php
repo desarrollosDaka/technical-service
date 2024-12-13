@@ -50,7 +50,6 @@ class AuthController extends Controller
      */
     public function user(Request $request): HttpResponse
     {
-        Reverb
         return $this->success($request->user());
     }
 

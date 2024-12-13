@@ -20,6 +20,7 @@ class ServiceCall extends Model
 
     protected $casts = [
         'app_status' => ServiceCallStatus::class,
+        'CLIENT_COORDINATE' => 'array',
     ];
 
     /**
