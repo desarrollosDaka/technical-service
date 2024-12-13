@@ -1,32 +1,11 @@
-<div x-data="{ modeEdit: false, address:  }">
+<div x-data="{ modeEdit: false, address: '' }">
     <div class="flex items-center justify-between mb-5">
         {{-- Dirección --}}
-        <p x-show="!modeEdit" wire:model="address">Esperando dirección...</p>
-        <x-textarea
-            x-show="modeEdit"
-            label="{{ __('Ingresa la dirección') }}"
-            placeholder="{{ __('Escribe la dirección') }}"
-            wire:model="address" />
-
-        {{-- Botones --}}
-        <x-button
-            label="{{ __('Editar dirección') }}"
-            right-icon="pencil-square"
-            secondary
-            light
-            x-on:click="modeEdit = true"
-            x-show="!modeEdit" />
-        <x-button
-            label="{{ __('Guardar') }}"
-            right-icon="check-circle"
-            primary
-            x-on:click="modeEdit = false"
-            class="text-secondary-100 font-semibold"
-            x-show="modeEdit" />
+        <p x-show="!modeEdit">{{ serviceCall()->Location }}</p>
     </div>
-
-    <div id="map" wire:ignore></div>
-    @dump(serviceCall())
+    @if (serviceCall()->latitude && serviceCall()->longitude)
+        <div id="map" wire:ignore class="z-10"></div>
+    @endif
     @script
         <script>
             const latitude = {{ serviceCall()->latitude ?? 0 }};

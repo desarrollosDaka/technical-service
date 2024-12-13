@@ -14,7 +14,7 @@
         @if ($selectedTab === 'details')
             <table class="w-full">
                 <tbody>
-                    @if (ticket()->status === App\Enums\Ticket\Status::Close)
+                    @if (true)
                         <tr>
                             <th>
                                 <p class="my-2 text-left">{{ __('Calificar soporte') }}</p>

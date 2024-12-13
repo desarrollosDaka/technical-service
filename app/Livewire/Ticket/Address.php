@@ -11,7 +11,7 @@ class Address extends Component
 
     public function mount(): void
     {
-        $this->address = ServiceCall::current()->Location;
+        // $this->address = ServiceCall::current()->Location;
     }
 
     public function render()
