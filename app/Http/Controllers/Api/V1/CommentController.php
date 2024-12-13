@@ -86,7 +86,7 @@ class CommentController extends Controller
             'commentator_type' => $request->user() ? get_class($request->user()) : null,
         ]);
 
-        NewComment::dispatch($record);
+        NewComment::dispatch($record, $comment);
 
         return $this->success($comment, Response::HTTP_CREATED);
     }

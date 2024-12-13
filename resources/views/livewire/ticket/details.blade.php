@@ -90,7 +90,7 @@
     </section>
     @script
         <script>
-            Echo.channel(`App.Ticket.{{ ticket()->id }}`)
+            Echo.channel(`App.Models.Ticket.{{ ticket()->id }}`)
                 .listen('NewComment', (e) => {
                     console.log(e);
                 });

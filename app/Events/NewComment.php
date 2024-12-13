@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Comment;
 use App\Models\Technical;
 use App\Models\Ticket;
 use Illuminate\Broadcasting\Channel;
@@ -9,6 +10,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -22,7 +24,8 @@ class NewComment implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Model $record
+        public Model $record,
+        public Comment $comment
     ) {
         //
     }
@@ -34,10 +37,9 @@ class NewComment implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        Log::info('RECORD', $this->record->toArray());
         if ($this->record instanceof Ticket) {
             return [
-                new Channel('App.Ticket.' . $this->record->id),
+                new Channel('App.Models.Ticket.' . $this->record->id),
             ];
         }
 
