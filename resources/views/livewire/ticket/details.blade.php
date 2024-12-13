@@ -61,12 +61,10 @@
                         </tr>
                     @endif
                     <tr>
-                        <th class="text-left">
-                            <p class="my-2 min-w-44">
+                        <td class="text-left" colspan="2">
+                            <p class="font-bold mb-1">
                                 {{ __('Dirección') }}
                             </p>
-                        </th>
-                        <td>
                             <livewire:ticket.address />
                         </td>
                     </tr>
