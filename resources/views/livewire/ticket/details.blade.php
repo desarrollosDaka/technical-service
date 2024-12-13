@@ -60,6 +60,16 @@
                             </td>
                         </tr>
                     @endif
+                    <tr>
+                        <th class="text-left">
+                            <p class="my-2 min-w-44">
+                                {{ __('Dirección') }}
+                            </p>
+                        </th>
+                        <td>
+                            <livewire:ticket.address />
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         @elseif($selectedTab === 'visits')
