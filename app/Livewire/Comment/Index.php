@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Comment;
 
+use App\Events\NewComment;
 use App\Models\Comment;
 use App\Models\Ticket;
 use Livewire\Attributes\On;
@@ -60,7 +61,7 @@ class Index extends Component
             ],
         );
 
-        Ticket::current()->comments()->create([
+        $ticketCreated = Ticket::current()->comments()->create([
             'comment' => $this->comment,
         ]);
 
@@ -70,6 +71,8 @@ class Index extends Component
             'commentator_type' => '',
             'commentator_id' => '',
         ];
+
+        NewComment::dispatch(Ticket::current(), $ticketCreated);
 
         $this->comment = '';
     }
