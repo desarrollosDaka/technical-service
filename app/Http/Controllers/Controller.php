@@ -37,7 +37,13 @@ abstract class Controller
                 $afterCreate($insertData);
             }
 
-            return $this->success(['data' => 'created'], Response::HTTP_CREATED);
+            return $this->success(
+                [
+                    'data' => 'created',
+                    'success' => true,
+                ],
+                Response::HTTP_CREATED
+            );
         } catch (\Throwable $th) {
             return $this->error(
                 app()->hasDebugModeEnabled() ? $th->getMessage() : __('Ops! Something went wrong'),

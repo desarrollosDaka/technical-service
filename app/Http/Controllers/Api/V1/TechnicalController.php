@@ -50,10 +50,7 @@ class TechnicalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Technical $technical)
-    {
-        
-    }
+    public function update(Request $request, Technical $technical) {}
 
     /**
      * Remove the specified resource from storage.
