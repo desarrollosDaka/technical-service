@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('n')->nullable();
             $table->string('linea')->nullable();
             $table->string('gama')->nullable();
-            $table->string('product')->nullable();
+            $table->string('producto')->nullable();
             $table->string('familia')->nullable();
             $table->string('repuestos')->nullable();
             $table->string('costos_servicios')->nullable();
