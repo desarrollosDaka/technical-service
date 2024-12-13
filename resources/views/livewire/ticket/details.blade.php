@@ -88,4 +88,12 @@
             <livewire:comment />
         @endif
     </section>
+    @script
+        <script>
+            Echo.channel(`App.Ticket.{{ ticket()->id }}`)
+                .listen('NewComment', (e) => {
+                    console.log(e);
+                });
+        </script>
+    @endscript
 </main>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\Comment\CommentableModel;
+use App\Events\NewComment;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Ticket;
@@ -84,6 +85,8 @@ class CommentController extends Controller
             'commentator_id' => $request->user() ? $request->user()->getKey() : null,
             'commentator_type' => $request->user() ? get_class($request->user()) : null,
         ]);
+
+        NewComment::dispatch($record);
 
         return $this->success($comment, Response::HTTP_CREATED);
     }
