@@ -25,5 +25,6 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/service-calls', App\Http\Controllers\Api\V1\ServiceCallController::class);
         Route::apiResource('/technicians', App\Http\Controllers\Api\V1\TechnicalController::class);
         Route::apiResource('/products', App\Http\Controllers\Api\V1\ProductController::class);
+        Route::apiResource('/tabulators', App\Http\Controllers\Api\V1\TabulatorController::class);
     });
 });
