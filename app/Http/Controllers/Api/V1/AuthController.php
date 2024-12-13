@@ -52,4 +52,25 @@ class AuthController extends Controller
     {
         return $this->success($request->user());
     }
+
+    /**
+     * Actualizado
+     *
+     * @param Request $request
+     * @return HttpResponse
+     */
+    public function update(Request $request): HttpResponse
+    {
+        $validated = $request->validate([
+            'User_name' => 'nullable|max:255',
+            'Email' => 'nullable|max:255',
+            'latitude' => 'nullable',
+            'longitude' => 'nullable',
+            'Address' => 'nullable',
+            'Phone' => 'nullable',
+        ]);
+        return $this->success(
+            $request->user()->update($validated)
+        );
+    }
 }
