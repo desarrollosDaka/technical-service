@@ -46,7 +46,8 @@ trait ApiV1Responser
     {
         return response(
             content: is_array($message) ? $message : [
-                'data' => $message
+                'data' => $message,
+                'success' => false,
             ],
             status: $status,
             headers: array_merge(['Content-Type' => 'application/json'], $headers)
