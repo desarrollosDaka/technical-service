@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class PartRequestController extends Controller
 {
@@ -46,7 +47,7 @@ class PartRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $validated = $request->validate([
             'tabulator_id' => 'required|exists:tabulators,id',
@@ -61,6 +62,20 @@ class PartRequestController extends Controller
 
         return $this->success(
             PartRequest::create($validated)
+        );
+    }
+
+    /**
+     * Sincronización de repuesto con backend de Daka
+     *
+     * @return Response
+     */
+    public function sync(): Response
+    {
+        return $this->success(
+            PartRequest::where('status', PartRequestStatus::New)
+                ->with('tabulator')
+                ->get()
         );
     }
 

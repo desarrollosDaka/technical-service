@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CommentController;
+use App\Http\Controllers\Api\V1\PartRequestController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\TabulatorController;
 use App\Http\Middleware\BackendToken;
@@ -22,7 +23,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/media', App\Http\Controllers\Api\V1\MediaController::class)->except(['update']);
         Route::apiResource('/products', ProductController::class)->only(['index']);
         Route::apiResource('/tabulators', TabulatorController::class)->only(['index']);
-        Route::apiResource('/part-requests', App\Http\Controllers\Api\V1\PartRequestController::class);
+        Route::apiResource('/part-requests', PartRequestController::class);
     });
 
     Route::apiResource('/guest-comments', CommentController::class)->only(['index', 'store']);
@@ -32,5 +33,9 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/technicians', App\Http\Controllers\Api\V1\TechnicalController::class);
         Route::apiResource('/products', ProductController::class)->only(['store']);
         Route::apiResource('/tabulators', TabulatorController::class)->only(['store']);
+
+        Route::group(['prefix' => 'sync'], function () {
+            Route::get('/part-requests', [PartRequestController::class, 'sync']);
+        });
     });
 });
