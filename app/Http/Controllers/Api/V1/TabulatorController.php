@@ -17,6 +17,14 @@ class TabulatorController extends Controller
         return $this->success(
             QueryBuilder::for(Tabulator::class)
                 ->defaultSort('-id')
+                ->allowedFilters([
+                    'n',
+                    'linea',
+                    'gama',
+                    'producto',
+                    'familia',
+                    'repuestos',
+                ])
                 ->simplePaginate()
                 ->appends($request->query())
         );
