@@ -32,10 +32,14 @@ class UpdatePartRequest implements ShouldQueue
             if ($partRequestFind) {
                 $partRequestFind->update([
                     ...$partRequest,
+                    'date_handed' => $partRequest['status'] === PartRequestStatus::Handed->value
+                        ? $partRequest['date_handed']
+                        : null,
                     'meta' => [
+                        ...$partRequestFind['meta'] ?? [],
+                        ...$partRequest['meta'] ?? [],
                         'reject_date' => $partRequest['status'] === PartRequestStatus::Rejected->value ? now() : null,
                         'approved_date' => $partRequest['status'] === PartRequestStatus::Approved->value ? now() : null,
-                        ...json_decode($partRequest['meta'] ?? "[]", true),
                     ],
                 ]);
             }
