@@ -26,7 +26,7 @@ class TicketFactory extends Factory
             'solution_detail' => $this->faker->text(),
             'reject_date' => $this->faker->date(),
             'reject_detail' => $this->faker->text(),
-            'customer_name' => $this->faker->name(),
+            'customer_name' => $this->faker->name,
             'status' => $this->faker->randomElement(
                 array_map(fn($status) => $status->value, Status::cases())
             ),

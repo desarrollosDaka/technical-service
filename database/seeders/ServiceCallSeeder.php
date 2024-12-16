@@ -20,6 +20,7 @@ class ServiceCallSeeder extends Seeder
             ->each(function (ServiceCall $serviceCall) {
                 $serviceCall->ticket()->create([
                     'title' => Arr::get($serviceCall, 'itemName', $serviceCall->subject),
+                    'customer_name' => $serviceCall->custmrName,
                     'technical_id' => $serviceCall->ASSIGNED_TECHNICIAN,
                 ]);
             });

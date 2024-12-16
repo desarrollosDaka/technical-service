@@ -14,7 +14,7 @@
         @if ($selectedTab === 'details')
             <table class="w-full">
                 <tbody>
-                    @if (true)
+                    @if (ticket()->status === App\Enums\Ticket\Status::Close)
                         <tr>
                             <th>
                                 <p class="my-2 text-left">{{ __('Calificar soporte') }}</p>
@@ -61,10 +61,11 @@
                         </tr>
                     @endif
                     <tr>
-                        <td class="text-left" colspan="2">
-                            <p class="font-bold mb-1">
-                                {{ __('Dirección') }}
-                            </p>
+                        <td class="text-left" colspan="2">{{ __('Dirección') }}</td>
+                        <td>{{ serviceCall()->Location }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
                             <livewire:ticket.address />
                         </td>
                     </tr>

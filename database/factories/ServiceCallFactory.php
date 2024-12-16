@@ -55,6 +55,7 @@ class ServiceCallFactory extends Factory
             'ASSIGNED_TECHNICIAN' => $this->faker->numberBetween(1, 20),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
+            'Location' => $this->faker->address(),
         ];
     }
 }
