@@ -53,6 +53,8 @@ class ServiceCallFactory extends Factory
             'U_DK_TIENDA' => $this->faker->randomElement(['Sucursal Maracay Centro', 'Sucursal Valle La Pascua', 'Agencia Centro Valencia']),
             'U_DK_QUEJA' => $this->faker->uuid,
             'ASSIGNED_TECHNICIAN' => $this->faker->numberBetween(1, 20),
+            'latitude' => $this->faker->latitude(),
+            'longitude' => $this->faker->longitude(),
         ];
     }
 }
