@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\PartRequest\Status as PartRequestStatus;
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdatePartRequest;
 use App\Models\PartRequest;
 use App\Models\TechnicalVisit;
 use Illuminate\Http\Request;
@@ -77,6 +78,33 @@ class PartRequestController extends Controller
                 ->with('tabulator')
                 ->get()
         );
+    }
+
+    /**
+     * Sincronización el estatus de repuesto con backend de Daka
+     *
+     * @return Response
+     */
+    public function syncStatus(Request $request): Response
+    {
+        $validated = $request->validate([
+            'elements.*.id' => 'required|exists:part_requests,id',
+            'elements.*.status' => 'required|in:' . implode(',', [
+                PartRequestStatus::Approved->value,
+                PartRequestStatus::Rejected->value,
+                PartRequestStatus::Handed->value,
+            ]),
+            'elements.*.date_handed' => 'nullable|date',
+            'elements.*.meta.estimated_handed_date' => 'nullable|date',
+            'elements.*.meta.reject_reason' => 'nullable|max:1024',
+        ]);
+
+        UpdatePartRequest::dispatch($validated['elements']);
+
+        return $this->success([
+            'data' => 'updated',
+            'success' => true,
+        ]);
     }
 
     /**

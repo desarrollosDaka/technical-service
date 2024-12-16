@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function () {
 
         Route::group(['prefix' => 'sync'], function () {
             Route::get('/part-requests', [PartRequestController::class, 'sync']);
+            Route::post('/part-requests', [PartRequestController::class, 'syncStatus']);
         });
     });
 });
