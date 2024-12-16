@@ -77,7 +77,13 @@ class PartRequestController extends Controller
      */
     public function update(Request $request, PartRequest $partRequest)
     {
-        //
+        Gate::authorize('update', $partRequest->technicalVisit);
+        $validated = $request->validate([
+            'meta' => 'nullable',
+            'observation' => 'nullable',
+        ]);
+
+        return $this->success($partRequest->update($validated));
     }
 
     /**
