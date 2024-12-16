@@ -81,14 +81,18 @@
                 <ul class="pt-6" x-show="displayCalendarMode === 'list'">
                     @foreach ($visits as $visit)
                         <li class="block w-full bg-slate-100 rounded-xl p-3 mb-6">
-                            <h3 class="font-semibold">{{ $visit->title }}</h3>
-                            <p class="text-sm text-gray-600">{{ $visit->visit_date->format('d/m/Y') }}</p>
-                            <p class="text-sm mt-3">{{ $visit->observations }}</p>
-                            <div class="flex items-center gap-3 mt-3 pt-4 border-t">
-                                <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
-                                <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
-                                <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-semibold">{{ $visit->title }}</h3>
+                                <p class="text-sm text-gray-500 font-semibold">{{ $visit->visit_date->format('d/m/Y') }}</p>
                             </div>
+                            <p class="text-sm mt-3">{{ $visit->observations }}</p>
+                            @if ($visit->media->count())
+                                <div class="flex items-center gap-3 mt-3 pt-4 border-t">
+                                    <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                    <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                    <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                </div>
+                            @endif
                         </li>
                     @endforeach
                 </ul>

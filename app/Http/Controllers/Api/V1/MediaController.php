@@ -25,7 +25,7 @@ class MediaController extends Controller
      */
     private function permissionsOnModel(Request $request): Model
     {
-        $model = array_filter(MediaModel::cases(), fn($enum) => $enum->name === $request->model_type)[0]?->value;
+        $model = array_values(array_filter(MediaModel::cases(), fn($enum) => $enum->name === $request->model_type))[0]->value;
         $instance = new $model;
         $record = $instance->find($request->model_id);
         Gate::authorize('update', $record);
@@ -53,7 +53,7 @@ class MediaController extends Controller
         try {
             $createdMedia = $this->permissionsOnModel($request)
                 ->addMediaFromRequest('file')
-                ->toMediaCollection($request->collection_name);
+                ->toMediaCollection($request->get('collection_name', 'Default'));
 
             return $this->success($createdMedia, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
@@ -61,6 +61,8 @@ class MediaController extends Controller
                 [
                     'data' => __('Invalid model type'),
                     'message' => config('app.debug') ? $th->getMessage() : __('Ops! Something went wrong'),
+                    'success' => false,
+                    'tracer' => config('app.debug') ? $th->getTrace() : __('Ops! Something went wrong'),
                 ],
                 Response::HTTP_BAD_REQUEST
             );

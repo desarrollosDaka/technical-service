@@ -3,6 +3,8 @@
 namespace App\Livewire\Ticket;
 
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -44,6 +46,9 @@ class DetailsTicket extends Component
         $this->visits = Ticket::current()
             ->visits()
             ->orderBy('visit_date', 'DESC')
+            ->with([
+                'media' => fn(MorphMany $builder) => $builder->where('collection_name', 'visit')
+            ])
             ->get();
     }
 
