@@ -22,9 +22,16 @@ trait ApiV1Responser
         $dataResponse = $data;
 
         if (is_array($data)) {
-            $dataResponse = !isset($data['data']) ? ['data' => $data] : $data;
+            $dataResponse = !isset($data['data'])
+                ? [
+                    'data' => $data,
+                    'success' => true,
+                ] : $data;
         } else if ($data instanceof Model || $data instanceof MediaCollection) {
-            $dataResponse = ['data' => $data->toArray()];
+            $dataResponse = [
+                'data' => $data->toArray(),
+                'success' => true,
+            ];
         }
 
         return response(

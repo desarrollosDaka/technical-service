@@ -6,21 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Technical;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): Response
     {
-        return $this->success(Product::orderByDesc('id')->get());
+        return $this->success(
+            QueryBuilder::for(Product::class)
+                ->defaultSort('-id')
+                ->simplePaginate()
+                ->appends($request->query())
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         return $this->insertMany($request, new Product);
     }
