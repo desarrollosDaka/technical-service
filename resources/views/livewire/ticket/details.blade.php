@@ -87,10 +87,19 @@
                             </div>
                             <p class="text-sm mt-3">{{ $visit->observations }}</p>
                             @if ($visit->media->count())
-                                <div class="flex items-center gap-3 mt-3 pt-4 border-t">
-                                    <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
-                                    <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
-                                    <img class="w-20 rounded-lg" src="{{ asset('img/placeholder.com-1280x720.webp') }}" alt="">
+                                <div class="flex items-center gap-3 mt-3 pt-4 border-t list-media-images">
+                                    @foreach ($visit->media as $media)
+                                        <a
+                                            href="{{ $media->original_url }}"
+                                            data-img="{{ $media->original_url }}"
+                                            data-thumb="{{ $media->original_url }}"
+                                            data-alt="{{ $media->name }}"
+                                            data-height="2500"
+                                            target="_blank"
+                                            data-width="1667">
+                                            <img class="w-20 rounded-lg" src="{{ $media->original_url }}" alt="{{ $media->name }}" />
+                                        </a>
+                                    @endforeach
                                 </div>
                             @endif
                         </li>
@@ -107,6 +116,14 @@
                 .listen('NewComment', (e) => {
                     $wire.dispatch('new-comment');
                 });
+
+            const bigger = window.BiggerPicture({
+                target: document.body,
+            });
+
+            bigger.open({
+                items: document.querySelectorAll('.list-media-images img'),
+            })
         </script>
     @endscript
 </main>
