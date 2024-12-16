@@ -5,15 +5,21 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Tabulator;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TabulatorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->success(Tabulator::orderByDesc('id')->get());
+        return $this->success(
+            QueryBuilder::for(Tabulator::class)
+                ->defaultSort('-id')
+                ->simplePaginate()
+                ->appends($request->query())
+        );
     }
 
     /**

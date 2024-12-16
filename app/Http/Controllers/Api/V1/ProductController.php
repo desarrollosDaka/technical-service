@@ -19,6 +19,12 @@ class ProductController extends Controller
         return $this->success(
             QueryBuilder::for(Product::class)
                 ->defaultSort('-id')
+                ->allowedFilters([
+                    'ItemCode',
+                    'ItemName',
+                    'CodeBars',
+                    'ItmsGrpNam',
+                ])
                 ->simplePaginate()
                 ->appends($request->query())
         );

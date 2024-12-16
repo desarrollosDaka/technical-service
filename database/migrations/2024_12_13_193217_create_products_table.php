@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create((new Product)->getTable(), function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
             $table->string('ItemCode')->nullable();
             $table->string('ItemName')->nullable();
             $table->string('CodeBars')->nullable();
@@ -21,7 +22,6 @@ return new class extends Migration
             $table->string('U_FAMILIA')->nullable();
             $table->string('ItmsGrpNam')->nullable();
             $table->string('in_mobile_status')->nullable();
-            $table->timestamps();
         });
     }
 
