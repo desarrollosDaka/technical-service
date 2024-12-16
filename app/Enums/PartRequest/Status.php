@@ -7,5 +7,5 @@ enum Status: int
     case New = 1;
     case Approved = 2;
     case Rejected = 3;
-    case Handed = 4;
+    case Handed = 4; # Entregado
 }
