@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\TabulatorController;
 use App\Http\Middleware\BackendToken;
+use App\Models\PartRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -21,6 +22,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/media', App\Http\Controllers\Api\V1\MediaController::class)->except(['update']);
         Route::apiResource('/products', ProductController::class)->only(['index']);
         Route::apiResource('/tabulators', TabulatorController::class)->only(['index']);
+        Route::apiResource('/part-requests', App\Http\Controllers\Api\V1\PartRequestController::class);
     });
 
     Route::apiResource('/guest-comments', CommentController::class)->only(['index', 'store']);

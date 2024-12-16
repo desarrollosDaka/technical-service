@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\Visit\Reason;
-use App\Traits\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalVisit\StoreRequest;
 use App\Http\Requests\TechnicalVisit\UpdateRequest;
@@ -80,6 +79,8 @@ class TechnicalVisitController extends Controller
      */
     public function update(UpdateRequest $request, TechnicalVisit $technicalVisit): Response
     {
+        Gate::authorize('update', $technicalVisit);
+
         return $this->success(
             $technicalVisit->update($request->validated())
         );
@@ -92,6 +93,8 @@ class TechnicalVisitController extends Controller
             'new_date' => 'required|date',
             'extend_reason' => 'nullable',
         ]);
+
+        Gate::authorize('update', $technicalVisit);
 
         $previousReprogramming = $technicalVisit->reprogramming;
         $validated['old_date'] = $technicalVisit->visit_date;
