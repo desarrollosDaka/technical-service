@@ -91,6 +91,8 @@ class PartRequestController extends Controller
      */
     public function destroy(PartRequest $partRequest)
     {
-        //
+        Gate::authorize('update', $partRequest->technicalVisit);
+
+        return $this->success($partRequest->delete());
     }
 }
