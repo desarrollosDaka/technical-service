@@ -35,7 +35,11 @@ class TabulatorController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->insertMany($request, new Tabulator);
+        return $this->insertMany(
+            request: $request,
+            model: new Tabulator,
+            getInsertedId: 'n',
+        );
     }
 
     /**

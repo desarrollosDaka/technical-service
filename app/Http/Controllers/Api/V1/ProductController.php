@@ -35,7 +35,11 @@ class ProductController extends Controller
      */
     public function store(Request $request): Response
     {
-        return $this->insertMany($request, new Product);
+        return $this->insertMany(
+            request: $request,
+            model: new Product,
+            getInsertedId: 'ItemCode'
+        );
     }
 
     /**
