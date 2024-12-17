@@ -18,9 +18,10 @@ abstract class Controller
         callable $afterCreate = null,
         callable $beforeCreate = null,
     ): Response {
-        $request->validate([
-            'elements' => 'required|array',
-        ]);
+        Log::info('LLEGANDO ELEMENTOS', ['count' => count($request->elements)]);
+        // $request->validate([
+        //     'elements' => 'required|array',
+        // ]);
 
         try {
             $insertData = array_map(
