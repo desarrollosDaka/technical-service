@@ -8,6 +8,7 @@ use App\Models\ServiceCall;
 use App\Models\Ticket;
 use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class ServiceCallController extends Controller
@@ -25,6 +26,10 @@ class ServiceCallController extends Controller
      */
     public function store(Request $request): Response
     {
+        Log::info('ELEMENTOS POR EL STORE: SERVICE_CALL_CONTROLLER', [
+            'request' => count($request->get('elements'))
+        ]);
+
         return $this->insertMany(
             $request,
             new ServiceCall,
