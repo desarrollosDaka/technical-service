@@ -36,7 +36,6 @@ abstract class Controller
                 $model::insert($insertData);
             } catch (\Throwable $th) {
                 Log::info('Cancelado!!!!!!!!', [
-                    'trace' => $th->getTrace(),
                     'message' => $th->getMessage(),
                 ]);
                 return $this->error(
