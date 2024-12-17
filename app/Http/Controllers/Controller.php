@@ -19,7 +19,9 @@ abstract class Controller
         callable $beforeCreate = null,
         string $getInsertedId = null,
     ): Response {
-        Log::info('LLEGANDO ELEMENTOS', ['count' => count($request->elements)]);
+        Log::info('LLEGANDO ELEMENTOS', [
+            'count' => count($request->get('elements', []))
+        ]);
         // $request->validate([
         //     'elements' => 'required|array',
         // ]);
@@ -51,6 +53,7 @@ abstract class Controller
             }
 
             $inserted = [];
+
             if ($getInsertedId) {
                 $inserted = array_map(fn($element) => $element[$getInsertedId], $insertData);
             }
