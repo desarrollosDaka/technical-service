@@ -41,6 +41,7 @@ class TicketController extends Controller
                     'technical',
                     'serviceCall',
                     'visits',
+                    'partRequest',
                     AllowedInclude::callback('media', function (MorphMany $query) {
                         if (request()->has('collection_name')) {
                             return $query->where('collection_name', request('collection_name'));
@@ -74,7 +75,18 @@ class TicketController extends Controller
         Gate::authorize('view', $ticket);
         return $this->success(
             QueryBuilder::for(Ticket::class)
-                ->allowedIncludes(['technical', 'serviceCall', 'visits'])
+                ->allowedIncludes([
+                    'technical',
+                    'serviceCall',
+                    'visits',
+                    'partRequest',
+                    AllowedInclude::callback('media', function (MorphMany $query) {
+                        if (request()->has('collection_name')) {
+                            return $query->where('collection_name', request('collection_name'));
+                        }
+                        return $query;
+                    }),
+                ])
                 ->find($ticket->getKey())
         );
     }
