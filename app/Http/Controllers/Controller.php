@@ -17,6 +17,7 @@ abstract class Controller
         Model $model,
         callable $afterCreate = null,
         callable $beforeCreate = null,
+        string $getInsertedId = null,
     ): Response {
         Log::info('LLEGANDO ELEMENTOS', ['count' => count($request->elements)]);
         // $request->validate([
@@ -49,10 +50,19 @@ abstract class Controller
                 $afterCreate($insertData);
             }
 
+            $inserted = [];
+            if ($getInsertedId) {
+                $inserted = array_map(fn($element) => $element[$getInsertedId], $insertData);
+            }
+
             return $this->success(
                 [
                     'data' => 'created',
                     'success' => true,
+                    'inserted' => [
+                        'key' => $getInsertedId,
+                        'elements' => $inserted,
+                    ],
                 ],
                 Response::HTTP_CREATED
             );

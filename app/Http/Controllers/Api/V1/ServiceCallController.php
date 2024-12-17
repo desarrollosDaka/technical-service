@@ -39,6 +39,7 @@ class ServiceCallController extends Controller
             afterCreate: function ($inserts): void {
                 CreateTickets::dispatch($inserts);
             },
+            getInsertedId: 'callID',
         );
     }
 
