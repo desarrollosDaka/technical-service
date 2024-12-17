@@ -58,8 +58,8 @@ class TechnicalFactory extends Factory
                     192
                 ],
             ],
-            'latitude' => $this->faker->latitude(),
-            'longitude' => $this->faker->longitude(),
+            'Latitude' => $this->faker->latitude(),
+            'Longitude' => $this->faker->longitude(),
             'Create_date' => now(),
             'Update_date' => now(),
         ];

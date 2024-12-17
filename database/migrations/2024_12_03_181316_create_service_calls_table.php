@@ -156,8 +156,8 @@ return new class extends Migration
             $table->text('U_F_ENVIO_CDD')->nullable();
             $table->text('U_BM_NUMDOC')->nullable();
             $table->text('U_BM_SUCDEST')->nullable();
-            $table->boolean('U_FORANEO')->default(true);
-            $table->foreignIdFor(Technical::class, 'ASSIGNED_TECHNICIAN');
+            $table->boolean('U_FORANEO')->nullable()->default(true);
+            $table->foreignIdFor(Technical::class, 'ASSIGNED_TECHNICIAN')->nullable();
         });
     }
 
