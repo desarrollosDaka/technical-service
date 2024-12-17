@@ -29,7 +29,7 @@ class CreateTickets implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->inserts as $insert) {
-            $serviceCall = ServiceCall::where('callID', $insert['callID'])->first();
+            $serviceCall = ServiceCall::where('callID', $insert)->first();
 
             if (!$serviceCall) {
                 continue;

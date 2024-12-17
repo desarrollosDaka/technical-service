@@ -18,7 +18,6 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('app_status')->default(ServiceCallStatus::Open->value);
             $table->timestamps();
-            $table->softDeletes();
 
             $table->unsignedBigInteger('callID')->unique();
             $table->string('subject')->nullable();

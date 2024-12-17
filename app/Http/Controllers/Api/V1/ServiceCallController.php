@@ -37,7 +37,7 @@ class ServiceCallController extends Controller
                 'CLIENT_COORDINATE' => json_encode($element['CLIENT_COORDINATE'] ?? []),
             ]),
             afterCreate: function ($inserts): void {
-                // CreateTickets::dispatch($inserts);
+                CreateTickets::dispatch($inserts);
             },
             getInsertedId: 'callID',
         );

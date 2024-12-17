@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cache;
 class ServiceCall extends Model
 {
     /** @use HasFactory<\Database\Factories\ServiceCallFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $guarded = [];
 
