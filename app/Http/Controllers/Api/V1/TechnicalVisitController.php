@@ -86,6 +86,13 @@ class TechnicalVisitController extends Controller
         );
     }
 
+    /**
+     * Reprogram la visita
+     *
+     * @param Request $request
+     * @param TechnicalVisit $technicalVisit
+     * @return Response
+     */
     public function reprogramming(Request $request, TechnicalVisit $technicalVisit): Response
     {
         $validated = $request->validate([

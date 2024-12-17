@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\ServiceCall\Status as ServiceCallStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateTickets;
 use App\Models\ServiceCall;
-use App\Models\Ticket;
-use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 class ServiceCallController extends Controller
@@ -45,6 +45,19 @@ class ServiceCallController extends Controller
     public function show(ServiceCall $serviceCall)
     {
         //
+    }
+
+    public function sync(Request $request): Response
+    {
+        return $this->success(
+            QueryBuilder::for(ServiceCall::class)
+                ->defaultSort('-id')
+                ->allowedFilters([
+                    'app_status',
+                ])
+                ->whereMonth('updated_at', now()->month)
+                ->get()
+        );
     }
 
     /**

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CommentController;
 use App\Http\Controllers\Api\V1\PartRequestController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\ServiceCallController;
 use App\Http\Controllers\Api\V1\TabulatorController;
 use App\Http\Middleware\BackendToken;
 use App\Models\PartRequest;
@@ -29,7 +30,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('/guest-comments', CommentController::class)->only(['index', 'store']);
 
     Route::group(['middleware' => BackendToken::class], function () {
-        Route::apiResource('/service-calls', App\Http\Controllers\Api\V1\ServiceCallController::class);
+        Route::apiResource('/service-calls', ServiceCallController::class);
         Route::apiResource('/technicians', App\Http\Controllers\Api\V1\TechnicalController::class);
         Route::apiResource('/products', ProductController::class)->only(['store']);
         Route::apiResource('/tabulators', TabulatorController::class)->only(['store']);
@@ -37,6 +38,7 @@ Route::prefix('v1')->group(function () {
         Route::group(['prefix' => 'sync'], function () {
             Route::get('/part-requests', [PartRequestController::class, 'sync']);
             Route::post('/part-requests', [PartRequestController::class, 'syncStatus']);
+            Route::get('/service-calls', [ServiceCallController::class, 'sync']);
         });
     });
 });

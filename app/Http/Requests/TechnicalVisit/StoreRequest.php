@@ -33,6 +33,7 @@ class StoreRequest extends FormRequest
             ],
             'observations' => 'nullable',
             'meta' => 'nullable|json',
+            'services' => 'nullable|array',
         ];
     }
 }

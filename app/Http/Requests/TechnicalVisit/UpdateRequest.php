@@ -27,6 +27,7 @@ class UpdateRequest extends FormRequest
             'visit_date' => 'nullable|date',
             'observations' => 'nullable',
             'meta' => 'nullable|json',
+            'services' => 'nullable|array',
         ];
     }
 }

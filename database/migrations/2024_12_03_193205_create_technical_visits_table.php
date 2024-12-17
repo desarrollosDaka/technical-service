@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('visit_date')->nullable();
             $table->text('observations')->nullable()->comment('Recordar poder adjuntar imágenes (max: 5)');
             $table->json('reprogramming')->nullable()->comment('Guardar un Arreglo: { "old_date", "new_date", "responsible", "reason" }');
+            $table->json('services')->nullable()->comment('Guarda los ids del tabulador');
 
             $table->json('meta')->nullable()->comment('Dentro del meta puede ir información adicional en un estilo dinámico');
             $table->softDeletes();

@@ -28,6 +28,7 @@ class TechnicalVisit extends Model implements HasMedia
         'meta',
         'reprogramming',
         'type',
+        'services',
     ];
 
     /**
