@@ -44,7 +44,7 @@ abstract class Controller
                     }
                 } catch (\Throwable $th) {
                     if ($getInsertedId) {
-                        $failedInsert[] = $data[$getInsertedId] ?? '';
+                        $failedInsert[] = ($data[$getInsertedId] ?? '') . ':' . $th->getMessage();
                     }
                 }
             }
