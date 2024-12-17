@@ -19,14 +19,16 @@ abstract class Controller
         callable $beforeCreate = null,
         string $getInsertedId = null,
     ): Response {
+        $elements = $request->get('elements', []);
+
         Log::info('LLEGANDO ELEMENTOS', [
-            'count' => count($request->get('elements', []))
+            'count' => count($elements),
         ]);
         $failedInsert = [];
         $successInsert = [];
 
         try {
-            foreach ($request->elements as $data) {
+            foreach ($elements as $data) {
                 $data['created_at'] = now();
                 $data['updated_at'] = now();
 

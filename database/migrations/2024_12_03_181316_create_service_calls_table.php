@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('callID');
+            $table->unsignedBigInteger('callID')->unique();
             $table->string('subject')->nullable();
             $table->string('customer')->nullable();
             $table->string('custmrName')->nullable();
