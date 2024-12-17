@@ -34,8 +34,8 @@ return new class extends Migration
             $table->string('ID_supplier')->nullable();
             $table->string('Availability')->nullable();
             $table->json('GeographicalCoordinates')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->string('Latitude')->nullable();
+            $table->string('Longitude')->nullable();
             $table->string('Create_user')->nullable();
             $table->dateTime('Create_date')->nullable();
             $table->string('Update_user')->nullable();
