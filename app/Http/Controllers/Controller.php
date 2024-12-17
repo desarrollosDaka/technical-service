@@ -22,40 +22,33 @@ abstract class Controller
         Log::info('LLEGANDO ELEMENTOS', [
             'count' => count($request->get('elements', []))
         ]);
-        // $request->validate([
-        //     'elements' => 'required|array',
-        // ]);
+        $failedInsert = [];
+        $successInsert = [];
 
         try {
-            $insertData = array_map(
-                fn($element) => array_merge($element, ['created_at' => now(), 'updated_at' => now()]),
-                $request->elements
-            );
+            foreach ($request->elements as $data) {
+                $data['created_at'] = now();
+                $data['updated_at'] = now();
 
-            if ($beforeCreate) {
-                $insertData = array_map($beforeCreate, $insertData);
-            }
+                if ($beforeCreate) {
+                    $data = $beforeCreate($data);
+                }
 
-            try {
-                $model::insert($insertData);
-            } catch (\Throwable $th) {
-                Log::info('Cancelado!!!!!!!!', [
-                    'message' => $th->getMessage(),
-                ]);
-                return $this->error(
-                    'Error al insertar: ' . $th->getMessage(),
-                    Response::HTTP_NOT_ACCEPTABLE
-                );
+                try {
+                    $model::insert($data);
+
+                    if ($getInsertedId) {
+                        $successInsert[] = $data[$getInsertedId] ?? '';
+                    }
+                } catch (\Throwable $th) {
+                    if ($getInsertedId) {
+                        $failedInsert[] = $data[$getInsertedId] ?? '';
+                    }
+                }
             }
 
             if ($afterCreate) {
-                $afterCreate($insertData);
-            }
-
-            $inserted = [];
-
-            if ($getInsertedId) {
-                $inserted = array_map(fn($element) => $element[$getInsertedId], $insertData);
+                $afterCreate($successInsert);
             }
 
             return $this->success(
@@ -64,7 +57,8 @@ abstract class Controller
                     'success' => true,
                     'inserted' => [
                         'key' => $getInsertedId,
-                        'elements' => $inserted,
+                        'success' => $successInsert,
+                        'failed' => $failedInsert,
                     ],
                 ],
                 Response::HTTP_CREATED
