@@ -23,6 +23,8 @@ abstract class Controller
 
         $failedInsert = [];
         $successInsert = [];
+        $insertCount = 0;
+        $failedCount = 0;
 
         try {
             foreach ($elements as $data) {
@@ -39,10 +41,13 @@ abstract class Controller
                     if ($getInsertedId) {
                         $successInsert[] = $data[$getInsertedId] ?? '';
                     }
+
+                    $insertCount++;
                 } catch (\Throwable $th) {
                     if ($getInsertedId) {
                         $failedInsert[] = ($data[$getInsertedId] ?? '') . ':' . $th->getMessage();
                     }
+                    $failedCount++;
                 }
             }
 
@@ -56,8 +61,8 @@ abstract class Controller
                     'success' => true,
                     'inserted' => [
                         'key' => $getInsertedId,
-                        'success_count' => count($successInsert),
-                        'failed_count' => count($failedInsert),
+                        'success_count' => $insertCount,
+                        'failed_count' => $failedCount,
                         'success' => $successInsert,
                         'failed' => $failedInsert,
                     ],
