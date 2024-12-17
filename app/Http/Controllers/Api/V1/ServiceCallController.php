@@ -57,7 +57,10 @@ class ServiceCallController extends Controller
         return $this->success(
             QueryBuilder::for(ServiceCall::class)
                 ->defaultSort('-id')
-                ->where('app_status', $request->get('app_status'))
+                ->when(
+                    $request->has('app_status'),
+                    fn($query) => $query->where('app_status', $request->app_status)
+                )
                 ->whereMonth('updated_at', now()->month)
                 ->get()
         );
