@@ -8,4 +8,5 @@ enum Status: int
     case Approved = 2;
     case Rejected = 3;
     case Handed = 4; # Entregado
+    case BuyTechnical = 5; # Comprado por el técnico
 }
