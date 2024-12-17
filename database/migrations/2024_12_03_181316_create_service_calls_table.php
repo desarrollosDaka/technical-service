@@ -95,7 +95,7 @@ return new class extends Migration
             $table->date('RemDate')->nullable();
             $table->string('RemSent')->nullable();
             $table->integer('RemTime')->nullable();
-            $table->integer('Location')->nullable();
+            $table->text('Location')->nullable();
             $table->json('CLIENT_COORDINATE')->nullable()->comment('Buffer de la dirección del usuario');
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
