@@ -127,10 +127,10 @@ return new class extends Migration
             $table->string('BPProjCode')->nullable();
             $table->string('BPContact')->nullable();
             $table->string('OwnerCode')->nullable();
-            $table->string('DPPStatus')->nullable()->default('N');
+            $table->string('DPPStatus')->nullable();
             $table->string('EncryptIV')->nullable();
-            $table->string('Printed')->nullable()->default('N');
-            $table->integer('DataVers')->nullable()->default(1);
+            $table->string('Printed')->nullable();
+            $table->integer('DataVers')->nullable();
             $table->string('U_DK_NUM_FACT')->nullable();
             $table->date('U_DK_F_COMP')->nullable();
             $table->string('U_DK_Modelo')->nullable();
@@ -151,7 +151,7 @@ return new class extends Migration
             $table->string('U_DK_ORIGEN')->nullable();
             $table->string('U_RMA1')->nullable();
             $table->string('U_RMA2')->nullable();
-            $table->string('U_DUPLICADO')->nullable()->default(2);
+            $table->string('U_DUPLICADO')->nullable();
             $table->string('U_TEC_Asignado')->nullable();
             $table->string('U_F_ENVIO_CDD')->nullable();
             $table->string('U_BM_NUMDOC')->nullable();
