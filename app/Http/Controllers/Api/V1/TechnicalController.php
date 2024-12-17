@@ -26,7 +26,6 @@ class TechnicalController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info('REQUEST!!!!!!!!!!!!!!!!!!!!!!!', $request->all());
         return $this->insertMany(
             $request,
             new Technical,

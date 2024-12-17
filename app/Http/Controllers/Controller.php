@@ -38,6 +38,7 @@ abstract class Controller
                 Log::info('Cancelado!!!!!!!!', [
                     'trace' => $th->getTrace(),
                     'message' => $th->getMessage(),
+                    'DATA' => $insertData,
                 ]);
                 return $this->error(
                     'Error al insertar: ' . $th->getMessage(),

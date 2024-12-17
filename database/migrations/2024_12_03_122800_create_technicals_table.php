@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('Agency')->nullable();
             $table->bigInteger('ID_rol')->nullable();
             $table->string('ID_supplier')->nullable();
-            $table->integer('Availability')->nullable();
+            $table->string('Availability')->nullable();
             $table->json('GeographicalCoordinates')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
