@@ -21,9 +21,6 @@ abstract class Controller
     ): Response {
         $elements = $request->get('elements', []);
 
-        Log::info('LLEGANDO ELEMENTOS', [
-            'count' => count($elements),
-        ]);
         $failedInsert = [];
         $successInsert = [];
 
@@ -59,6 +56,8 @@ abstract class Controller
                     'success' => true,
                     'inserted' => [
                         'key' => $getInsertedId,
+                        'success_count' => count($successInsert),
+                        'failed_count' => count($failedInsert),
                         'success' => $successInsert,
                         'failed' => $failedInsert,
                     ],

@@ -26,10 +26,6 @@ class ServiceCallController extends Controller
      */
     public function store(Request $request): Response
     {
-        Log::info('ELEMENTOS POR EL STORE: SERVICE_CALL_CONTROLLER', [
-            'token' => $request->get('token'),
-        ]);
-
         return $this->insertMany(
             $request,
             new ServiceCall,
