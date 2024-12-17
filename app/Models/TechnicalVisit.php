@@ -41,6 +41,7 @@ class TechnicalVisit extends Model implements HasMedia
         'meta' => 'array',
         'reprogramming' => 'array',
         'type' => VisitType::class,
+        'services' => 'array',
     ];
 
     /**

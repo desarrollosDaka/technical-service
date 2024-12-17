@@ -47,14 +47,18 @@ class ServiceCallController extends Controller
         //
     }
 
-    public function sync(Request $request): Response
+    /**
+     * Sincronizar las service call
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sync(Request $request)
     {
         return $this->success(
             QueryBuilder::for(ServiceCall::class)
                 ->defaultSort('-id')
-                ->allowedFilters([
-                    'app_status',
-                ])
+                ->where('app_status', $request->get('app_status'))
                 ->whereMonth('updated_at', now()->month)
                 ->get()
         );
