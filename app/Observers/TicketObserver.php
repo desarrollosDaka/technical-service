@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Enums\Ticket\Status as TicketStatus;
+use App\Jobs\ServiceCallResolution;
 use App\Models\Ticket;
 
 class TicketObserver
@@ -20,12 +21,15 @@ class TicketObserver
      */
     public function updated(Ticket $ticket): void
     {
+        $serviceCall = $ticket->serviceCall;
+        $update['app_status'] = $ticket->status;
+
         if ($ticket->status === TicketStatus::Reject) {
-            $ticket->serviceCall->update([
-                'app_status' => TicketStatus::Reject,
-                'ASSIGNED_TECHNICIAN' => null,
-            ]);
+            $update['ASSIGNED_TECHNICIAN'] = null;
         }
+
+        $serviceCall->update($update);
+        ServiceCallResolution::dispatch($serviceCall);
     }
 
     /**
