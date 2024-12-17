@@ -42,7 +42,7 @@ return new class extends Migration
             $table->string('callType')->nullable();
             $table->string('problemTyp')->nullable();
             $table->integer('assignee')->nullable();
-            $table->string('descrption')->nullable();
+            $table->longText('descrption')->nullable();
             $table->string('objType')->nullable();
             $table->integer('logInstanc')->nullable();
             $table->integer('userSign')->nullable();
@@ -57,7 +57,7 @@ return new class extends Migration
             $table->string('isEntitled')->nullable();
             $table->string('insID')->nullable();
             $table->string('technician')->nullable();
-            $table->string('resolution')->nullable();
+            $table->longText('resolution')->nullable();
             $table->string('Scl1NxtLn')->nullable();
             $table->integer('Scl2NxtLn')->nullable();
             $table->string('Scl3NxtLn')->nullable();
