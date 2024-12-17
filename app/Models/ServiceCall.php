@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ServiceCall\Status as ServiceCallStatus;
+use App\Enums\Ticket\Status as TicketStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -19,7 +19,7 @@ class ServiceCall extends Model
     public static ?ServiceCall $instance = null;
 
     protected $casts = [
-        'app_status' => ServiceCallStatus::class,
+        'app_status' => TicketStatus::class,
         'CLIENT_COORDINATE' => 'array',
     ];
 

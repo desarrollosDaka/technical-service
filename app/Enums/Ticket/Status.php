@@ -9,6 +9,7 @@ enum Status: int
     case Reject = 3; # Cuando el técnico rechaza el ticket
     case Progress = 4; # Cuando el técnico esta trabajando en el ticket
     case inPause = 5;
+    case Cancel = 6;
 
     public function getLabel(): string
     {

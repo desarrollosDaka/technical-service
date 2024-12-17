@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Enums\ServiceCall\Status as ServiceCallStatus;
 use App\Enums\Ticket\Status as TicketStatus;
 use App\Models\ServiceCall;
 use App\Models\Ticket;
@@ -44,7 +43,7 @@ class CreateTickets implements ShouldQueue
             ]);
 
             $serviceCall->update([
-                'app_status' => ServiceCallStatus::Progress,
+                'app_status' => TicketStatus::Progress,
             ]);
         }
     }

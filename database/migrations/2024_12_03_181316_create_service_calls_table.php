@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\ServiceCall\Status as ServiceCallStatus;
+use App\Enums\Ticket\Status as TicketStatus;
 use App\Models\ServiceCall;
 use App\Models\Technical;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create((new ServiceCall)->getTable(), function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('app_status')->default(ServiceCallStatus::Open->value);
+            $table->tinyInteger('app_status')->default(TicketStatus::Open->value);
             $table->timestamps();
             $table->softDeletes();
 
