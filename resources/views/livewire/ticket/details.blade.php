@@ -1,4 +1,4 @@
-<main class="flex flex-wrap md:flex-nowrap gap-4" x-data="{ displayCalendarMode: 'calendar' }">
+<main class="flex flex-wrap md:flex-nowrap gap-4" x-data="detailsTicket">
     <section class="w-full md:w-60 min-w-60 flex flex-col gap-2 md:gap-5">
         @foreach ($buttons as $tab => $label)
             <x-button.my
@@ -87,16 +87,9 @@
                             </div>
                             <p class="text-sm mt-3">{{ $visit->observations }}</p>
                             @if ($visit->media->count())
-                                <div class="flex items-center gap-3 mt-3 pt-4 border-t list-media-images">
+                                <div class="flex items-center gap-3 mt-3 pt-4 border-t list-media-images" x-ref="list_images">
                                     @foreach ($visit->media as $media)
-                                        <a
-                                            href="{{ $media->original_url }}"
-                                            data-img="{{ $media->original_url }}"
-                                            data-thumb="{{ $media->original_url }}"
-                                            data-alt="{{ $media->name }}"
-                                            data-height="2500"
-                                            target="_blank"
-                                            data-width="1667">
+                                        <a href="{{ $media->original_url }}" x-on:click.prevent="openImage('{{ $media->original_url }}')">
                                             <img class="w-20 rounded-lg" src="{{ $media->original_url }}" alt="{{ $media->name }}" />
                                         </a>
                                     @endforeach
@@ -105,6 +98,15 @@
                         </li>
                     @endforeach
                 </ul>
+                <div
+                    class="fixed bg-black/40 w-full h-full flex items-center justify-center top-0 left-0 z-70"
+                    x-show="urlDisplayImg"
+                    x-transition
+                    x-on:click="urlDisplayImg = null">
+                    <div class="w-[99vw] md:w-[80vw] h-[80vh]">
+                        <img :src="urlDisplayImg" alt="" class="rounded-lg overflow-hidden">
+                    </div>
+                </div>
             </div>
         @elseif($selectedTab === 'comments')
             <livewire:comment />
@@ -116,14 +118,6 @@
                 .listen('NewComment', (e) => {
                     $wire.dispatch('new-comment');
                 });
-
-            const bigger = window.BiggerPicture({
-                target: document.body,
-            });
-
-            bigger.open({
-                items: document.querySelectorAll('.list-media-images img'),
-            })
         </script>
     @endscript
 </main>
