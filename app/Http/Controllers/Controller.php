@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\ApiV1Responser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class Controller
@@ -31,7 +32,18 @@ abstract class Controller
                 $insertData = array_map($beforeCreate, $insertData);
             }
 
-            $model::insert($insertData);
+            try {
+                $model::insert($insertData);
+            } catch (\Throwable $th) {
+                Log::info('Cancelado!!!!!!!!', [
+                    'trace' => $th->getTrace(),
+                    'message' => $th->getMessage(),
+                ]);
+                return $this->error(
+                    'Error al insertar: ' . $th->getMessage(),
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
 
             if ($afterCreate) {
                 $afterCreate($insertData);

@@ -36,9 +36,9 @@ return new class extends Migration
             $table->json('GeographicalCoordinates')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->integer('Create_user')->nullable();
+            $table->string('Create_user')->nullable();
             $table->dateTime('Create_date')->nullable();
-            $table->integer('Update_user')->nullable();
+            $table->string('Update_user')->nullable();
             $table->dateTime('Update_date')->nullable();
         });
     }

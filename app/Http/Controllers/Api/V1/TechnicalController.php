@@ -8,6 +8,7 @@ use App\Traits\ApiV1Responser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class TechnicalController extends Controller
@@ -25,6 +26,7 @@ class TechnicalController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('REQUEST!!!!!!!!!!!!!!!!!!!!!!!', $request->all());
         return $this->insertMany(
             $request,
             new Technical,
