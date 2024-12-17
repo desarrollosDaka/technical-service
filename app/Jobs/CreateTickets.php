@@ -36,10 +36,10 @@ class CreateTickets implements ShouldQueue
             }
 
             Ticket::create([
-                'title' => Arr::get($insert, 'itemName', $insert['subject']),
+                'title' => Arr::get($serviceCall, 'itemName', $serviceCall->subject),
                 'service_call_id' => $serviceCall->getKey(),
-                'customer_name' => $insert['custmrName'],
-                'technical_id' => $insert['ASSIGNED_TECHNICIAN'],
+                'customer_name' => $serviceCall->custmrName,
+                'technical_id' => $serviceCall->ASSIGNED_TECHNICIAN,
                 'status' => TicketStatus::Progress,
             ]);
 
