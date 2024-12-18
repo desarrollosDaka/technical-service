@@ -6,6 +6,8 @@ use App\Models\ServiceCall;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use App\Enums\Ticket\Status as TicketStatus;
+use App\Enums\Visit\Reason;
+use Carbon\Carbon;
 
 class ServiceCallResolution implements ShouldQueue
 {
@@ -41,13 +43,12 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "# Teléfono: " . $technical->Phone . "\n";
         $resolutionString .= "# Comercial: " . $technical->Name_user_comercial . "\n";
         $resolutionString .= "# Email: " . $technical->Email . "\n";
-        $resolutionString .= "# Dirección: " . $technical->Address . "\n";
+        $resolutionString .= "# Dirección: " . $technical->Address;
 
         // Detalles del ticket
-        $resolutionString .= "## Detalles del Ticket (Aplicativo)\n";
+        $resolutionString .= "\n\n## Detalles del Ticket (Aplicativo)\n";
         $resolutionString .= "# ID: " . $ticket->id . " =Titulo= " . $ticket->title . "\n";
         $resolutionString .= "# Aceptado el: " . $ticket->created_at->format('d/m/Y') . "\n";
-        $resolutionString .= "# Técnico:  " . $ticket->technical->name . " : " . $ticket->technical->email . " =ID= " . $ticket->technical_id . "\n";
 
         if ($ticket->diagnosis_date && $ticket->status === TicketStatus::Progress) {
             $resolutionString .= "# Diagnostico: " . $ticket->diagnosis_date?->format('d/m/Y') . " =Detalles=" . $ticket->diagnosis_detail;
@@ -55,30 +56,50 @@ class ServiceCallResolution implements ShouldQueue
             $resolutionString .= "# Rechazado: " . $ticket->reject_date?->format('d/m/Y') . " =Detalles=" . $ticket->reject_detail;
         } else if ($ticket->solution_date && ($ticket->status === TicketStatus::Resolution || $ticket->status === TicketStatus::Close)) {
             $resolutionString .= "# Resolución Final: " . $ticket->solution_date?->format('d/m/Y') . " =Detalles=" . $ticket->solution_detail;
+        } else if ($ticket->status === TicketStatus::Open) {
+            $resolutionString .= "# El ticket esta esperando ser aceptado";
         }
 
         // Listado de visitas
-        $resolutionString .= "\n\n## Detalles de las visitas\n";
+        $resolutionString .= "\n\n## Detalles de las visitas";
 
         if (count($visits) < 1) {
-            $resolutionString .= "\n# Todavía no se han pautados visitas";
+            $resolutionString .= "\n# Todavía no se han pautados visitas...";
         }
 
         foreach ($visits as $visit) {
-            $resolutionString .= "\n# Visita:" . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
-            $resolutionString .= "\n#Fecha pautada de la visita:" . $ticket->visit_date->format('d/m/Y H:i:s');
-            $resolutionString .= "\n#Observaciones el técnico:" . $ticket->observations;
+            $resolutionString .= "\n--------------";
+            $resolutionString .= "\n# Visita ID: " . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
+            $resolutionString .= "\n# Fecha pautada de la visita: " . ($visit->visit_date ? $visit->visit_date->format('d/m/Y H:i:s') : 'No hay fecha pautada');
+            $resolutionString .= "\n# Observaciones el técnico:" . $visit->observations;
 
             // Ha sufrido reprogramaciones
-            if (count($visit->reprogramming) === 0) {
+            if (count($visit->reprogramming ?? []) === 0) {
                 $resolutionString .= "\n# No ha sufrido reprogramaciones";
             } else {
                 $resolutionString .= "\n# La visita se ha reprogramado, a continuación el detalle de las reprogramaciones...";
                 foreach ($visit->reprogramming as $reason => $reprogramming) {
+                    $reasonText = match ($reason) {
+                        'technical' => 'Técnico',
+                        'client' => 'Cliente',
+                        'other' => 'Otro motivo',
+                    };
+                    $resolutionString .= "\n\n# Reprogramaciones por {$reasonText}, total: " . count($reprogramming);
+                    foreach ($reprogramming as $key => $reprogram) {
+                        $resolutionString .= "\n\n\t# Reprogramación por {$reasonText} Nº" . $key + 1;
+                        $resolutionString .= "\n\t# Fecha previa pautada: " . Carbon::parse($reprogram['old_date'])->format('d/m/Y H:i:s');
+                        $resolutionString .= "\n\t# Nueva fecha de pautada: " . Carbon::parse($reprogram['new_date'])->format('d/m/Y H:i:s');
+                        $resolutionString .= "\n\t# Razones adicionales: " . $reprogram['extend_reason'];
+                    }
                 }
             }
+
+            // Solicitud de repuesto
+            $resolutionString .= "\n--------------";
         }
 
         $resolutionString .= "\n\n### Resumen final\n";
+
+        dd($resolutionString);
     }
 }
