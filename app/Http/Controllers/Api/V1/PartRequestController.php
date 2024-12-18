@@ -51,10 +51,10 @@ class PartRequestController extends Controller
     public function store(Request $request): Response
     {
         $validated = $request->validate([
-            'tabulator_id' => 'required|exists:tabulators,id',
             'technical_visit_id' => 'required',
             'observation' => 'nullable',
             'meta' => 'nullable',
+            'date_handed' => 'nullable',
         ]);
 
         $technicalVisit = TechnicalVisit::findOrFail($validated['technical_visit_id']);

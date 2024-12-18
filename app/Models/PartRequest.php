@@ -13,7 +13,6 @@ class PartRequest extends Model
 
     protected $fillable = [
         'status',
-        'tabulator_id',
         'technical_visit_id',
         'observation',
         'date_handed',
