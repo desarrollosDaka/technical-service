@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\Ticket\Status as TicketStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
@@ -52,10 +54,20 @@ class ServiceCall extends Model
     /**
      * Ticket del service call
      *
-     * @return HasOne
+     * @return HasMany
      */
-    public function ticket(): HasOne
+    public function tickets(): HasMany
     {
-        return $this->hasOne(Ticket::class);
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Técnicos de los tickets por los que ha pasado el ticket
+     *
+     * @return HasManyThrough
+     */
+    public function technicians(): HasManyThrough
+    {
+        return $this->hasManyThrough(Technical::class, Ticket::class, 'service_call_id', 'id', 'id');
     }
 }

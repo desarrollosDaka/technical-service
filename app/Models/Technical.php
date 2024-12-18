@@ -21,6 +21,7 @@ class Technical extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'ID_user',
         'Name_user_comercial',
         'Services',
         'User_name',

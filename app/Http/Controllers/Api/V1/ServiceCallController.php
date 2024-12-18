@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Enums\Ticket\Status as TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateTickets;
 use App\Models\ServiceCall;
@@ -60,6 +61,12 @@ class ServiceCallController extends Controller
                 ->when(
                     $request->has('app_status'),
                     fn($query) => $query->where('app_status', $request->app_status)
+                )
+                ->when(
+                    $request->get('app_status', 0) === (string) TicketStatus::Reject->value,
+                    fn($query) => $query->with([
+                        'technicians' => fn($query) => $query->select(['technicals.id', 'technicals.User_name', 'technicals.Email', 'technicals.ID_user'])
+                    ])
                 )
                 ->whereMonth('updated_at', now()->month)
                 ->get()
