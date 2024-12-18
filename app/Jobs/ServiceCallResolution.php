@@ -41,7 +41,7 @@ class ServiceCallResolution implements ShouldQueue
 
         // Detalles del técnico
         $resolutionString .= "## Técnico: " . $technical->User_name . " =ID= " . $technical->ID_user;
-        $resolutionString .= "# Teléfono: " . $technical->Phone . "\n";
+        $resolutionString .= "\n# Teléfono: " . $technical->Phone . "\n";
         $resolutionString .= "# Comercial: " . $technical->Name_user_comercial . "\n";
         $resolutionString .= "# Email: " . $technical->Email . "\n";
         $resolutionString .= "# Dirección: " . $technical->Address;
@@ -69,7 +69,7 @@ class ServiceCallResolution implements ShouldQueue
         }
 
         foreach ($visits as $visit) {
-            $resolutionString .= "\n--------------";
+            $resolutionString .= "\n----------------------------------------";
             $resolutionString .= "\n# Visita ID: " . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
             $resolutionString .= "\n# Fecha pautada de la visita: " . ($visit->visit_date ? $visit->visit_date->format('d/m/Y H:i:s') : 'No hay fecha pautada');
             $resolutionString .= "\n# Observaciones el técnico:" . $visit->observations;
@@ -99,7 +99,7 @@ class ServiceCallResolution implements ShouldQueue
             }
 
             // Solicitud de repuesto
-            $resolutionString .= "\n--------------";
+            $resolutionString .= "\n-------------------------------------";
         }
 
         $date_compare_to = match ($ticket->status->value) {

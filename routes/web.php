@@ -58,5 +58,5 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
-    (new ServiceCallResolution(ServiceCall::first()))->handle();
+    dd(ServiceCall::find(1)->resolution);
 });
