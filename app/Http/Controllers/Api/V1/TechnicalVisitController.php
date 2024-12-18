@@ -26,9 +26,7 @@ class TechnicalVisitController extends Controller
         ]);
 
         if (!$request->has('ticket_id')) {
-            return $this->success(
-                $request->user()->visits()->where('ticket_id', $request->ticket_id)->get()
-            );
+            return $this->success($request->user()->visits);
         }
 
         $ticket = Ticket::where('id', $request->ticket_id)
