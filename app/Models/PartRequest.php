@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\PartRequest\Status as PartRequestStatus;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy(\App\Observers\PartRequestObserver::class)]
 class PartRequest extends Model
 {
     use SoftDeletes;

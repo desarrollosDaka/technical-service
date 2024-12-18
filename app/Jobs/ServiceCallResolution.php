@@ -113,6 +113,6 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "\n# Total de reprogramaciones: " . $total_reprogramming;
         $resolutionString .= "\n# Duración total del ticket: " . ($date_compare_to ? $date_compare_to->diff($ticket->created_at) : 'Ticket aun abierto');
 
-        dd($resolutionString);
+        // dd($resolutionString);
     }
 }

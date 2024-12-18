@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Visit\Type as VisitType;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+#[ObservedBy(\App\Observers\TechnicalVisitObserver::class)]
 class TechnicalVisit extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\TechnicalVisitsFactory> */

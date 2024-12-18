@@ -4,6 +4,7 @@ use App\Enums\Ticket\Status as TicketStatus;
 use App\Http\Middleware\CurrentServiceCall;
 use App\Http\Middleware\WithoutServiceCall;
 use App\Jobs\ServiceCallResolution;
+use App\Models\PartRequest;
 use App\Models\Product;
 use App\Models\ServiceCall;
 use App\Models\Tabulator;
@@ -57,8 +58,5 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
-    // (new ServiceCallResolution(ServiceCall::first()))->handle();
-    $visit = TechnicalVisit::first();
-
-    dd($visit->serviceCall);
+    (new ServiceCallResolution(ServiceCall::first()))->handle();
 });

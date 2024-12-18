@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\ServiceCallResolution;
 use App\Models\TechnicalVisit;
 
 class TechnicalVisitObserver
@@ -11,7 +12,7 @@ class TechnicalVisitObserver
      */
     public function created(TechnicalVisit $technicalVisit): void
     {
-        //
+        ServiceCallResolution::dispatch($technicalVisit->serviceCall);
     }
 
     /**
@@ -19,7 +20,7 @@ class TechnicalVisitObserver
      */
     public function updated(TechnicalVisit $technicalVisit): void
     {
-        //
+        ServiceCallResolution::dispatch($technicalVisit->serviceCall);
     }
 
     /**
@@ -27,7 +28,7 @@ class TechnicalVisitObserver
      */
     public function deleted(TechnicalVisit $technicalVisit): void
     {
-        //
+        ServiceCallResolution::dispatch($technicalVisit->serviceCall);
     }
 
     /**
