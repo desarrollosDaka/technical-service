@@ -3,5 +3,7 @@
     "ticket.status.2": "Cerrado",
     "ticket.status.3": "Rechazado por el técnico",
     "ticket.status.4": "En progreso",
-    "ticket.status.5": "En pausa"
+    "ticket.status.5": "En pausa",
+    "ticket.status.6": "Cancelado",
+    "ticket.status.7": "Resuelto, esperando calificación"
 }

@@ -17,6 +17,11 @@ enum Status: int
         return __("ticket.status.{$this->value}");
     }
 
+    /**
+     * Color?
+     *
+     * @return string
+     */
     public function getColor(): string
     {
         return match ($this->value) {
