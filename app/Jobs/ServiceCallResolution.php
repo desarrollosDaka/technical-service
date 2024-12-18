@@ -30,6 +30,7 @@ class ServiceCallResolution implements ShouldQueue
         $ticket = $this->serviceCall->tickets()->orderByDesc('id')->first();
         $visits = $ticket->visits;
         $technical = $ticket->technical;
+        $total_reprogramming = 0;
 
         $resolutionString = '### Estado: ' . $this->serviceCall->app_status->getLabel() . " =ID= " . $this->serviceCall->callID . "\n\n";
 
@@ -85,11 +86,14 @@ class ServiceCallResolution implements ShouldQueue
                         'other' => 'Otro motivo',
                     };
                     $resolutionString .= "\n\n# Reprogramaciones por {$reasonText}, total: " . count($reprogramming);
+
                     foreach ($reprogramming as $key => $reprogram) {
                         $resolutionString .= "\n\n\t# Reprogramación por {$reasonText} Nº" . $key + 1;
                         $resolutionString .= "\n\t# Fecha previa pautada: " . Carbon::parse($reprogram['old_date'])->format('d/m/Y H:i:s');
                         $resolutionString .= "\n\t# Nueva fecha de pautada: " . Carbon::parse($reprogram['new_date'])->format('d/m/Y H:i:s');
                         $resolutionString .= "\n\t# Razones adicionales: " . $reprogram['extend_reason'];
+
+                        $total_reprogramming++;
                     }
                 }
             }
@@ -98,7 +102,16 @@ class ServiceCallResolution implements ShouldQueue
             $resolutionString .= "\n--------------";
         }
 
+        $date_compare_to = match ($ticket->status->value) {
+            TicketStatus::Reject->value => $ticket->reject_date,
+            TicketStatus::Close->value, TicketStatus::Resolution->value => $ticket->solution_date,
+            default => null,
+        };
+
         $resolutionString .= "\n\n### Resumen final\n";
+        $resolutionString .= "\n# Total de visitas pautadas: " . count($visits);
+        $resolutionString .= "\n# Total de reprogramaciones: " . $total_reprogramming;
+        $resolutionString .= "\n# Duración total del ticket: " . ($date_compare_to ? $date_compare_to->diff($ticket->created_at) : 'Ticket aun abierto');
 
         dd($resolutionString);
     }
