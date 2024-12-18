@@ -6,6 +6,7 @@ use App\Enums\Visit\Type as VisitType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -63,5 +64,22 @@ class TechnicalVisit extends Model implements HasMedia
     {
         $this->addMediaCollection('visit')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+    }
+
+    /**
+     * Obtener el service call de la visita
+     *
+     * @return HasOneThrough
+     */
+    public function serviceCall(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            ServiceCall::class,
+            Ticket::class,
+            'id', // Foreign key on the Ticket table...
+            'service_calls.id', // Foreign key on the ServiceCall table...
+            'ticket_id', // Local key on the TechnicalVisit table...
+            'id' // Local key on the Ticket
+        );
     }
 }

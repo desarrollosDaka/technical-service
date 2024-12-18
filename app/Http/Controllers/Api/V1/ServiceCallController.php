@@ -68,7 +68,7 @@ class ServiceCallController extends Controller
                         'technicians' => fn($query) => $query->select(['technicals.id', 'technicals.User_name', 'technicals.Email', 'technicals.ID_user'])
                     ])
                 )
-                ->whereMonth('updated_at', now()->month)
+                ->whereBetween('updated_at', [now()->subDays(15), now()])
                 ->get()
         );
     }

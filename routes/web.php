@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ServiceCall;
 use App\Models\Tabulator;
 use App\Models\Technical;
+use App\Models\TechnicalVisit;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 
@@ -56,5 +57,8 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
-    (new ServiceCallResolution(ServiceCall::first()))->handle();
+    // (new ServiceCallResolution(ServiceCall::first()))->handle();
+    $visit = TechnicalVisit::first();
+
+    dd($visit->serviceCall);
 });
