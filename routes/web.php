@@ -59,6 +59,7 @@ Route::get('/test', function () {
 
     $ticket = $serviceCall->tickets()->orderByDesc('id')->first();
     $visits = $ticket->visits;
+    $technical = $ticket->technical;
 
     $resolutionString = '### Estado: ' . $serviceCall->app_status->getLabel() . " =ID= " . $serviceCall->callID . "\n\n";
 
@@ -68,11 +69,11 @@ Route::get('/test', function () {
     $resolutionString .= "# Coordenadas: " . $serviceCall->latitude . ":" . $serviceCall->longitude . "\n\n";
 
     // Detalles del técnico
-    $resolutionString .= "## Técnico: " . $serviceCall->User_name . " =ID= " . $serviceCall->ID_user;
-    $resolutionString .= "# Teléfono: " . $serviceCall->Phone . "\n";
-    $resolutionString .= "# Comercial: " . $serviceCall->Name_user_comercial . "\n";
-    $resolutionString .= "# Email: " . $serviceCall->Email . "\n";
-    $resolutionString .= "# Dirección: " . $serviceCall->Address . "\n";
+    $resolutionString .= "## Técnico: " . $technical->User_name . " =ID= " . $technical->ID_user;
+    $resolutionString .= "# Teléfono: " . $technical->Phone . "\n";
+    $resolutionString .= "# Comercial: " . $technical->Name_user_comercial . "\n";
+    $resolutionString .= "# Email: " . $technical->Email . "\n";
+    $resolutionString .= "# Dirección: " . $technical->Address . "\n";
 
     // Detalles del ticket
     $resolutionString .= "## Detalles del Ticket (Aplicativo)\n";
