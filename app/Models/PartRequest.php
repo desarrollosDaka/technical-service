@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\PartRequest\Status as PartRequestStatus;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -29,16 +30,6 @@ class PartRequest extends Model implements HasMedia
     ];
 
     /**
-     * Tabulador a donde pertenece el repuesto
-     *
-     * @return BelongsTo
-     */
-    public function tabulator(): BelongsTo
-    {
-        return $this->belongsTo(Tabulator::class);
-    }
-
-    /**
      * Vista asociada
      *
      * @return BelongsTo
@@ -46,6 +37,23 @@ class PartRequest extends Model implements HasMedia
     public function technicalVisit(): BelongsTo
     {
         return $this->belongsTo(TechnicalVisit::class);
+    }
+
+    /**
+     * Ticket de la solicitud de repuesto
+     *
+     * @return HasOneThrough
+     */
+    public function ticket(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Ticket::class,
+            TechnicalVisit::class,
+            (new TechnicalVisit())->getTable() . '.id', # TechnicalVisit id
+            (new Ticket())->getTable() . '.id', # Ticket id
+            'technical_visit_id',
+            'ticket_id'
+        );
     }
 
     /**

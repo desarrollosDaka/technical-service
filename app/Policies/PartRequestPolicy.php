@@ -38,7 +38,11 @@ class PartRequestPolicy
      */
     public function update(User|Technical $user, PartRequest $partRequest): bool
     {
-        return true;
+        return $partRequest
+            ->ticket()
+            ->select(['tickets.id', 'tickets.technical_id'])
+            ->firstOrFail()
+            ->technical_id === $user->getKey();
     }
 
     /**

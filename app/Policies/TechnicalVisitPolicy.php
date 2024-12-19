@@ -24,7 +24,7 @@ class TechnicalVisitPolicy
     {
         return $technicalVisit
             ->ticket()
-            ->select(['id', 'technical_id'])
+            ->select(['tickets.id', 'tickets.technical_id'])
             ->firstOrFail()
             ->technical_id === $user->getKey();
     }

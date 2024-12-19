@@ -36,9 +36,9 @@ class PartRequestController extends Controller
                     AllowedFilter::exact('status'),
                 ])
                 ->allowedIncludes([
-                    'tabulator',
                     'technicalVisit',
                     'media',
+                    'ticket'
                 ])
                 ->where('technical_visit_id', $technicalVisit->getKey())
                 ->simplePaginate()
