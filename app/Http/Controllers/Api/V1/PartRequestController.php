@@ -8,7 +8,6 @@ use App\Jobs\UpdatePartRequest;
 use App\Models\PartRequest;
 use App\Models\TechnicalVisit;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -56,6 +55,7 @@ class PartRequestController extends Controller
             'observation' => 'nullable',
             'meta' => 'nullable',
             'date_handed' => 'nullable',
+            'name' => 'required|max:255',
         ]);
 
         $technicalVisit = TechnicalVisit::findOrFail($validated['technical_visit_id']);

@@ -17,6 +17,7 @@ class PartRequest extends Model implements HasMedia
     use SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
+        'name',
         'status',
         'technical_visit_id',
         'observation',
