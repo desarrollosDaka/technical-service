@@ -16,10 +16,25 @@ class ServiceCall extends Model
     /** @use HasFactory<\Database\Factories\ServiceCallFactory> */
     use HasFactory, SoftDeletes;
 
+    /**
+     * Guarded
+     *
+     * @var array
+     */
     protected $guarded = [];
 
+    /**
+     * ServiceCall
+     *
+     * @var ServiceCall|null
+     */
     public static ?ServiceCall $instance = null;
 
+    /**
+     * Casts
+     *
+     * @var array
+     */
     protected $casts = [
         'app_status' => TicketStatus::class,
         'CLIENT_COORDINATE' => 'array',
