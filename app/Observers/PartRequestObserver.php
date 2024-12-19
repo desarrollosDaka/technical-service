@@ -12,7 +12,12 @@ class PartRequestObserver
      */
     public function created(PartRequest $partRequest): void
     {
-        ServiceCallResolution::dispatch($partRequest->technicalVisit->serviceCall);
+        ServiceCallResolution::dispatch(
+            $partRequest->ticket()
+                ->select(['tickets.id', 'tickets.service_call_id'])
+                ->first()
+                ->serviceCall
+        );
     }
 
     /**
@@ -20,7 +25,12 @@ class PartRequestObserver
      */
     public function updated(PartRequest $partRequest): void
     {
-        ServiceCallResolution::dispatch($partRequest->technicalVisit->serviceCall);
+        ServiceCallResolution::dispatch(
+            $partRequest->ticket()
+                ->select(['tickets.id', 'tickets.service_call_id'])
+                ->first()
+                ->serviceCall
+        );
     }
 
     /**
@@ -28,7 +38,12 @@ class PartRequestObserver
      */
     public function deleted(PartRequest $partRequest): void
     {
-        ServiceCallResolution::dispatch($partRequest->technicalVisit->serviceCall);
+        ServiceCallResolution::dispatch(
+            $partRequest->ticket()
+                ->select(['tickets.id', 'tickets.service_call_id'])
+                ->first()
+                ->serviceCall
+        );
     }
 
     /**

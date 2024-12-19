@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\PartRequest\Status as PartRequestStatus;
 use App\Models\ServiceCall;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -125,7 +126,13 @@ class ServiceCallResolution implements ShouldQueue
                 $resolutionString .= "\n\n## Solicitud de repuestos: " . $partRequests->count();
 
                 foreach ($partRequests as $partRequest) {
-                    $resolutionString .= "\n# Solicitud Nª" . $partRequest->id;
+                    $resolutionString .= "\n\n-# Solicitud Nª" . $partRequest->id;
+                    $resolutionString .= "\n-# Estatus: " . $partRequest->status->getLabel();
+                    $resolutionString .= "\n-# Repuesto: " . $partRequest->name;
+                    $resolutionString .= "\n-# Observación: " . $partRequest->observation;
+                    if ($partRequest->status === PartRequestStatus::Handed) {
+                        $resolutionString .= "\n-# Fecha de entrega: " . $partRequest->date_handed->format('d/m/Y H:i:s');
+                    }
                 }
             }
 

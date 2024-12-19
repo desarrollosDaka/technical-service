@@ -5,5 +5,10 @@
     "ticket.status.4": "En progreso",
     "ticket.status.5": "En pausa",
     "ticket.status.6": "Cancelado",
-    "ticket.status.7": "Resuelto, esperando calificación"
+    "ticket.status.7": "Resuelto, esperando calificación",
+    "part-request.status.1": "Nuevo",
+    "part-request.status.2": "Aprobada",
+    "part-request.status.3": "Rechazada",
+    "part-request.status.4": "Entregada",
+    "part-request.status.5": "Comprado por el técnico"
 }

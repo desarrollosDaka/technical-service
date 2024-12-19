@@ -27,6 +27,7 @@ class PartRequest extends Model implements HasMedia
     protected $casts = [
         'status' => PartRequestStatus::class,
         'meta' => 'array',
+        'date_handed' => 'datetime',
     ];
 
     /**
