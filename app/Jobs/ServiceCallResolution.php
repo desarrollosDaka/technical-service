@@ -37,7 +37,9 @@ class ServiceCallResolution implements ShouldQueue
         $reject_part_request = 0;
 
         $resolutionString = '### Estado: ' . $this->serviceCall->app_status->getLabel();
-        $resolutionString .= "\n# Llamada de servicio Nº " . $this->serviceCall->callID . "\n\n";
+        $resolutionString .= "\n# Llamada de servicio Nº " . $this->serviceCall->callID;
+        $resolutionString .= "\n# Nombre del articulo: " . $this->serviceCall->itemName;
+        $resolutionString .= "\n# Descripción: " . $this->serviceCall->descrption . "\n\n";
 
         // Detalles del cliente
         $resolutionString .= "## Cliente: " . $this->serviceCall->custmrName . "\n";
