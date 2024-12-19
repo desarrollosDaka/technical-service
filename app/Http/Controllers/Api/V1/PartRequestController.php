@@ -96,6 +96,7 @@ class PartRequestController extends Controller
                 PartRequestStatus::Approved->value,
                 PartRequestStatus::Rejected->value,
                 PartRequestStatus::Handed->value,
+                PartRequestStatus::BuyTechnical->value,
             ]),
             'elements.*.date_handed' => 'nullable|date',
             'elements.*.meta.estimated_handed_date' => 'nullable|date',
