@@ -32,6 +32,9 @@ class ServiceCallResolution implements ShouldQueue
         $visits = $ticket->visits;
         $technical = $ticket->technical;
         $total_reprogramming = 0;
+        $total_part_request = 0;
+        $handed_part_request = 0;
+        $reject_part_request = 0;
 
         $resolutionString = '### Estado: ' . $this->serviceCall->app_status->getLabel();
         $resolutionString .= "\n# Llamada de servicio Nº " . $this->serviceCall->callID . "\n\n";
@@ -123,15 +126,27 @@ class ServiceCallResolution implements ShouldQueue
             if ($partRequests->count() === 0) {
                 $resolutionString .= "\n\n# No se han solicitado repuestos";
             } else {
-                $resolutionString .= "\n\n## Solicitud de repuestos: " . $partRequests->count();
+                $resolutionString .= "\n\n## Solicitud de repuestos, total: " . $partRequests->count();
 
                 foreach ($partRequests as $partRequest) {
-                    $resolutionString .= "\n\n-# Solicitud Nª" . $partRequest->id;
+                    $total_part_request++;
+                    $resolutionString .= "\n\n-# Solicitud IDº" . $partRequest->id;
                     $resolutionString .= "\n-# Estatus: " . $partRequest->status->getLabel();
                     $resolutionString .= "\n-# Repuesto: " . $partRequest->name;
                     $resolutionString .= "\n-# Observación: " . $partRequest->observation;
                     if ($partRequest->status === PartRequestStatus::Handed) {
                         $resolutionString .= "\n-# Fecha de entrega: " . $partRequest->date_handed->format('d/m/Y H:i:s');
+                        $handed_part_request++;
+                    }
+
+                    if ($partRequest->status === PartRequestStatus::Rejected) {
+                        $reject_part_request++;
+                    }
+
+                    $mediaPartRequest = $partRequest->getMedia('part');
+
+                    foreach ($mediaPartRequest as $media) {
+                        $resolutionString .= "\n-# Adjunto IDº {$media->id} de la solicitud de repuesto: " . $media->original_url;
                     }
                 }
             }
@@ -150,6 +165,9 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "\n# Total de visitas pautadas: " . count($visits);
         $resolutionString .= "\n# Total de reprogramaciones: " . $total_reprogramming;
         $resolutionString .= "\n# Duración total del ticket: " . ($date_compare_to ? $date_compare_to->diff($ticket->created_at) : 'Ticket aun abierto');
+        $resolutionString .= "\n# Repuestos solicitados: " . $total_part_request;
+        $resolutionString .= "\n# Repuestos entregados: " . $handed_part_request;
+        $resolutionString .= "\n# Repuestos rechazados: " . $reject_part_request;
 
         $this->serviceCall->update([
             'resolution' => $resolutionString,
