@@ -79,7 +79,7 @@ class Ticket extends Model implements HasMedia
      */
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('diagnosis')
+        $this->addMediaCollection('diagnostic')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 

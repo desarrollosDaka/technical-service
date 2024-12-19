@@ -56,9 +56,25 @@ class ServiceCallResolution implements ShouldQueue
         } else if ($ticket->reject_date && $ticket->status === TicketStatus::Reject) {
             $resolutionString .= "# Rechazado: " . $ticket->reject_date?->format('d/m/Y') . " =Detalles=" . $ticket->reject_detail;
         } else if ($ticket->solution_date && ($ticket->status === TicketStatus::Resolution || $ticket->status === TicketStatus::Close)) {
-            $resolutionString .= "# Resolución Final: " . $ticket->solution_date?->format('d/m/Y') . " =Detalles=" . $ticket->solution_detail;
+            $resolutionString .= "# Resolución Final: " . $ticket->solution_date?->format('d/m/Y');
+            $resolutionString .= "\n# Detalles: " . $ticket->solution_detail;
         } else if ($ticket->status === TicketStatus::Open) {
             $resolutionString .= "# El ticket esta esperando ser aceptado";
+        }
+
+        // Imágenes del diagnósticos
+        $mediaDiagnostic = $ticket->getMedia('diagnostic');
+
+        if (count($mediaDiagnostic) > 0) {
+            $resolutionString .= "\n\n## Imágenes del diagnóstico";
+
+            foreach ($mediaDiagnostic as $media) {
+                $resolutionString .= "\n\n----------------------------------------";
+                $resolutionString .= "\n# URL: " . $media->original_url;
+                $resolutionString .= "\n# Subida el: " . $media->created_at->format('d/m/Y H:i:s');
+                $resolutionString .= "\n# Tamaño del archivo: " . ($media->size / 1024) . " KB";
+                $resolutionString .= "\n----------------------------------------\n";
+            }
         }
 
         // Listado de visitas
