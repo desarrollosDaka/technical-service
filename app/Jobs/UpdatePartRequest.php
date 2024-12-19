@@ -40,6 +40,9 @@ class UpdatePartRequest implements ShouldQueue
                         ...$partRequest['meta'] ?? [],
                         'reject_date' => $partRequest['status'] === PartRequestStatus::Rejected->value ? now() : null,
                         'approved_date' => $partRequest['status'] === PartRequestStatus::Approved->value ? now() : null,
+                        'handed_reference' => $partRequest['status'] === PartRequestStatus::Handed->value
+                            ? ($partRequest['meta']['handed_reference'] ?? 'No se adjunto referencia de entrega')
+                            : null,
                     ],
                 ]);
             }

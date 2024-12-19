@@ -100,6 +100,8 @@ class PartRequestController extends Controller
             'elements.*.date_handed' => 'nullable|date',
             'elements.*.meta.estimated_handed_date' => 'nullable|date',
             'elements.*.meta.reject_reason' => 'nullable|max:1024',
+            'elements.*.meta.approval_information' => 'nullable|max:1024',
+            'elements.*.meta.handed_reference' => 'nullable|max:1024',
         ]);
 
         UpdatePartRequest::dispatch($validated['elements']);
