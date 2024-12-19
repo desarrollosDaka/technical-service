@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
@@ -83,5 +84,15 @@ class TechnicalVisit extends Model implements HasMedia
             'ticket_id', // Local key on the TechnicalVisit table...
             'id' // Local key on the Ticket
         );
+    }
+
+    /**
+     * Solicitud de repuesto
+     *
+     * @return HasMany
+     */
+    public function partRequest(): HasMany
+    {
+        return $this->hasMany(PartRequest::class);
     }
 }

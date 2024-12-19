@@ -40,7 +40,7 @@ class TechnicalVisitController extends Controller
                 ->allowedFilters(['visit_date'])
                 ->allowedSorts(['visit_date', 'created_at'])
                 ->defaultSort('-created_at')
-                ->allowedIncludes(['ticket'])
+                ->allowedIncludes(['ticket', 'media'])
                 ->where('ticket_id', $ticket->getKey())
                 ->simplePaginate()
                 ->appends($request->query())

@@ -32,7 +32,8 @@ class ServiceCallResolution implements ShouldQueue
         $technical = $ticket->technical;
         $total_reprogramming = 0;
 
-        $resolutionString = '### Estado: ' . $this->serviceCall->app_status->getLabel() . " =ID= " . $this->serviceCall->callID . "\n\n";
+        $resolutionString = '### Estado: ' . $this->serviceCall->app_status->getLabel();
+        $resolutionString .= "\n# Llamada de servicio Nº " . $this->serviceCall->callID . "\n\n";
 
         // Detalles del cliente
         $resolutionString .= "## Cliente: " . $this->serviceCall->custmrName . "\n";
@@ -40,7 +41,9 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "# Coordenadas: " . $this->serviceCall->latitude . ":" . $this->serviceCall->longitude . "\n\n";
 
         // Detalles del técnico
-        $resolutionString .= "## Técnico: " . $technical->User_name . " =ID= " . $technical->ID_user;
+        $resolutionString .= "## Técnico: " . $technical->User_name;
+        $resolutionString .= "\n# ID: " .  $technical->ID_user;
+        $resolutionString .= "\n# ID Aplicativo: " .  $technical->id;
         $resolutionString .= "\n# Teléfono: " . $technical->Phone . "\n";
         $resolutionString .= "# Comercial: " . $technical->Name_user_comercial . "\n";
         $resolutionString .= "# Email: " . $technical->Email . "\n";
@@ -48,7 +51,8 @@ class ServiceCallResolution implements ShouldQueue
 
         // Detalles del ticket
         $resolutionString .= "\n\n## Detalles del Ticket (Aplicativo)\n";
-        $resolutionString .= "# ID: " . $ticket->id . " =Titulo= " . $ticket->title . "\n";
+        $resolutionString .= "# ID Aplicativo: " . $ticket->id;
+        $resolutionString .= "\n# Titulo= " . $ticket->title . "\n";
         $resolutionString .= "# Aceptado el: " . $ticket->created_at->format('d/m/Y') . "\n";
 
         if ($ticket->diagnosis_date && $ticket->status === TicketStatus::Progress) {
@@ -86,22 +90,23 @@ class ServiceCallResolution implements ShouldQueue
 
         foreach ($visits as $visit) {
             $resolutionString .= "\n----------------------------------------";
-            $resolutionString .= "\n# Visita ID: " . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
+            $resolutionString .= "\n# Visita ID Aplicativo: " . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
             $resolutionString .= "\n# Fecha pautada de la visita: " . ($visit->visit_date ? $visit->visit_date->format('d/m/Y H:i:s') : 'No hay fecha pautada');
             $resolutionString .= "\n# Observaciones el técnico:" . $visit->observations;
+            $partRequests = $visit->partRequest;
 
             // Ha sufrido reprogramaciones
             if (count($visit->reprogramming ?? []) === 0) {
                 $resolutionString .= "\n# No ha sufrido reprogramaciones";
             } else {
-                $resolutionString .= "\n# La visita se ha reprogramado, a continuación el detalle de las reprogramaciones...";
+                $resolutionString .= "\n\n## La visita se ha reprogramado, a continuación el detalle de las reprogramaciones...";
                 foreach ($visit->reprogramming as $reason => $reprogramming) {
                     $reasonText = match ($reason) {
                         'technical' => 'Técnico',
                         'client' => 'Cliente',
                         'other' => 'Otro motivo',
                     };
-                    $resolutionString .= "\n\n# Reprogramaciones por {$reasonText}, total: " . count($reprogramming);
+                    $resolutionString .= "\n\n-# Reprogramaciones por {$reasonText}, total: " . count($reprogramming);
 
                     foreach ($reprogramming as $key => $reprogram) {
                         $resolutionString .= "\n\n\t# Reprogramación por {$reasonText} Nº" . $key + 1;
@@ -111,6 +116,16 @@ class ServiceCallResolution implements ShouldQueue
 
                         $total_reprogramming++;
                     }
+                }
+            }
+
+            if ($partRequests->count() === 0) {
+                $resolutionString .= "\n\n# No se han solicitado repuestos";
+            } else {
+                $resolutionString .= "\n\n## Solicitud de repuestos: " . $partRequests->count();
+
+                foreach ($partRequests as $partRequest) {
+                    $resolutionString .= "\n# Solicitud Nª" . $partRequest->id;
                 }
             }
 
@@ -130,7 +145,7 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "\n# Duración total del ticket: " . ($date_compare_to ? $date_compare_to->diff($ticket->created_at) : 'Ticket aun abierto');
 
         $this->serviceCall->update([
-            'resolution' => $resolutionString
+            'resolution' => $resolutionString,
         ]);
     }
 }
