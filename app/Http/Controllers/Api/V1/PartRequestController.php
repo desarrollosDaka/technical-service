@@ -76,7 +76,9 @@ class PartRequestController extends Controller
     {
         return $this->success(
             PartRequest::where('status', PartRequestStatus::New)
-                ->with('tabulator')
+                ->with([
+                    'media' => fn($query) => $query->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk'])
+                ])
                 ->get()
         );
     }

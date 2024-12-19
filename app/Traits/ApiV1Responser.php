@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
 use \Illuminate\Http\Response as HttpResponse;
@@ -24,13 +25,13 @@ trait ApiV1Responser
         if (is_array($data)) {
             $dataResponse = !isset($data['data'])
                 ? [
-                    'data' => $data,
                     'success' => true,
+                    'data' => $data,
                 ] : $data;
-        } else if ($data instanceof Model || $data instanceof MediaCollection) {
+        } else if ($data instanceof Model || $data instanceof MediaCollection || $data instanceof Collection) {
             $dataResponse = [
-                'data' => $data->toArray(),
                 'success' => true,
+                'data' => $data->toArray(),
             ];
         }
 
