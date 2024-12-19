@@ -7,12 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Media\IndexRequest;
 use App\Http\Requests\Media\StoreRequest;
 use App\Models\Media;
-use App\Traits\ApiV1Responser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
-use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 class MediaController extends Controller

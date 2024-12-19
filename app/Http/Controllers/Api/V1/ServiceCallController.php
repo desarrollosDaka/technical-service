@@ -58,6 +58,7 @@ class ServiceCallController extends Controller
         return $this->success(
             QueryBuilder::for(ServiceCall::class)
                 ->defaultSort('-id')
+                ->allowedSorts(['id', 'updated_at'])
                 ->when(
                     $request->has('app_status'),
                     fn($query) => $query->where('app_status', $request->app_status)

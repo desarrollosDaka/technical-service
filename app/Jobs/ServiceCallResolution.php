@@ -35,6 +35,7 @@ class ServiceCallResolution implements ShouldQueue
         $total_part_request = 0;
         $handed_part_request = 0;
         $reject_part_request = 0;
+        $total_size = 0;
 
         $resolutionString = '### Estado: ' . $this->serviceCall->app_status->getLabel();
         $resolutionString .= "\n# Llamada de servicio Nº " . $this->serviceCall->callID;
@@ -84,6 +85,7 @@ class ServiceCallResolution implements ShouldQueue
                 $resolutionString .= "\n# Subida el: " . $media->created_at->format('d/m/Y H:i:s');
                 $resolutionString .= "\n# Tamaño del archivo: " . ($media->size / 1024) . " KB";
                 $resolutionString .= "\n----------------------------------------\n";
+                $total_size += $media->size;
             }
         }
 
@@ -149,6 +151,7 @@ class ServiceCallResolution implements ShouldQueue
 
                     foreach ($mediaPartRequest as $media) {
                         $resolutionString .= "\n-# Adjunto IDº {$media->id} de la solicitud de repuesto: " . $media->original_url;
+                        $total_size += $media->size;
                     }
                 }
             }
@@ -170,6 +173,11 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "\n# Repuestos solicitados: " . $total_part_request;
         $resolutionString .= "\n# Repuestos entregados: " . $handed_part_request;
         $resolutionString .= "\n# Repuestos rechazados: " . $reject_part_request;
+        $resolutionString .= "\n# Tamaño total en adjuntos: " . ($total_size
+            ? number_format(($total_size / (1024 * 1024)), 2) . " MB"
+            : 0 . " KB"
+        );
+
 
         $this->serviceCall->update([
             'resolution' => $resolutionString,
