@@ -37,7 +37,8 @@ class PartRequestController extends Controller
                 ])
                 ->allowedIncludes([
                     'tabulator',
-                    'technicalVisit'
+                    'technicalVisit',
+                    'media',
                 ])
                 ->where('technical_visit_id', $technicalVisit->getKey())
                 ->simplePaginate()

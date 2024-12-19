@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\PartRequest\Status as PartRequestStatus;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[ObservedBy(\App\Observers\PartRequestObserver::class)]
-class PartRequest extends Model
+class PartRequest extends Model implements HasMedia
 {
-    use SoftDeletes;
+    use SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'status',
@@ -44,5 +46,16 @@ class PartRequest extends Model
     public function technicalVisit(): BelongsTo
     {
         return $this->belongsTo(TechnicalVisit::class);
+    }
+
+    /**
+     * Media collections
+     *
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('part')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 }
