@@ -40,7 +40,7 @@
                         <th class="text-left">
                             <p class="my-2">{{ __('Estado') }}</p>
                         </th>
-                        <td>{{ ticket()->status->getLabel() }} probar</td>
+                        <td>{{ ticket()->status->getLabel() }}</td>
                     </tr>
                     @if (ticket()->diagnosis_date)
                         <tr>
@@ -52,7 +52,7 @@
                             <td>{{ ticket()->diagnosis_date ? ticket()->diagnosis_date->format('d/m/Y') : __('Sin fechar de diagnostico') }}</td>
                         </tr>
                         <tr>
-                            <th class="text-left">{{ __('Diagnóstico') }}</th>
+                            <th class="text-left">{{ __('Diagnóstico del técnico') }}</th>
                             <td>
                                 <p class="my-2 text-sm">
                                     {{ ticket()->diagnosis_detail }}
@@ -60,6 +60,22 @@
                             </td>
                         </tr>
                     @endif
+                    <tr>
+                        <th class="text-left">{{ __('Articulo') }}</th>
+                        <td>
+                            <p class="my-2 text-sm">
+                                {{ serviceCall()->itemName }}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-left">{{ __('Diagnostico ATC') }}</th>
+                        <td>
+                            <p class="my-2 text-sm">
+                                {{ serviceCall()->subject }}
+                            </p>
+                        </td>
+                    </tr>
                     <tr>
                         <th class="text-left">{{ __('Dirección') }}</th>
                         <td>
