@@ -93,12 +93,12 @@
                             @if ($visit->reprogramming && count($visit->reprogramming))
                                 @foreach ($visit->reprogramming as $key => $reprogramming)
                                     <h2 class="font-semibold my-3">
-                                        <span>{{ __('Reprogramaciones hechas por el ') }}</span>
+                                        <span>{{ __('Reprogramaciones hechas por ') }}</span>
                                         @php
                                             echo match ($key) {
-                                                'client' => 'cliente',
-                                                'technical' => 'técnico',
-                                                default => 'otro',
+                                                'client' => 'el cliente',
+                                                'technical' => 'el técnico',
+                                                default => 'otro motivo',
                                             };
                                         @endphp<span>:</span>
                                     </h2>
