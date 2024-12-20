@@ -12,7 +12,13 @@ class TechnicalVisitObserver
      */
     public function created(TechnicalVisit $technicalVisit): void
     {
-        ServiceCallResolution::dispatch($technicalVisit->ticket->serviceCall);
+        ServiceCallResolution::dispatch(
+            $technicalVisit
+                ->ticket()
+                ->select(['tickets.id', 'tickets.service_call_id'])
+                ->first()
+                ->serviceCall
+        );
     }
 
     /**
@@ -20,7 +26,13 @@ class TechnicalVisitObserver
      */
     public function updated(TechnicalVisit $technicalVisit): void
     {
-        ServiceCallResolution::dispatch($technicalVisit->ticket->serviceCall);
+        ServiceCallResolution::dispatch(
+            $technicalVisit
+                ->ticket()
+                ->select(['tickets.id', 'tickets.service_call_id'])
+                ->first()
+                ->serviceCall
+        );
     }
 
     /**
@@ -28,7 +40,13 @@ class TechnicalVisitObserver
      */
     public function deleted(TechnicalVisit $technicalVisit): void
     {
-        ServiceCallResolution::dispatch($technicalVisit->ticket->serviceCall);
+        ServiceCallResolution::dispatch(
+            $technicalVisit
+                ->ticket()
+                ->select(['tickets.id', 'tickets.service_call_id'])
+                ->first()
+                ->serviceCall
+        );
     }
 
     /**
