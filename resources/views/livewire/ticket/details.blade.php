@@ -40,7 +40,7 @@
                         <th class="text-left">
                             <p class="my-2">{{ __('Estado') }}</p>
                         </th>
-                        <td>{{ ticket()->status->getLabel() }}</td>
+                        <td>{{ ticket()->status->getLabel() }} probar</td>
                     </tr>
                     @if (ticket()->diagnosis_date)
                         <tr>
@@ -61,8 +61,8 @@
                         </tr>
                     @endif
                     <tr>
-                        <td class="text-left" colspan="2">{{ __('Dirección') }}</td>
-                        <td>{{ serviceCall()->Location }}</td>
+                        <th class="text-left" colspan="2">{{ __('Dirección') }}</th>
+                        <td>{{ trim(serviceCall()->Location) }}</td>
                     </tr>
                     <tr>
                         <td colspan="2">

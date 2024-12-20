@@ -1,4 +1,4 @@
-<section>
+<section wire:poll.2s="refreshComments">
     <ul class="rounded-xl h-[65vh] max-h-[65vh] text-sm overflow-auto soft-scrollbar px-3">
         @foreach ($comments as $comment)
             <li

@@ -1,7 +1,7 @@
 <div x-data="{ modeEdit: false, address: '' }">
     <div class="flex items-center justify-between mb-5">
         {{-- Dirección --}}
-        <p x-show="!modeEdit">{{ serviceCall()->Location }}</p>
+        {{-- <p x-show="!modeEdit">{{ serviceCall()->Location }}</p> --}}
     </div>
     @if (serviceCall()->latitude && serviceCall()->longitude)
         <div id="map" wire:ignore class="z-10"></div>
