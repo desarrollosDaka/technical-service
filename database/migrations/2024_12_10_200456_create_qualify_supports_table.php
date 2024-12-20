@@ -18,6 +18,7 @@ return new class extends Migration
             $table->tinyInteger('qualification', unsigned: true)->default(1)->comment('Del 1 al 5, 1 es peor y 5 es mejor');
             $table->text('comment')->nullable();
             $table->foreignIdFor(Ticket::class)->constrained()->cascadeOnDelete();
+            $table->json('meta')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

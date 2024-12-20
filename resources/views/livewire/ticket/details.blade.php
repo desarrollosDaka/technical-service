@@ -14,6 +14,8 @@
         @if ($selectedTab === 'details')
             <table class="w-full">
                 <tbody>
+                    <livewire:ticket.qualify />
+
                     @if (ticket()->status === App\Enums\Ticket\Status::Close)
                         <tr>
                             <th>

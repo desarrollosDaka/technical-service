@@ -44,10 +44,7 @@ class Index extends Component
     #[On('new-comment')]
     public function refreshComments(): void
     {
-        if (!Ticket::current()) {
-            redirect('/');
-            return;
-        }
+        validateTicketAndServiceCall();
         $this->comments = Ticket::current()->comments()->get()->toArray();
         $this->dispatch('refreshedComment');
     }

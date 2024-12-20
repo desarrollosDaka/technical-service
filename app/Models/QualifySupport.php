@@ -14,6 +14,11 @@ class QualifySupport extends Model
         'qualification',
         'comment',
         'ticket_id',
+        'meta',
+    ];
+
+    protected $casts = [
+        'meta' => 'array',
     ];
 
     /**

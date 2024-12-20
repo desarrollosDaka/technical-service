@@ -9,7 +9,7 @@
         <x-card title="{{ __('Calificar soporte') }}">
             <p class="text-neutral-600 text-sm md:max-w-[65%] text-center mx-auto mb-6">¡{{ __('Para tiendas DAKA es importante conocer tu opinion de nuestro servicio técnico') }}!</p>
 
-            <div class="flex items-center flex-col mb-6">
+            <div class="flex items-center flex-col mb-4">
                 <div class="flex justify-center items-center">
                     <template x-for="i in 5">
                         <div
@@ -43,6 +43,28 @@
                     <p x-show="(startOnHover || star) === 5">{{ __('¡Excelente!') }}</p>
                 </div>
             </div>
+
+            {{-- Listado de visitas --}}
+            @if (count($visits))
+                <h2 class="text-center font-semibold mb-2 text-sm text-slate-700">{{ __('Visitas del técnico') }}</h2>
+                <ul>
+                    @foreach ($visits as $visit)
+                        <li class="flex items-center justify-between text-sm border-b pb-3 mb-3">
+                            <div>
+                                <p>{{ $visit['title'] }}</p>
+                                <p class="text-gray-400">{{ now()->parse($visit['visit_date'])->format('d/m/Y H:i') }}</p>
+                            </div>
+                            <div>
+                                <x-toggle
+                                    rounded="sm"
+                                    label="{{ __('Esta visita ocurrió?') }}"
+                                    wire:model="visits_occurred.{{ $visit['id'] }}"
+                                    xl />
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
 
             <x-textarea :disabled="(bool) $previousQualify" placeholder="{{ __('¿Como fue tu experiencia? Cuéntanos!') }}" wire:model="comment" />
 

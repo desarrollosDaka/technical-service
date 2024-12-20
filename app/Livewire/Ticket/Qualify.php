@@ -5,6 +5,7 @@ namespace App\Livewire\Ticket;
 use App\Models\Ticket;
 use Livewire\Component;
 use App\Models\QualifySupport;
+use App\Models\TechnicalVisit;
 
 class Qualify extends Component
 {
@@ -30,6 +31,15 @@ class Qualify extends Component
     public ?QualifySupport $previousQualify = null;
 
     /**
+     * Visitas
+     *
+     * @var array
+     */
+    public array $visits = [];
+
+    public array $visits_occurred = [];
+
+    /**
      * Mount
      *
      * @return void
@@ -41,6 +51,11 @@ class Qualify extends Component
 
         $this->star = $this->previousQualify ? $this->previousQualify->qualification : 0;
         $this->comment = $this->previousQualify ? $this->previousQualify->comment : '';
+        $this->visits = array_map(fn(array $visit) => [...$visit, 'has' => true], Ticket::current()->visits->toArray());
+
+        foreach ($this->visits as  $value) {
+            $this->visits_occurred[$value['id']] = $value['has'];
+        }
     }
 
     /**
@@ -54,6 +69,9 @@ class Qualify extends Component
             'qualification' => $this->star,
             'comment' => $this->comment,
             'ticket_id' => Ticket::current()->getKey(),
+            'meta' => [
+                'visits_occurred_id' => $this->visits_occurred
+            ],
         ]);
 
         $this->dispatch('closeModal', 'qualification');
