@@ -63,8 +63,7 @@ class CreateTickets implements ShouldQueue
             ];
 
             // Configurar la notificación para enviar a alias specific
-            $fields = array(
-                // 'app_id' => config('onesignal.app_id'),
+            $fields = [
                 'filters' => [
                     [
                         "field" => "tag",
@@ -78,7 +77,8 @@ class CreateTickets implements ShouldQueue
                 'data' => [
                     'ticket_id' => $ticketCreated->getKey(),
                 ],
-            );
+            ];
+
             OneSignalFacade::sendNotificationCustom($fields);
         }
     }

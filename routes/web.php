@@ -60,5 +60,5 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
-    CreateTickets::dispatch([8981704]);
+    return 'hola';
 });
