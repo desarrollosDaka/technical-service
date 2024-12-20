@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Technical;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -47,7 +48,7 @@ class ServiceCallFactory extends Factory
             'Reminder' => 'N',
             'RemQty' => 15,
             'RemType' => 'M',
-            'ASSIGNED_TECHNICIAN' => $this->faker->numberBetween(1, 20),
+            'ASSIGNED_TECHNICIAN' => Technical::all()->random()->ID_user,
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
             'Location' => $this->faker->address(),

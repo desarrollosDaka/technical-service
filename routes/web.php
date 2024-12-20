@@ -3,6 +3,7 @@
 use App\Enums\Ticket\Status as TicketStatus;
 use App\Http\Middleware\CurrentServiceCall;
 use App\Http\Middleware\WithoutServiceCall;
+use App\Jobs\CreateTickets;
 use App\Jobs\ServiceCallResolution;
 use App\Models\PartRequest;
 use App\Models\Product;
@@ -59,11 +60,5 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
-    // OneSignalFacade::sendNotificationToAll(
-    //     "Magallanes es mejor??",
-    //     $url = null,
-    //     $data = null,
-    //     $buttons = null,
-    //     $schedule = null
-    // );
+    CreateTickets::dispatch([8981704]);
 });
