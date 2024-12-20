@@ -81,9 +81,9 @@ class TechnicalVisitController extends Controller
     {
         Gate::authorize('update', $technicalVisit);
 
-        return $this->success(
-            $technicalVisit->update($request->validated())
-        );
+        $technicalVisit->update($request->validated());
+
+        return $this->success($technicalVisit);
     }
 
     /**

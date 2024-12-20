@@ -96,9 +96,9 @@ class TicketController extends Controller
      */
     public function update(UpdateRequest $request, Ticket $ticket): Response
     {
-        return $this->success(
-            $ticket->update($request->validated())
-        );
+        $ticket->update($request->validated());
+
+        return $this->success($ticket);
     }
 
     /**

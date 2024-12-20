@@ -69,8 +69,9 @@ class AuthController extends Controller
             'Address' => 'nullable',
             'Phone' => 'nullable',
         ]);
-        return $this->success(
-            $request->user()->update($validated)
-        );
+
+        $request->user()->update($validated);
+
+        return $this->success($request->user());
     }
 }

@@ -144,7 +144,9 @@ class PartRequestController extends Controller
             'observation' => 'nullable',
         ]);
 
-        return $this->success($partRequest->update($validated));
+        $partRequest->update($validated);
+
+        return $this->success($partRequest);
     }
 
     /**
