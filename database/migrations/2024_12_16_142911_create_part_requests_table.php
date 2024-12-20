@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(TechnicalVisit::class)->constrained()->cascadeOnDelete();
             $table->string('name')->nullable();
             $table->text('observation')->nullable();
+            $table->float('budget_amount')->nullable();
             $table->dateTime('date_handed')->nullable()->comment('Fecha de entrega del repuesto');
             $table->json('meta')->nullable();
             $table->softDeletes();

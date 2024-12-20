@@ -9,6 +9,7 @@ use App\Models\PartRequest;
 use App\Models\TechnicalVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,12 +104,10 @@ class PartRequestController extends Controller
     {
         $validated = $request->validate([
             'elements.*.id' => 'required|exists:part_requests,id',
-            'elements.*.status' => 'required|in:' . implode(',', [
-                PartRequestStatus::Approved->value,
-                PartRequestStatus::Rejected->value,
-                PartRequestStatus::Handed->value,
-                PartRequestStatus::BuyTechnical->value,
-            ]),
+            'elements.*.status' => [
+                'required',
+                Rule::enum(PartRequestStatus::class),
+            ],
             'elements.*.date_handed' => 'nullable|date',
             'elements.*.meta.estimated_handed_date' => 'nullable|date',
             'elements.*.meta.reject_reason' => 'nullable|max:1024',
