@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\PartRequestChangeStatusNotification;
 use App\Jobs\ServiceCallResolution;
 use App\Models\PartRequest;
 
@@ -31,6 +32,8 @@ class PartRequestObserver
                 ->first()
                 ->serviceCall
         );
+
+        PartRequestChangeStatusNotification::dispatch($partRequest);
     }
 
     /**

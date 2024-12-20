@@ -37,8 +37,8 @@ class PartRequestChangeStatusNotification implements ShouldQueue
         ];
 
         $content = [
-            'es' => "Hola! {$technical->User_name} su solicitud de repuesto tiene una nueva actualización",
-            'en' => "Hello! {$technical->User_name} your replacement application has a new update",
+            'es' => "Hola! {$technical->User_name} su solicitud de repuesto: {$this->partRequest->name}, tiene una nueva actualización",
+            'en' => "Hello! {$technical->User_name} your replacement application: {$this->partRequest->name}, has a new update",
         ];
 
         // Configurar la notificación para enviar a alias specific
