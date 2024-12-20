@@ -67,5 +67,8 @@ class PartRequest extends Model implements HasMedia
     {
         $this->addMediaCollection('part')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+        $this->addMediaCollection('estimation')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 }

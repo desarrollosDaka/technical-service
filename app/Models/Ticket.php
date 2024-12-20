@@ -81,6 +81,9 @@ class Ticket extends Model implements HasMedia
     {
         $this->addMediaCollection('diagnostic')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+        $this->addMediaCollection('closed')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
 
     /**
