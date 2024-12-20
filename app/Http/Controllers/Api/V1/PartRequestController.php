@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\PartRequest\Status as PartRequestStatus;
+use App\Enums\Ticket\Status;
 use App\Http\Controllers\Controller;
 use App\Jobs\UpdatePartRequest;
 use App\Models\PartRequest;
@@ -78,7 +79,8 @@ class PartRequestController extends Controller
         return $this->success(
             PartRequest::where('status', PartRequestStatus::New)
                 ->with([
-                    'media' => fn($query) => $query->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk']),
+                    'media' => fn($query) => $query
+                        ->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk']),
                     'ticket' => fn($query) => $query
                         ->select(['tickets.id', 'tickets.status', 'tickets.service_call_id'])
                         ->with([
@@ -139,7 +141,14 @@ class PartRequestController extends Controller
         Gate::authorize('update', $partRequest->technicalVisit);
 
         $validated = $request->validate([
-            'status' => 'required',
+            'status' => [
+                'required',
+                Rule::in([
+                    PartRequestStatus::New->value,
+                    PartRequestStatus::UpdatedBudgetAmount->value,
+                    PartRequestStatus::AlreadyBoughtPart->value,
+                ])
+            ],
             'meta' => 'nullable',
             'observation' => 'nullable',
             'budget_amount' => 'nullable',
