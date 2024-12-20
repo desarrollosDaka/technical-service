@@ -12,7 +12,7 @@ class TechnicalVisitObserver
      */
     public function created(TechnicalVisit $technicalVisit): void
     {
-        ServiceCallResolution::dispatch($technicalVisit->serviceCall);
+        ServiceCallResolution::dispatch($technicalVisit->ticket->serviceCall);
     }
 
     /**
@@ -20,7 +20,7 @@ class TechnicalVisitObserver
      */
     public function updated(TechnicalVisit $technicalVisit): void
     {
-        ServiceCallResolution::dispatch($technicalVisit->serviceCall);
+        ServiceCallResolution::dispatch($technicalVisit->ticket->serviceCall);
     }
 
     /**
@@ -28,7 +28,7 @@ class TechnicalVisitObserver
      */
     public function deleted(TechnicalVisit $technicalVisit): void
     {
-        ServiceCallResolution::dispatch($technicalVisit->serviceCall);
+        ServiceCallResolution::dispatch($technicalVisit->ticket->serviceCall);
     }
 
     /**

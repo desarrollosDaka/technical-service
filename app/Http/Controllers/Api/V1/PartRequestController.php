@@ -77,9 +77,20 @@ class PartRequestController extends Controller
         return $this->success(
             PartRequest::where('status', PartRequestStatus::New)
                 ->with([
-                    'media' => fn($query) => $query->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk'])
+                    'media' => fn($query) => $query->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk']),
+                    'ticket' => fn($query) => $query
+                        ->select(['tickets.id', 'tickets.status', 'tickets.service_call_id'])
+                        ->with([
+                            'serviceCall' => fn($query) => $query->select(['service_calls.id', 'service_calls.callID']),
+                        ]),
                 ])
                 ->get()
+                ->map(function (PartRequest $partRequest) {
+                    return [
+                        ...$partRequest->toArray(),
+                        'callID' => $partRequest->ticket->serviceCall->callID
+                    ];
+                })
         );
     }
 
@@ -127,6 +138,7 @@ class PartRequestController extends Controller
     public function update(Request $request, PartRequest $partRequest)
     {
         Gate::authorize('update', $partRequest->technicalVisit);
+
         $validated = $request->validate([
             'meta' => 'nullable',
             'observation' => 'nullable',
