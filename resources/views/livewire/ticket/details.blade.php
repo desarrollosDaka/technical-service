@@ -61,8 +61,12 @@
                         </tr>
                     @endif
                     <tr>
-                        <th class="text-left" colspan="2">{{ __('Dirección') }}</th>
-                        <td>{{ trim(serviceCall()->Location) }}</td>
+                        <th class="text-left">{{ __('Dirección') }}</th>
+                        <td>
+                            <p class="my-2 text-sm">
+                                {{ trim(serviceCall()->Location) }}
+                            </p>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -85,7 +89,32 @@
                                 <h3 class="font-semibold">{{ $visit->title }}</h3>
                                 <p class="text-sm text-gray-500 font-semibold">{{ $visit->visit_date->format('d/m/Y') }}</p>
                             </div>
-                            <p class="text-sm mt-3">{{ $visit->observations }}</p>
+                            <p class="text-sm my-3">{{ $visit->observation }}</p>
+                            @if ($visit->reprogramming && count($visit->reprogramming))
+                                @foreach ($visit->reprogramming as $key => $reprogramming)
+                                    <h2 class="font-semibold my-3">
+                                        <span>{{ __('Reprogramaciones hechas por el ') }}</span>
+                                        @php
+                                            echo match ($key) {
+                                                'client' => 'cliente',
+                                                'technical' => 'técnico',
+                                                default => 'otro',
+                                            };
+                                        @endphp<span>:</span>
+                                    </h2>
+                                    <ul>
+                                        @foreach ($visit->reprogramming['client'] as $reprogramming)
+                                            <li class="text-sm grid grid-cols-2 border-t pt-2">
+                                                <p><span class="font-semibold">Motivo: </span>{{ $reprogramming['extend_reason'] }}</p>
+                                                <div>
+                                                    <p>Fecha previa: {{ now()->parse($reprogramming['old_date'])->format('d/m/Y') }}</p>
+                                                    <p>Fecha nueva: {{ now()->parse($reprogramming['new_date'])->format('d/m/Y') }}</p>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endforeach
+                            @endif
                             @if ($visit->media->count())
                                 <div class="flex items-center gap-3 mt-3 pt-4 border-t list-media-images" x-ref="list_images">
                                     @foreach ($visit->media as $media)

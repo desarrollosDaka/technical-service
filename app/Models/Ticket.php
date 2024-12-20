@@ -69,7 +69,10 @@ class Ticket extends Model implements HasMedia
             return null;
         }
 
-        return self::$instance = self::where('service_call_id', ServiceCall::current()->id)->first();
+        return self::$instance = self::where('service_call_id', ServiceCall::current()->id)
+            ->orderByDesc('id')
+            ->whereNotIn('status', [TicketStatus::Close, TicketStatus::Reject])
+            ->first();
     }
 
     /**
