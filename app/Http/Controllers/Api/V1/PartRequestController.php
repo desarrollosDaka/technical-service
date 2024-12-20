@@ -139,8 +139,10 @@ class PartRequestController extends Controller
         Gate::authorize('update', $partRequest->technicalVisit);
 
         $validated = $request->validate([
+            'status' => 'required',
             'meta' => 'nullable',
             'observation' => 'nullable',
+            'budget_amount' => 'nullable',
         ]);
 
         $partRequest->update($validated);
