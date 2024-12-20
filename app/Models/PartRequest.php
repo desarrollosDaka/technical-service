@@ -23,12 +23,14 @@ class PartRequest extends Model implements HasMedia
         'observation',
         'date_handed',
         'meta',
+        'budget_amount',
     ];
 
     protected $casts = [
         'status' => PartRequestStatus::class,
         'meta' => 'array',
         'date_handed' => 'datetime',
+        'budget_amount' => 'float',
     ];
 
     /**
