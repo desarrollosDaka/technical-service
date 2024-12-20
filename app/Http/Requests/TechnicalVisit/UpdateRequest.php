@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'visit_date' => 'nullable|date',
-            'observations' => 'nullable',
+            'observation' => 'nullable',
             'meta' => 'nullable|json',
             'services' => 'nullable|array',
         ];

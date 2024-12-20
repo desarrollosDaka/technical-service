@@ -55,7 +55,7 @@ class PartRequestController extends Controller
         $validated = $request->validate([
             'technical_visit_id' => 'required',
             'observation' => 'nullable',
-            'meta' => 'nullable',
+            'meta' => 'nullable|json',
             'date_handed' => 'nullable',
             'name' => 'required|max:255',
         ]);
@@ -149,7 +149,7 @@ class PartRequestController extends Controller
                     PartRequestStatus::AlreadyBoughtPart->value,
                 ])
             ],
-            'meta' => 'nullable',
+            'meta' => 'nullable|json',
             'observation' => 'nullable',
             'budget_amount' => 'nullable',
         ]);

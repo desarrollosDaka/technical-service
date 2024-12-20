@@ -100,7 +100,7 @@ class ServiceCallResolution implements ShouldQueue
             $resolutionString .= "\n----------------------------------------";
             $resolutionString .= "\n# Visita ID Aplicativo: " . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
             $resolutionString .= "\n# Fecha pautada de la visita: " . ($visit->visit_date ? $visit->visit_date->format('d/m/Y H:i:s') : 'No hay fecha pautada');
-            $resolutionString .= "\n# Observaciones el técnico:" . $visit->observations;
+            $resolutionString .= "\n# Observaciones el técnico:" . $visit->observation;
             $partRequests = $visit->partRequest;
 
             // Ha sufrido reprogramaciones

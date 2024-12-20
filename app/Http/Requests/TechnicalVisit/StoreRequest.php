@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
                 'required',
                 Rule::exists('tickets', 'id')->where('technical_id', $this->user()->getKey()),
             ],
-            'observations' => 'nullable',
+            'observation' => 'nullable',
             'meta' => 'nullable|json',
             'services' => 'nullable|array',
         ];

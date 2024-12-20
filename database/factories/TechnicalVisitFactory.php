@@ -19,7 +19,7 @@ class TechnicalVisitFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'visit_date' => $this->faker->date(),
-            'observations' => $this->faker->text(),
+            'observation' => $this->faker->text(),
         ];
     }
 }

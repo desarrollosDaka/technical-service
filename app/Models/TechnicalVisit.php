@@ -28,7 +28,7 @@ class TechnicalVisit extends Model implements HasMedia
         'title',
         'ticket_id',
         'visit_date',
-        'observations',
+        'observation',
         'meta',
         'reprogramming',
         'type',
