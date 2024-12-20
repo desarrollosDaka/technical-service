@@ -39,14 +39,14 @@ Alpine.data('calendar', ({ visits }) => ({
             initialDate, // Establece la fecha inicial al mes de la última visita
             events: visits.map(visit => ({
                 title: visit.title,
-                start: visit.visit_date,
+                start: dayjs(visit.visit_date).locale('America/Caracas').toDate(),
                 ...visit,
             })),
             eventClick: (info) => {
                 $openModal('simpleModal');
                 document.getElementById('modal-title').textContent = info.event.title;
                 document.getElementById('modal-observation').textContent = info.event.extendedProps.observation;
-                document.getElementById('modal-date').textContent = info.event._instance.range.start.toLocaleDateString();
+                document.getElementById('modal-date').textContent = dayjs(info.event._instance.range.start).format('DD/MM/YYYY HH:mm');
 
                 let reprogramming = '';
                 _.each(info.event.extendedProps.reprogramming, (value, key) => {

@@ -87,7 +87,7 @@
                         <li class="block w-full bg-slate-100 rounded-xl p-3 mb-6">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-semibold">{{ $visit->title }}</h3>
-                                <p class="text-sm text-gray-500 font-semibold">{{ $visit->visit_date->format('d/m/Y') }}</p>
+                                <p class="text-sm text-gray-500 font-semibold">{{ $visit->visit_date->format('d/m/Y H:i') }}</p>
                             </div>
                             <p class="text-sm my-3">{{ $visit->observation }}</p>
                             @if ($visit->reprogramming && count($visit->reprogramming))
