@@ -58,6 +58,7 @@ class PartRequestController extends Controller
             'meta' => 'nullable|json',
             'date_handed' => 'nullable',
             'name' => 'required|max:255',
+            'budget_amount' => 'nullable|numeric',
         ]);
 
         $technicalVisit = TechnicalVisit::findOrFail($validated['technical_visit_id']);
