@@ -11,6 +11,7 @@ use App\Models\Tabulator;
 use App\Models\Technical;
 use App\Models\TechnicalVisit;
 use App\Models\Ticket;
+use Berkayk\OneSignal\OneSignalFacade;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.index')
@@ -58,6 +59,11 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
-    (new ServiceCallResolution(ServiceCall::find(1)))->handle();
-    dd(ServiceCall::find(1)->resolution);
+    // OneSignalFacade::sendNotificationToAll(
+    //     "Magallanes es mejor??",
+    //     $url = null,
+    //     $data = null,
+    //     $buttons = null,
+    //     $schedule = null
+    // );
 });
