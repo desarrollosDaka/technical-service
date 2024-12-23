@@ -99,7 +99,7 @@
                 </section>
                 <livewire:ticket.calendar :visits="$visits" />
                 <ul class="pt-6" x-show="displayCalendarMode === 'list'">
-                    @foreach ($visits as $visit)
+                    @forelse ($visits as $visit)
                         <li class="block w-full bg-slate-100 rounded-xl p-3 mb-6">
                             <div class="flex items-center justify-between">
                                 <h3 class="font-semibold">{{ $visit->title }}</h3>
@@ -141,7 +141,12 @@
                                 </div>
                             @endif
                         </li>
-                    @endforeach
+                    @empty
+                        <div class="flex items-center justify-center flex-col py-6">
+                            <x-icon name="bookmark-slash" class="w-12 h-12" outline />
+                            <h3 class="text-center font-semibold text-secondary-100 text-xl py-3">{{ __('El técnico aun no ha pautado visitas.') }}</h3>
+                        </div>
+                    @endforelse
                 </ul>
                 <div
                     class="fixed bg-black/40 w-full h-full flex items-center justify-center top-0 left-0 z-70"
