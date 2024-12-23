@@ -71,7 +71,6 @@ class Ticket extends Model implements HasMedia
 
         return self::$instance = self::where('service_call_id', ServiceCall::current()->id)
             ->orderByDesc('id')
-            ->whereNotIn('status', [TicketStatus::Close, TicketStatus::Reject])
             ->first();
     }
 
