@@ -9,9 +9,12 @@ use App\Models\PartRequest;
 class PartRequestObserver
 {
     /**
-     * Handle the PartRequest "created" event.
+     * Service call resolution
+     *
+     * @param PartRequest $partRequest
+     * @return void
      */
-    public function created(PartRequest $partRequest): void
+    private function callResolution(PartRequest $partRequest): void
     {
         ServiceCallResolution::dispatch(
             $partRequest->ticket()
@@ -22,16 +25,19 @@ class PartRequestObserver
     }
 
     /**
+     * Handle the PartRequest "created" event.
+     */
+    public function created(PartRequest $partRequest): void
+    {
+        $this->callResolution($partRequest);
+    }
+
+    /**
      * Handle the PartRequest "updated" event.
      */
     public function updated(PartRequest $partRequest): void
     {
-        ServiceCallResolution::dispatch(
-            $partRequest->ticket()
-                ->select(['tickets.id', 'tickets.service_call_id'])
-                ->first()
-                ->serviceCall
-        );
+        $this->callResolution($partRequest);
 
         PartRequestChangeStatusNotification::dispatch($partRequest);
     }
@@ -41,12 +47,7 @@ class PartRequestObserver
      */
     public function deleted(PartRequest $partRequest): void
     {
-        ServiceCallResolution::dispatch(
-            $partRequest->ticket()
-                ->select(['tickets.id', 'tickets.service_call_id'])
-                ->first()
-                ->serviceCall
-        );
+        $this->callResolution($partRequest);
     }
 
     /**

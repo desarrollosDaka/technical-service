@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\PartRequest\Status as PartRequestStatus;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Spatie\MediaLibrary\HasMedia;
@@ -14,7 +15,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 #[ObservedBy(\App\Observers\PartRequestObserver::class)]
 class PartRequest extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia;
+    use SoftDeletes, InteractsWithMedia, HasFactory;
 
     protected $fillable = [
         'name',
