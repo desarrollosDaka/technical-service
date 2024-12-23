@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tabulator;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 
 class TabulatorController extends Controller
 {
@@ -33,7 +34,7 @@ class TabulatorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         return $this->insertMany(
             request: $request,
