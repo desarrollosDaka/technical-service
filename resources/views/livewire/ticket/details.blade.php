@@ -166,6 +166,9 @@
         <script>
             Echo.channel(`App.Models.Ticket.{{ ticket()->id }}`)
                 .listen('NewComment', (e) => {
+                    console.log('Recibiendo nuevo comentario', {
+                        e
+                    });
                     $wire.dispatch('new-comment');
                 });
         </script>
