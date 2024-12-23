@@ -37,7 +37,11 @@ class ServiceCallSeeder extends Seeder
                             ->create(['ticket_id' => $ticket->id])
                             ->each(function (TechnicalVisit $visit) {
                                 // Crear solicitudes de partes para cada visita técnica
-                                PartRequest::factory()->count(10)->create(['technical_visit_id' => $visit->id,]);
+                                PartRequest::factory()
+                                    ->count(10)
+                                    ->create([
+                                        'technical_visit_id' => $visit->id
+                                    ]);
                             });
                     });
             });

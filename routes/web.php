@@ -3,14 +3,10 @@
 use App\Enums\Ticket\Status as TicketStatus;
 use App\Http\Middleware\CurrentServiceCall;
 use App\Http\Middleware\WithoutServiceCall;
-use App\Jobs\CreateTickets;
-use App\Jobs\ServiceCallResolution;
-use App\Models\PartRequest;
 use App\Models\Product;
 use App\Models\ServiceCall;
 use App\Models\Tabulator;
 use App\Models\Technical;
-use App\Models\TechnicalVisit;
 use App\Models\Ticket;
 use Berkayk\OneSignal\OneSignalFacade;
 use Illuminate\Support\Facades\Route;
@@ -60,5 +56,12 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test', function () {
+    $tickets = Ticket::where('status', TicketStatus::Open)
+        ->doesntHave('visits')
+        ->where('created_at', '<', now()->subHour(72))
+        ->get();
+
+
+    dump($tickets);
     return 'hola';
 });
