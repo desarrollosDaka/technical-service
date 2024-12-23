@@ -8,6 +8,13 @@ use Livewire\Component;
 class CloseTicket extends Component
 {
     /**
+     * btn text
+     *
+     * @var string
+     */
+    public string $btnText = 'Cerrar';
+
+    /**
      * Close the ticket
      *
      * @return void
@@ -26,7 +33,7 @@ class CloseTicket extends Component
     public function render()
     {
         return <<<'BLADE'
-            <x-button black light label="{{ __('Cerrar') }}" spinner wire:click="close" />
+            <x-button black light label="{{ __($btnText) }}" spinner wire:click="close" />
         BLADE;
     }
 }
