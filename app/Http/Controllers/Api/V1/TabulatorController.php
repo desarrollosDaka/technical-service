@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Tabulator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,6 +37,7 @@ class TabulatorController extends Controller
      */
     public function store(Request $request): Response
     {
+        Log::info('Llegando info', $request->all());
         return $this->insertMany(
             request: $request,
             model: new Tabulator,
