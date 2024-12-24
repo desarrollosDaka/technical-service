@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Enums\Ticket\Status;
+use App\Models\ServiceCall;
+use App\Models\Technical;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +19,11 @@ class TicketFactory extends Factory
      */
     public function definition(): array
     {
+        $serviceCall = ServiceCall::all()->random();
+
         return [
-            'service_call_id' => $this->faker->numberBetween(1, 50),
-            'title' => $this->faker->sentence(),
+            'service_call_id' => $serviceCall->id,
+            'title' => $serviceCall->custmrName,
             'diagnosis_date' => $this->faker->date(),
             'diagnosis_detail' => $this->faker->text(),
             'solution_date' => $this->faker->date(),
@@ -31,6 +35,9 @@ class TicketFactory extends Factory
                 array_map(fn($status) => $status->value, Status::cases())
             ),
             'total_cost' => $this->faker->randomFloat(2, 0, 1000),
+            'technical_id' => Technical::where('ID_user', $serviceCall->ASSIGNED_TECHNICIAN)
+                ->first()
+                ->getKey(),
         ];
     }
 }

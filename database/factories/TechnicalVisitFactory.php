@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class TechnicalVisitFactory extends Factory
             'title' => $this->faker->sentence(),
             'visit_date' => $this->faker->date(),
             'observation' => $this->faker->text(),
+            'ticket_id' => Ticket::all()->random()->getKey(),
         ];
     }
 }

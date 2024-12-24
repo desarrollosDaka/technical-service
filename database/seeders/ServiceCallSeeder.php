@@ -20,30 +20,6 @@ class ServiceCallSeeder extends Seeder
     {
         ServiceCall::factory()
             ->count(10)
-            ->create()
-            ->each(function (ServiceCall $serviceCall) {
-                $serviceCall
-                    ->tickets()
-                    ->create([
-                        'title' => Arr::get($serviceCall, 'itemName', $serviceCall->subject),
-                        'customer_name' => $serviceCall->custmrName,
-                        'technical_id' => Technical::where('ID_user', $serviceCall->ASSIGNED_TECHNICIAN)
-                            ->first()
-                            ->getKey(),
-                    ])
-                    ->each(function (Ticket $ticket) {
-                        TechnicalVisit::factory()
-                            ->count(10)
-                            ->create(['ticket_id' => $ticket->id])
-                            ->each(function (TechnicalVisit $visit) {
-                                // Crear solicitudes de partes para cada visita técnica
-                                PartRequest::factory()
-                                    ->count(10)
-                                    ->create([
-                                        'technical_visit_id' => $visit->id
-                                    ]);
-                            });
-                    });
-            });
+            ->create();
     }
 }

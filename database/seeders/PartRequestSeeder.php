@@ -2,19 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\TechnicalVisit;
+use App\Models\PartRequest;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TechnicalVisitsSeeder extends Seeder
+class PartRequestSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        TechnicalVisit::factory()
-            ->count(30)
-            ->create();
+        PartRequest::factory()->count(40)->create();
     }
 }
