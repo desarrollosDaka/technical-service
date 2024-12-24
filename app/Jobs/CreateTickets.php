@@ -79,7 +79,7 @@ class CreateTickets implements ShouldQueue
                 ],
             ];
 
-            OneSignalFacade::sendNotificationCustom($fields);
+            // OneSignalFacade::sendNotificationCustom($fields);
         }
     }
 }
