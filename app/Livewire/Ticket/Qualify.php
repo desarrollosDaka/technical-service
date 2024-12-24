@@ -6,6 +6,7 @@ use App\Models\Ticket;
 use Livewire\Component;
 use App\Models\QualifySupport;
 use App\Models\TechnicalVisit;
+use Livewire\Attributes\Validate;
 
 class Qualify extends Component
 {
@@ -14,6 +15,7 @@ class Qualify extends Component
      *
      * @var integer
      */
+    #[Validate('required|numeric|min:1')]
     public int $star = 0;
 
     /**
@@ -37,6 +39,9 @@ class Qualify extends Component
      */
     public array $visits = [];
 
+    /**
+     * Listado de visitas
+     */
     public array $visits_occurred = [];
 
     /**
@@ -51,7 +56,24 @@ class Qualify extends Component
 
         $this->star = $this->previousQualify ? $this->previousQualify->qualification : 0;
         $this->comment = $this->previousQualify ? $this->previousQualify->comment : '';
-        $this->visits = array_map(fn(array $visit) => [...$visit, 'has' => true], Ticket::current()->visits->toArray());
+        $this->visits = array_map(
+            function (array $visit) {
+                $has = true;
+
+                if ($this->previousQualify && $this->previousQualify->meta['visits']) {
+                    $find = current(
+                        array_filter($this->previousQualify->meta['visits'], fn($item) => $item['visit_id'] == $visit['id']) ?? ['occurred' => false]
+                    );
+                    $has = $find['occurred'];
+                }
+
+                return [
+                    'has' => $has,
+                    ...$visit,
+                ];
+            },
+            Ticket::current()->visits->toArray()
+        );
 
         foreach ($this->visits as  $value) {
             $this->visits_occurred[$value['id']] = $value['has'];
@@ -65,12 +87,22 @@ class Qualify extends Component
      */
     public function send()
     {
+        $this->validate();
+        $visits_occurred = [];
+
+        foreach ($this->visits_occurred as $key => $value) {
+            $visits_occurred[] = [
+                'visit_id' => $key,
+                'occurred' => $value
+            ];
+        }
+
         $this->previousQualify = QualifySupport::create([
             'qualification' => $this->star,
             'comment' => $this->comment,
             'ticket_id' => Ticket::current()->getKey(),
             'meta' => [
-                'visits_occurred_id' => $this->visits_occurred
+                'visits' => $visits_occurred
             ],
         ]);
 

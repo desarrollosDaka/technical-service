@@ -6,7 +6,7 @@
     @endunless
 
     <x-modal name="qualification" title="{{ __('Calificar soporte') }}">
-        <x-card title="{{ __('Calificar soporte') }}">
+        <x-card title="{{ __('Calificar soporte') }}" with='xl'>
             <p class="text-neutral-600 text-sm md:max-w-[65%] text-center mx-auto mb-6">¡{{ __('Para tiendas DAKA es importante conocer tu opinion de nuestro servicio técnico') }}!</p>
 
             <div class="flex items-center flex-col mb-4">
@@ -42,6 +42,9 @@
                     <p x-show="(startOnHover || star) === 4">{{ __('Bueno') }}</p>
                     <p x-show="(startOnHover || star) === 5">{{ __('¡Excelente!') }}</p>
                 </div>
+                @error('star')
+                    <x-alert title="{{ __('Por favor, dale aunque sea una estrella 😢😢.') }}" negative flat class="mt-4" />
+                @enderror
             </div>
 
             {{-- Listado de visitas --}}
@@ -57,8 +60,9 @@
                             <div>
                                 <x-toggle
                                     rounded="sm"
-                                    label="{{ __('Esta visita ocurrió?') }}"
+                                    label="{{ __('¿Esta visita ocurrió?') }}"
                                     wire:model="visits_occurred.{{ $visit['id'] }}"
+                                    :disabled="(bool) $previousQualify"
                                     xl />
                             </div>
                         </li>
@@ -66,7 +70,7 @@
                 </ul>
             @endif
 
-            <x-textarea :disabled="(bool) $previousQualify" placeholder="{{ __('¿Como fue tu experiencia? Cuéntanos!') }}" wire:model="comment" />
+            <x-textarea :disabled="(bool) $previousQualify" placeholder="{{ __('¿Como fue tu experiencia? ¡Cuéntanos!') }}" wire:model="comment" />
 
             @if ($previousQualify)
                 <x-alert title="{{ __('¡Gracias por tu calificación!') }}" positive flat class="mt-4" />
