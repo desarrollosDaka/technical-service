@@ -21,7 +21,7 @@ class TechnicalVisitFactory extends Factory
             'title' => $this->faker->sentence(),
             'visit_date' => $this->faker->date(),
             'observation' => $this->faker->text(),
-            'ticket_id' => Ticket::all()->random()->getKey(),
+            'ticket_id' => Ticket::inRandomOrder()->first()->getKey(),
         ];
     }
 }

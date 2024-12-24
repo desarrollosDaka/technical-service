@@ -19,10 +19,10 @@ class TicketFactory extends Factory
      */
     public function definition(): array
     {
-        $serviceCall = ServiceCall::all()->random();
+        $serviceCall = ServiceCall::inRandomOrder()->first();
 
         return [
-            'service_call_id' => $serviceCall->id,
+            'service_call_id' => $serviceCall->getKey(),
             'title' => $serviceCall->custmrName,
             'diagnosis_date' => $this->faker->date(),
             'diagnosis_detail' => $this->faker->text(),

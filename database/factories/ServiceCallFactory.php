@@ -50,7 +50,7 @@ class ServiceCallFactory extends Factory
             'Reminder' => 'N',
             'RemQty' => 15,
             'RemType' => 'M',
-            'ASSIGNED_TECHNICIAN' => Technical::all()->random()->ID_user,
+            'ASSIGNED_TECHNICIAN' => Technical::inRandomOrder()->first()->ID_user,
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
             'Location' => $this->faker->address(),

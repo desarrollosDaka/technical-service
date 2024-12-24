@@ -27,7 +27,7 @@ class PartRequestFactory extends Factory
             'budget_amount' => $status === 6 ? $this->faker->randomNumber(4) : null,
             'date_handed' => $status === 4 ? now() : null,
             'meta' => [],
-            'technical_visit_id' => TechnicalVisit::all()->random()->getKey(),
+            'technical_visit_id' => TechnicalVisit::inRandomOrder()->first()->getKey(),
         ];
     }
 }

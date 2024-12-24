@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TabulatorSeeder::class,
             TechnicalSeeder::class,
             ServiceCallSeeder::class,
+            TicketSeeder::class,
             TechnicalVisitsSeeder::class,
             PartRequestSeeder::class,
         ]);
