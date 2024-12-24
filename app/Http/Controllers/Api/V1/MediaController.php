@@ -54,14 +54,15 @@ class MediaController extends Controller
 
             return $this->success($createdMedia, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
+            $isError = $th->getCode() >= 400 || $th->getCode() <= 505;
             return $this->error(
                 [
                     'data' => __('Invalid model type'),
-                    'message' => config('app.debug') ? $th->getMessage() : __('Ops! Something went wrong'),
+                    'message' => $isError ? $th->getMessage() : __('Ops! Something went wrong'),
                     'success' => false,
                     'tracer' => config('app.debug') ? $th->getTrace() : __('Ops! Something went wrong'),
                 ],
-                Response::HTTP_BAD_REQUEST
+                $isError ? $th->getCode() :  Response::HTTP_BAD_REQUEST
             );
         }
     }
