@@ -37,7 +37,6 @@ class TabulatorController extends Controller
      */
     public function store(Request $request): Response
     {
-        Log::info('Llegando info', $request->all());
         return $this->insertMany(
             request: $request,
             model: new Tabulator,
