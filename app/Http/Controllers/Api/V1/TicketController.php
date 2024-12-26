@@ -116,6 +116,7 @@ class TicketController extends Controller
                     'serviceCall',
                     'visits',
                     'partRequest',
+                    'comments',
                     AllowedInclude::callback('media', function (MorphMany $query) {
                         if (request()->has('collection_name')) {
                             return $query->where('collection_name', request('collection_name'));

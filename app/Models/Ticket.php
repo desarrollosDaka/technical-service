@@ -59,6 +59,11 @@ class Ticket extends Model implements HasMedia
         'total_cost' => 'float',
     ];
 
+    /**
+     * Current ticket en el front de usuarios
+     *
+     * @return Ticket|null
+     */
     public static function current(): ?Ticket
     {
         if (self::$instance) {
