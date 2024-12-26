@@ -16,17 +16,21 @@
             </li>
         @endforeach
     </ul>
-    <form class="mt-2 flex flex-wrap md:flex-nowrap items-start gap-3" wire:submit="send">
-        <x-textarea
-            placeholder="{{ __('Deja tu comentario con el servicio técnico') }}"
-            class="w-full md:w-11/12"
-            wire:model="comment" />
-        <x-button
-            primary
-            type="submit"
-            label="{{ __('Enviar') }}"
-            class="w-full md:w-auto font-bold !text-secondary-100" />
-    </form>
+    @if (ticket()->status === App\Enums\Ticket\Status::Progress || ticket()->status === App\Enums\Ticket\Status::Open)
+        <form class="mt-2 flex flex-wrap md:flex-nowrap items-start gap-3" wire:submit="send">
+            <x-textarea
+                placeholder="{{ __('Deja tu comentario con el servicio técnico') }}"
+                class="w-full md:w-11/12"
+                wire:model="comment" />
+            <x-button
+                primary
+                type="submit"
+                label="{{ __('Enviar') }}"
+                class="w-full md:w-auto font-bold !text-secondary-100" />
+        </form>
+    @else
+        <h5 class="text-center font-semibold text-gray-700">{{ __('El servicio técnico ya se encuentra cerrado o en pausa.') }}</h5>
+    @endif
     @script
         <script>
             const commentsContainer = $wire.el.querySelector('ul');
