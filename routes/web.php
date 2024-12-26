@@ -67,13 +67,44 @@ Route::get('/tabulators', function () {
 });
 
 
-Route::get('/test', function () {
-    $tickets = Ticket::where('status', TicketStatus::Open)
-        ->doesntHave('visits')
-        ->where('created_at', '<', now()->subHour(72))
-        ->get();
+Route::get('/test-one-signal', function (Request $request) {
+    $request->validate([
+        'ticket_id' => 'required',
+        'technical_id' => 'required',
+    ]);
 
+    $heading = [
+        'es' => 'Servicio técnico Daka',
+        'en' => 'Daka technical service',
+    ];
 
-    dump($tickets);
-    return 'hola';
+    $content = [
+        'es' => "Hola! ESTO ES UN TEST",
+        'en' => "Hola! ESTO ES UN TEST",
+    ];
+
+    $fields = [
+        'filters' => [
+            [
+                "field" => "tag",
+                "key" => "external_id",
+                "relation" => "=",
+                "value" => "technical-{$request->get('technical_id', 0)}"
+            ],
+        ],
+        'contents' => $content,
+        'headings' => $heading,
+        'data' => [
+            'ticket_id' => $request->get('ticket_id', 0),
+        ],
+    ];
+
+    try {
+        OneSignalFacade::sendNotificationCustom($fields);
+        return 'OneSignalFacade Send';
+    } catch (\Throwable $th) {
+        dump($th);
+    }
+
+    return 'OneSignalFacade Falla';
 });
