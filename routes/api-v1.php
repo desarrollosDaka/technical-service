@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\PartRequestController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ServiceCallController;
 use App\Http\Controllers\Api\V1\TabulatorController;
+use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Middleware\BackendToken;
 use App\Models\PartRequest;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ Route::prefix('v1')->group(function () {
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/user', [AuthController::class, 'user']);
         Route::post('/user', [AuthController::class, 'update']);
-        Route::apiResource('/tickets', App\Http\Controllers\Api\V1\TicketController::class);
+        Route::apiResource('/tickets', TicketController::class);
         Route::apiResource('/technical-visits', App\Http\Controllers\Api\V1\TechnicalVisitController::class);
         Route::patch('/technical-visits/{technicalVisit}/reprogramming', [App\Http\Controllers\Api\V1\TechnicalVisitController::class, 'reprogramming']);
         Route::apiResource('/comments', CommentController::class)->only(['index', 'store']);
@@ -39,6 +40,11 @@ Route::prefix('v1')->group(function () {
             Route::get('/part-requests', [PartRequestController::class, 'sync']);
             Route::post('/part-requests', [PartRequestController::class, 'syncStatus']);
             Route::get('/service-calls', [ServiceCallController::class, 'sync']);
+        });
+
+        Route::group(['prefix' => 'external'], function () {
+            Route::get('/tickets', [TicketController::class, 'externalGet']);
+            Route::get('/tickets/{ticket_id}', [TicketController::class, 'externalFindGet']);
         });
     });
 });
