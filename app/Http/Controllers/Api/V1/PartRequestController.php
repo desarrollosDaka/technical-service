@@ -77,8 +77,9 @@ class PartRequestController extends Controller
      */
     public function sync(): Response
     {
-        return $this->success(
-            PartRequest::where('status', PartRequestStatus::New)
+        return $this->success([
+            'success' => true,
+            'data' =>  PartRequest::where('status', PartRequestStatus::New)
                 ->with([
                     'media' => fn($query) => $query
                         ->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk']),
@@ -94,8 +95,8 @@ class PartRequestController extends Controller
                         ...$partRequest->toArray(),
                         'callID' => $partRequest->ticket->serviceCall->callID
                     ];
-                })
-        );
+                }),
+        ]);
     }
 
     /**
