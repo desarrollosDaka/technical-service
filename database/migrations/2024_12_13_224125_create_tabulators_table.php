@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create((new Tabulator)->getTable(), function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
             $table->string('n')->nullable();
             $table->string('linea')->nullable();
             $table->string('gama')->nullable();
@@ -21,7 +22,6 @@ return new class extends Migration
             $table->string('familia')->nullable();
             $table->string('repuestos')->nullable();
             $table->string('costos_servicios')->nullable();
-            $table->timestamps();
         });
     }
 

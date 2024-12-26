@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('ID_user');
+            $table->unsignedBigInteger('ID_user')->unique();
             $table->string('Name_user_comercial')->nullable();
             $table->string('Services')->nullable();
             $table->string('User_name')->nullable();
