@@ -72,10 +72,14 @@ Route::get('/test-one-signal', function (Request $request) {
         return 'Opps!';
     }
 
-    $request->validate([
-        'ticket_id' => 'required',
-        'technical_id' => 'required',
-    ]);
+    try {
+        $request->validate([
+            'ticket_id' => 'required',
+            'technical_id' => 'required',
+        ]);
+    } catch (\Throwable $th) {
+        return $th->getMessage();
+    }
 
     $heading = [
         'es' => 'Servicio técnico Daka',
