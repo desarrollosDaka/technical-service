@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\PartRequest\Status as PartRequestStatus;
 use App\Models\PartRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -28,6 +29,13 @@ class PartRequestChangeStatusNotification implements ShouldQueue
      */
     public function handle(): void
     {
+        if (in_array(
+            $this->partRequest->status->value,
+            [PartRequestStatus::New->value, PartRequestStatus::UpdatedBudgetAmount->value, PartRequestStatus::AlreadyBoughtPart->value]
+        )) {
+            return;
+        }
+
         $ticket = $this->partRequest->ticket()->select(['tickets.id', 'tickets.technical_id'])->first();
         $technical = $ticket->technical;
 
