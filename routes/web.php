@@ -68,6 +68,10 @@ Route::get('/tabulators', function () {
 
 
 Route::get('/test-one-signal', function (Request $request) {
+    if (!app()->hasDebugModeEnabled()) {
+        return 'Opps!';
+    }
+
     $request->validate([
         'ticket_id' => 'required',
         'technical_id' => 'required',
