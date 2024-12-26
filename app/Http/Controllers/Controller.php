@@ -12,6 +12,16 @@ abstract class Controller
 {
     use ApiV1Responser;
 
+    /**
+     * Insert many records
+     *
+     * @param Request $request
+     * @param Model $model
+     * @param callable|null $afterCreate
+     * @param callable|null $beforeCreate
+     * @param string|null $getInsertedId
+     * @return Response
+     */
     public function insertMany(
         Request $request,
         Model $model,

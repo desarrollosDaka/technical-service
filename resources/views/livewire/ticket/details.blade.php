@@ -14,7 +14,7 @@
         @if ($selectedTab === 'details')
             <table class="w-full">
                 <tbody>
-                    @if (ticket()->status === App\Enums\Ticket\Status::Close)
+                    @if (ticket()->status === App\Enums\Ticket\Status::Resolution || ticket()->status === App\Enums\Ticket\Status::Close)
                         <tr>
                             <th>
                                 <p class="my-2 text-left">{{ __('Calificar soporte') }}</p>
@@ -40,7 +40,12 @@
                         <th class="text-left">
                             <p class="my-2">{{ __('Estado') }}</p>
                         </th>
-                        <td>{{ ticket()->status->getLabel() }}</td>
+                        <td>
+                            <x-badge
+                                md
+                                :color="ticket()->status->getColor()"
+                                :label="ticket()->status->getLabel()" />
+                        </td>
                     </tr>
                     @if (ticket()->diagnosis_date)
                         <tr>

@@ -26,10 +26,12 @@ enum Status: int
     {
         return match ($this->value) {
             self::Open->value => 'secondary',
-            self::Close->value => 'black',
+            self::Close->value => 'primary',
             self::Reject->value => 'negative',
             self::Progress->value => 'primary',
             self::inPause->value => 'warning',
+            self::Cancel->value => 'negative',
+            self::Resolution->value => 'positive',
         };
     }
 }

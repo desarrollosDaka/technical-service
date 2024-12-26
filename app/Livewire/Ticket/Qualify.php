@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Ticket;
 
+use App\Enums\Ticket\Status;
 use App\Models\Ticket;
 use Livewire\Component;
 use App\Models\QualifySupport;
@@ -105,6 +106,8 @@ class Qualify extends Component
                 'visits' => $visits_occurred
             ],
         ]);
+
+        Ticket::current()->update(['status' => Status::Close]);
 
         $this->dispatch('closeModal', 'qualification');
     }
