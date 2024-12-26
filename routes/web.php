@@ -9,11 +9,20 @@ use App\Models\Tabulator;
 use App\Models\Technical;
 use App\Models\Ticket;
 use Berkayk\OneSignal\OneSignalFacade;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 Route::view('/', 'pages.index')
     ->name('index')
     ->middleware(WithoutServiceCall::class);
+
+Route::get('/login', function (Request $request) {
+    return response(
+        ['message' => 'Unauthenticated.'],
+        Response::HTTP_UNAUTHORIZED
+    );
+})->name('login');
 
 Route::view('/show-ticket', 'pages.ticket.show')
     ->name('ticket.show')
