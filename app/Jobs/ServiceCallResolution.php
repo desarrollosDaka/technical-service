@@ -60,14 +60,14 @@ class ServiceCallResolution implements ShouldQueue
         $resolutionString .= "\n\n## Detalles del Ticket (Aplicativo)\n";
         $resolutionString .= "# ID Aplicativo: " . $ticket->id;
         $resolutionString .= "\n# Titulo= " . $ticket->title . "\n";
-        $resolutionString .= "# Aceptado el: " . $ticket->created_at->format('d/m/Y') . "\n";
+        $resolutionString .= "# Creado el: " . $ticket->created_at->format('d/m/Y H:i:s a') . "\n";
 
         if ($ticket->diagnosis_date && $ticket->status === TicketStatus::Progress) {
-            $resolutionString .= "# Diagnostico: " . $ticket->diagnosis_date?->format('d/m/Y') . " =Detalles=" . $ticket->diagnosis_detail;
+            $resolutionString .= "# Diagnostico: " . $ticket->diagnosis_date?->format('d/m/Y H:i:s a') . " =Detalles=" . $ticket->diagnosis_detail;
         } else if ($ticket->reject_date && $ticket->status === TicketStatus::Reject) {
-            $resolutionString .= "# Rechazado: " . $ticket->reject_date?->format('d/m/Y') . " =Detalles=" . $ticket->reject_detail;
+            $resolutionString .= "# Rechazado: " . $ticket->reject_date?->format('d/m/Y H:i:s a') . " =Detalles=" . $ticket->reject_detail;
         } else if ($ticket->solution_date && ($ticket->status === TicketStatus::Resolution || $ticket->status === TicketStatus::Close)) {
-            $resolutionString .= "# Resolución Final: " . $ticket->solution_date?->format('d/m/Y');
+            $resolutionString .= "# Resolución Final: " . $ticket->solution_date?->format('d/m/Y H:i:s a');
             $resolutionString .= "\n# Detalles: " . $ticket->solution_detail;
         } else if ($ticket->status === TicketStatus::Open) {
             $resolutionString .= "# El ticket esta esperando ser aceptado";
@@ -99,6 +99,7 @@ class ServiceCallResolution implements ShouldQueue
         foreach ($visits as $visit) {
             $resolutionString .= "\n----------------------------------------";
             $resolutionString .= "\n# Visita ID Aplicativo: " . $visit->id . " =Creada el= " . $visit->created_at->format('d/m/Y');
+            $resolutionString .= "\n# Creada el= " . $visit->created_at->format('d/m/Y');
             $resolutionString .= "\n# Fecha pautada de la visita: " . ($visit->visit_date ? $visit->visit_date->format('d/m/Y H:i:s') : 'No hay fecha pautada');
             $resolutionString .= "\n# Observaciones el técnico:" . $visit->observation;
             $partRequests = $visit->partRequest;
@@ -127,6 +128,7 @@ class ServiceCallResolution implements ShouldQueue
                 }
             }
 
+            // Solicitudes de repuesto
             if ($partRequests->count() === 0) {
                 $resolutionString .= "\n\n# No se han solicitado repuestos";
             } else {
@@ -177,7 +179,6 @@ class ServiceCallResolution implements ShouldQueue
             ? number_format(($total_size / (1024 * 1024)), 2) . " MB"
             : 0 . " KB"
         );
-
 
         $this->serviceCall->update([
             'resolution' => $resolutionString,

@@ -37,7 +37,10 @@ Route::get('/technical', function () {
 
 Route::get('/service-calls', function () {
     if (app()->hasDebugModeEnabled()) {
-        return ServiceCall::orderBy('id', 'DESC')->limit(50)->get();
+        return ServiceCall::orderBy('id', 'DESC')
+            ->orderByDesc('updated_at')
+            ->limit(50)
+            ->get();
     }
     return 'Oops!';
 });

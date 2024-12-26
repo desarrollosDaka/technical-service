@@ -40,6 +40,14 @@ class CreateTickets implements ShouldQueue
             $technical = Technical::where('ID_user', $serviceCall->ASSIGNED_TECHNICIAN)
                 ->first();
 
+            if (!$technical) {
+                Log::error('No se encontró el técnico en la llamada de servicio', [
+                    'callID' => $insert,
+                    'ASSIGNED_TECHNICIAN' => $serviceCall->ASSIGNED_TECHNICIAN,
+                ]);
+                continue;
+            }
+
             $ticketCreated = Ticket::create([
                 'title' => Arr::get($serviceCall, 'itemName', $serviceCall->subject),
                 'service_call_id' => $serviceCall->getKey(),
