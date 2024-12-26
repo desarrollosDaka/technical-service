@@ -103,6 +103,8 @@ return new class extends Migration
             $table->string('AddrType')->nullable();
             $table->string('Street')->nullable();
             $table->string('City')->nullable();
+            $table->text('REFERENCE_DIRECTORY')->nullable();
+            $table->text('REFERENCE_CITY')->nullable();
             $table->string('Room')->nullable();
             $table->string('State')->nullable();
             $table->string('Country')->nullable();
