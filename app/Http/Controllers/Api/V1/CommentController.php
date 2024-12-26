@@ -20,7 +20,7 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $request->validate([
             'commentable_type' => [
@@ -40,13 +40,18 @@ class CommentController extends Controller
             default => null,
         };
 
-        Gate::authorize('update', $record);
+        if ($request->user()) {
+            Gate::authorize('update', $record);
+        }
 
         return $this->success(
             QueryBuilder::for(Comment::class)
                 ->allowedSorts(['created_at'])
                 ->defaultSort(['-created_at'])
-                ->allowedIncludes(['commentator', 'commentable'])
+                ->allowedIncludes([
+                    'commentator',
+                    'commentable'
+                ])
                 ->where('commentable_id', $record->id)
                 ->where('commentable_type', get_class($record))
                 ->simplePaginate()
@@ -56,7 +61,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         $request->validate([
             'comment' => 'required',
@@ -94,24 +99,8 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Comment $comment)
+    public function externalGet(Request $request): Response
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
-        //
+        return $this->index($request);
     }
 }
