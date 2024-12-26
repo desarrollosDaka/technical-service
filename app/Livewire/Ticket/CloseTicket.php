@@ -15,6 +15,20 @@ class CloseTicket extends Component
     public string $btnText = 'Cerrar';
 
     /**
+     * Color del botón
+     *
+     * @var string
+     */
+    public string $color = 'black';
+
+    /**
+     * Light btn
+     *
+     * @var bool
+     */
+    public bool $light = true;
+
+    /**
      * Close the ticket
      *
      * @return void
@@ -33,7 +47,7 @@ class CloseTicket extends Component
     public function render()
     {
         return <<<'BLADE'
-            <x-button black light label="{{ __($btnText) }}" spinner wire:click="close" />
+            <x-button :$color light label="{{ __($btnText) }}" spinner wire:click="close" />
         BLADE;
     }
 }

@@ -1,8 +1,9 @@
 <div>
     @if (serviceCall() && !ticket())
         <h2 class="text-lg text-secondary-100 font-semibold">Aun no se encuentra un técnico asignado a este soporte.</h2>
-        <p class="font-bold mb-6">{{ __('Número del servicio') }}: {{ serviceCall()->callID }} </p>
-        <livewire:ticket.close-ticket btnText="Cerrar consulta" />
+        <p class="font-bold">{{ __('Número del servicio') }}: {{ serviceCall()->callID }} </p>
+        <p class="font-bold mb-6">{{ __('Cliente') }}: {{ serviceCall()->custmrName }} </p>
+        <livewire:ticket.close-ticket btnText="Cerrar consulta" color="yellow" />
     @else
         <form wire:submit="send">
             <div class="grid md:grid-cols-5 gap-4 mb-4">
