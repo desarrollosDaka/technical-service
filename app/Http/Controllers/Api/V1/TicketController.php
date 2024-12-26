@@ -124,7 +124,7 @@ class TicketController extends Controller
                         return $query;
                     }),
                 ])
-                ->find($ticket->getKey())
+                ->findOrFail($ticket->getKey())
         );
     }
 }
