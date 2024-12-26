@@ -111,7 +111,12 @@ Route::get('/test-one-signal', function (Request $request) {
         OneSignalFacade::sendNotificationCustom($fields);
         return 'OneSignalFacade Send';
     } catch (\Throwable $th) {
-        dump($th);
+        dump([
+            'message' => $th->getMessage(),
+            'trace' => $th->getTrace(),
+            'file' => $th->getFile(),
+            'code' => $th->getCode(),
+        ]);
     }
 
     return 'OneSignalFacade Falla';
