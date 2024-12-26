@@ -85,7 +85,7 @@
                         <th class="text-left">{{ __('Dirección') }}</th>
                         <td>
                             <p class="my-2 text-sm">
-                                {{ trim(serviceCall()->Location) }}
+                                {{ trim(serviceCall()->REFERENCE_CITY) }}: {{ trim(serviceCall()->REFERENCE_DIRECTORY) }}
                             </p>
                         </td>
                     </tr>

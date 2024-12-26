@@ -54,6 +54,8 @@ class ServiceCallFactory extends Factory
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
             'Location' => $this->faker->address(),
+            'REFERENCE_CITY' => $this->faker->city(),
+            'REFERENCE_DIRECTORY' => $this->faker->address(),
         ];
     }
 }
