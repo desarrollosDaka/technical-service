@@ -85,4 +85,14 @@ class ServiceCall extends Model
     {
         return $this->hasManyThrough(Technical::class, Ticket::class, 'service_call_id', 'id', 'id');
     }
+
+    /**
+     * Técnicos de los tickets por los que ha pasado el ticket
+     *
+     * @return HasManyThrough
+     */
+    public function partRequest(): HasManyThrough
+    {
+        return $this->hasManyThrough(PartRequest::class, Ticket::class, 'service_call_id', 'id', 'id');
+    }
 }

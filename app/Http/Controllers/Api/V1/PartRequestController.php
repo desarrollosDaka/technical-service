@@ -7,6 +7,7 @@ use App\Enums\Ticket\Status;
 use App\Http\Controllers\Controller;
 use App\Jobs\UpdatePartRequest;
 use App\Models\PartRequest;
+use App\Models\ServiceCall;
 use App\Models\TechnicalVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -75,8 +76,19 @@ class PartRequestController extends Controller
      *
      * @return Response
      */
-    public function sync(): Response
+    public function sync(Request $request): Response
     {
+        if ($request->has('callID')) {
+            $service_call = ServiceCall::where('callID', $request->callID)->firstOrFail();
+            $ticket = $service_call
+                ->tickets()
+                ->whereNotIn('status', [Status::Cancel, Status::Reject])
+                ->with(['partRequest'])
+                ->first();
+
+            return $this->success($ticket);
+        }
+
         return $this->success([
             'success' => true,
             'data' =>  PartRequest::where('status', PartRequestStatus::New)
