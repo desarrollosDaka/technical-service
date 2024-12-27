@@ -33,7 +33,7 @@ class TechnicalVisitController extends Controller
             ->where('technical_id', $request->user()->getKey())
             ->firstOrFail();
 
-        Gate::authorize('view', TechnicalVisit::class);
+        Gate::authorize('view', $ticket);
 
         return $this->externalGet($request);
     }
@@ -58,11 +58,8 @@ class TechnicalVisitController extends Controller
     public function show(TechnicalVisit $technicalVisit): Response
     {
         Gate::authorize('view', $technicalVisit);
-        return $this->success(
-            QueryBuilder::for(TechnicalVisit::class)
-                ->allowedIncludes(['ticket'])
-                ->find($technicalVisit->getKey())
-        );
+
+        return $this->externalFindGet($technicalVisit);
     }
 
     /**
@@ -134,19 +131,33 @@ class TechnicalVisitController extends Controller
      */
     public function externalGet(Request $request): Response
     {
-        $request->validate([
-            'ticket_id' => 'nullable',
-        ]);
-
         return $this->success(
             QueryBuilder::for(TechnicalVisit::class)
                 ->allowedFilters(['visit_date'])
                 ->allowedSorts(['visit_date', 'created_at'])
                 ->defaultSort('-created_at')
                 ->allowedIncludes(['ticket', 'media'])
-                ->where('ticket_id', $request->get('ticket_id'))
+                ->when(
+                    $request->has('ticket_id'),
+                    fn($query) => $query->where('ticket_id', $request->ticket_id)
+                )
                 ->simplePaginate()
                 ->appends($request->query())
+        );
+    }
+
+    /**
+     * External función get
+     *
+     * @param TechnicalVisit $technicalVisit
+     * @return Response
+     */
+    public function externalFindGet(TechnicalVisit $technicalVisit): Response
+    {
+        return $this->success(
+            QueryBuilder::for(TechnicalVisit::class)
+                ->allowedIncludes(['ticket'])
+                ->find($technicalVisit->getKey())
         );
     }
 }

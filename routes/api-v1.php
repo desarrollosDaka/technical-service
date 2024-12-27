@@ -48,6 +48,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/tickets/{ticket}', [TicketController::class, 'externalFindGet']);
             Route::get('/comments', [CommentController::class, 'externalGet']);
             Route::get('/technical-visits', [TechnicalVisitController::class, 'externalGet']);
+            Route::get('/technical-visits/{technicalVisit}', [TechnicalVisitController::class, 'externalFindGet']);
         });
     });
 });
