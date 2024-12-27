@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\PartRequestController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ServiceCallController;
 use App\Http\Controllers\Api\V1\TabulatorController;
+use App\Http\Controllers\Api\V1\TechnicalVisitController;
 use App\Http\Controllers\Api\V1\TicketController;
 use App\Http\Middleware\BackendToken;
 use App\Models\PartRequest;
@@ -19,8 +20,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/user', [AuthController::class, 'user']);
         Route::post('/user', [AuthController::class, 'update']);
         Route::apiResource('/tickets', TicketController::class);
-        Route::apiResource('/technical-visits', App\Http\Controllers\Api\V1\TechnicalVisitController::class);
-        Route::patch('/technical-visits/{technicalVisit}/reprogramming', [App\Http\Controllers\Api\V1\TechnicalVisitController::class, 'reprogramming']);
+        Route::apiResource('/technical-visits', TechnicalVisitController::class);
+        Route::patch('/technical-visits/{technicalVisit}/reprogramming', [TechnicalVisitController::class, 'reprogramming']);
         Route::apiResource('/comments', CommentController::class)->only(['index', 'store']);
         Route::apiResource('/media', App\Http\Controllers\Api\V1\MediaController::class)->except(['update']);
         Route::apiResource('/products', ProductController::class)->only(['index']);
@@ -46,6 +47,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/tickets', [TicketController::class, 'externalGet']);
             Route::get('/tickets/{ticket}', [TicketController::class, 'externalFindGet']);
             Route::get('/comments', [CommentController::class, 'externalGet']);
+            Route::get('/technical-visits', [TechnicalVisitController::class, 'externalGet']);
         });
     });
 });

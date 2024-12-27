@@ -33,18 +33,9 @@ class TechnicalVisitController extends Controller
             ->where('technical_id', $request->user()->getKey())
             ->firstOrFail();
 
-        Gate::authorize('viewAny', TechnicalVisit::class);
+        Gate::authorize('view', TechnicalVisit::class);
 
-        return $this->success(
-            QueryBuilder::for(TechnicalVisit::class)
-                ->allowedFilters(['visit_date'])
-                ->allowedSorts(['visit_date', 'created_at'])
-                ->defaultSort('-created_at')
-                ->allowedIncludes(['ticket', 'media'])
-                ->where('ticket_id', $ticket->getKey())
-                ->simplePaginate()
-                ->appends($request->query())
-        );
+        return $this->externalGet($request);
     }
 
     /**
@@ -128,10 +119,34 @@ class TechnicalVisitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TechnicalVisit $technicalVisit)
+    public function destroy(TechnicalVisit $technicalVisit): Response
     {
         Gate::authorize('delete', $technicalVisit);
         $technicalVisit->delete();
         return $this->success(['data' => 'deleted']);
+    }
+
+    /**
+     * Api get para el backoffice
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function externalGet(Request $request): Response
+    {
+        $request->validate([
+            'ticket_id' => 'nullable',
+        ]);
+
+        return $this->success(
+            QueryBuilder::for(TechnicalVisit::class)
+                ->allowedFilters(['visit_date'])
+                ->allowedSorts(['visit_date', 'created_at'])
+                ->defaultSort('-created_at')
+                ->allowedIncludes(['ticket', 'media'])
+                ->where('ticket_id', $request->get('ticket_id'))
+                ->simplePaginate()
+                ->appends($request->query())
+        );
     }
 }
