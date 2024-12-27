@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreRequest as StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -24,7 +24,7 @@ class TicketController extends Controller
     public function index(Request $request): Response
     {
         Gate::authorize('viewAny', Ticket::class);
-        return $this->externalGet($request);
+        return $this->externalGet($request, $request->user()->getKey());
     }
 
     /**
@@ -101,7 +101,6 @@ class TicketController extends Controller
                 ])
                 ->defaultSort('-updated_at')
                 ->when($technical_id, fn(Builder $query) => $query->where('technical_id', $technical_id))
-                // ->where('technical_id', $request->user()->getKey())
                 ->simplePaginate()
                 ->appends($request->query())
         );
