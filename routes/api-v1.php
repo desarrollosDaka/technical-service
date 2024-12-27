@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CommentController;
+use App\Http\Controllers\Api\V1\MediaController;
 use App\Http\Controllers\Api\V1\PartRequestController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ServiceCallController;
@@ -49,6 +50,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/comments', [CommentController::class, 'externalGet']);
             Route::get('/technical-visits', [TechnicalVisitController::class, 'externalGet']);
             Route::get('/technical-visits/{technicalVisit}', [TechnicalVisitController::class, 'externalFindGet']);
+            Route::get('/media', [MediaController::class, 'externalGet']);
         });
     });
 });

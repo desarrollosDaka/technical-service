@@ -20,12 +20,15 @@ class MediaController extends Controller
      * @param Request $request
      * @return Model
      */
-    private function permissionsOnModel(Request $request): Model
+    private function permissionsOnModel(Request $request, bool $validate = true): Model
     {
         $model = array_values(array_filter(MediaModel::cases(), fn($enum) => $enum->name === $request->model_type))[0]->value;
         $instance = new $model;
         $record = $instance->find($request->model_id);
-        Gate::authorize('update', $record);
+
+        if ($validate) {
+            Gate::authorize('update', $record);
+        }
 
         return $record;
     }
@@ -68,27 +71,26 @@ class MediaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Media $media)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(IndexRequest $request, string $media)
+    public function destroy(IndexRequest $request, string $media): Response
     {
         $this->permissionsOnModel($request);
         return $this->success(Media::find($media)->delete());
+    }
+
+    /**
+     * External Get
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function externalGet(Request $request): Response
+    {
+        $record = $this->permissionsOnModel($request, false);
+
+        return $this->success(
+            $record->getMedia($request->get('collection_name', '*')),
+        );
     }
 }
