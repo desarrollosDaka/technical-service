@@ -96,7 +96,7 @@ class TechnicalVisitController extends Controller
 
         $previousReprogramming = $technicalVisit->reprogramming;
 
-        $validated['new_date'] = Carbon::parse($validated['new_date'], config('app.timezone'))->toDateTimeString();
+        // $validated['new_date'] = Carbon::parse($validated['new_date'], config('app.timezone'))->toDateTimeString();
 
         $validated['old_date'] = $technicalVisit->visit_date;
 
@@ -122,6 +122,7 @@ class TechnicalVisitController extends Controller
             'visita' => $technicalVisit,
             'timezone' => Carbon::parse($validated['new_date'])->timezone,
             'now' => now(),
+            'carbon' => Carbon::parse($validated['new_date'], config('app.timezone'))->toDateTimeString()
         ]);
 
         return $this->success($technicalVisit);
