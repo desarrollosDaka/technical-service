@@ -9,8 +9,10 @@ use App\Http\Requests\TechnicalVisit\UpdateRequest;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\TechnicalVisit;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,7 +95,9 @@ class TechnicalVisitController extends Controller
         Gate::authorize('update', $technicalVisit);
 
         $previousReprogramming = $technicalVisit->reprogramming;
+
         $validated['old_date'] = $technicalVisit->visit_date;
+
         $key = match ((int)$validated['reason']) {
             Reason::ClientCant->value => 'client',
             Reason::TechnicalCant->value => 'technical',
@@ -109,6 +113,13 @@ class TechnicalVisitController extends Controller
         $technicalVisit->update([
             'reprogramming' => $previousReprogramming,
             'visit_date' => $validated['new_date'],
+        ]);
+
+        Log::info('Reprogramming', [
+            'validated' => $validated,
+            'visita' => $technicalVisit,
+            'timezone' => Carbon::parse($validated['new_date'])->timezone,
+            'now' => now(),
         ]);
 
         return $this->success($technicalVisit);
