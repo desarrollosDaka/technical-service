@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Ticket;
 
-use App\Enums\Ticket\Status;
 use App\Models\Ticket;
 use Illuminate\Console\Command;
 use App\Enums\Ticket\Status as TicketStatus;
