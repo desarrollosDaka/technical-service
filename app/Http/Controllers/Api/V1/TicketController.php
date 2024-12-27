@@ -80,6 +80,9 @@ class TicketController extends Controller
                     'title',
                     'customer_name',
                     AllowedFilter::exact('status'),
+                    AllowedFilter::callback('callID', function (Builder $query, $value) {
+                        $query->whereHas('posts');
+                    })
                 ])
                 ->allowedSorts([
                     'title',

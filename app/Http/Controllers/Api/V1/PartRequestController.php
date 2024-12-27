@@ -9,6 +9,7 @@ use App\Jobs\UpdatePartRequest;
 use App\Models\PartRequest;
 use App\Models\ServiceCall;
 use App\Models\TechnicalVisit;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -83,7 +84,10 @@ class PartRequestController extends Controller
             $ticket = $service_call
                 ->tickets()
                 ->whereNotIn('status', [Status::Cancel, Status::Reject])
-                ->with(['partRequest'])
+                ->with([
+                    'partRequest' => fn(HasManyThrough $builder) => $builder->with(['media']),
+                    'media' => fn($query) => $query->select(['id', 'file_name', 'model_type', 'model_id', 'collection_name', 'disk']),
+                ])
                 ->first();
 
             return $this->success($ticket);
