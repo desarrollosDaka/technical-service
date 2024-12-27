@@ -107,7 +107,7 @@ class TicketController extends Controller
                 ])
                 ->defaultSort('-updated_at')
                 ->when($technical_id, fn(Builder $query) => $query->where('technical_id', $technical_id))
-                ->simplePaginate()
+                ->simplePaginate(50)
                 ->appends($request->query())
         );
     }
