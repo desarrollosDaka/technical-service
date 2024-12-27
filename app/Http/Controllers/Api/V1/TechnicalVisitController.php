@@ -6,6 +6,7 @@ use App\Enums\Visit\Reason;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalVisit\StoreRequest;
 use App\Http\Requests\TechnicalVisit\UpdateRequest;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\TechnicalVisit;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -139,7 +140,7 @@ class TechnicalVisitController extends Controller
                 ->allowedIncludes(['ticket', 'media'])
                 ->when(
                     $request->has('ticket_id'),
-                    fn($query) => $query->where('ticket_id', $request->ticket_id)
+                    fn(Builder $query) => $query->where('ticket_id', $request->ticket_id)
                 )
                 ->simplePaginate()
                 ->appends($request->query())

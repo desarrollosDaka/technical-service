@@ -6,21 +6,13 @@ use App\Enums\Ticket\Status as TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateTickets;
 use App\Models\ServiceCall;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 class ServiceCallController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -65,7 +57,7 @@ class ServiceCallController extends Controller
                 )
                 ->when(
                     $request->get('app_status', 0) === (string) TicketStatus::Reject->value,
-                    fn($query) => $query->with([
+                    fn(Builder $query) => $query->with([
                         'technicians' => fn($query) => $query->select(['technicals.id', 'technicals.User_name', 'technicals.Email', 'technicals.ID_user'])
                     ])
                 )
