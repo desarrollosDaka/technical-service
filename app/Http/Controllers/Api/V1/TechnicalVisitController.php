@@ -125,7 +125,7 @@ class TechnicalVisitController extends Controller
             'validated' => $validated,
             'visita' => $technicalVisit,
             'now' => now(),
-            'carbon' => $validated['new_date'],
+            'carbon' => Carbon::parse($validated['new_date'], config('app.timezone'))->format('Y-m-d H:i:s'),
             'request_new_date' => $request->new_date,
         ]);
 
