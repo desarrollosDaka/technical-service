@@ -62,7 +62,7 @@ class Qualify extends Component
             foreach ($visit->services ?? [] as $service) {
                 $findTabulator = Tabulator::where('n', (string) $service)->first();
                 if ($findTabulator) {
-                    $previousService = $this->previousQualify ? $this->previousQualify->meta['services'] : [];
+                    $previousService = $this->previousQualify ? $this->previousQualify->meta['confirmed_services'] : [];
                     $has = true;
 
                     if (isset($previousService[$findTabulator->n])) {
