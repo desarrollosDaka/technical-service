@@ -124,7 +124,7 @@
                                         @endphp<span>:</span>
                                     </h2>
                                     <ul>
-                                        @foreach ($visit->reprogramming['client'] as $reprogramming)
+                                        {{-- @foreach ($visit->reprogramming['client'] as $reprogramming)
                                             <li class="text-sm grid grid-cols-2 border-t pt-2">
                                                 <p><span class="font-semibold">Motivo: </span>{{ $reprogramming['extend_reason'] }}</p>
                                                 <div>
@@ -132,7 +132,7 @@
                                                     <p>Fecha nueva: {{ now()->parse($reprogramming['new_date'])->format('d/m/Y') }}</p>
                                                 </div>
                                             </li>
-                                        @endforeach
+                                        @endforeach --}}
                                     </ul>
                                 @endforeach
                             @endif
