@@ -109,7 +109,9 @@ class TechnicalVisitController extends Controller
             default => 'other',
         };
 
-        $validated['created_at'] = now(config('app.timezone'));
+        $validated['created_at'] = now(config('app.timezone'))
+            ->setTimezone(config('app.timezone'))
+            ->toDateTimeString();
 
         if (isset($previousReprogramming[$key])) {
             $previousReprogramming[$key][] = $validated;
