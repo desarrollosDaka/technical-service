@@ -28,6 +28,7 @@ abstract class Controller
         callable $afterCreate = null,
         callable $beforeCreate = null,
         string $getInsertedId = null,
+        callable $modifyResponseInsert = null,
     ): Response {
         $elements = $request->get('elements', []);
 
@@ -49,13 +50,17 @@ abstract class Controller
                     $model::insert($data);
 
                     if ($getInsertedId) {
-                        $successInsert[] = $data[$getInsertedId] ?? '';
+                        $successInsert[] = is_callable($modifyResponseInsert)
+                            ? $modifyResponseInsert($data, null)
+                            : ($data[$getInsertedId] ?? '');
                     }
 
                     $insertCount++;
                 } catch (\Throwable $th) {
                     if ($getInsertedId) {
-                        $failedInsert[] = ($data[$getInsertedId] ?? '') . ':' . $th->getMessage();
+                        $failedInsert[] = is_callable($modifyResponseInsert)
+                            ? $modifyResponseInsert($data, $th)
+                            : ($data[$getInsertedId] ?? '') . ':' . $th->getMessage();
                     }
                     $failedCount++;
                 }

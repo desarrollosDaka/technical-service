@@ -6,6 +6,7 @@ use App\Enums\Ticket\Status;
 use App\Models\Ticket;
 use Livewire\Component;
 use App\Models\QualifySupport;
+use App\Models\Tabulator;
 use App\Models\TechnicalVisit;
 use Livewire\Attributes\Validate;
 
@@ -38,12 +39,12 @@ class Qualify extends Component
      *
      * @var array
      */
-    public array $visits = [];
+    public array $services = [];
 
     /**
      * Listado de visitas
      */
-    public array $visits_occurred = [];
+    public array $confirmed_services = [];
 
     /**
      * Mount
@@ -57,28 +58,22 @@ class Qualify extends Component
 
         $this->star = $this->previousQualify ? $this->previousQualify->qualification : 0;
         $this->comment = $this->previousQualify ? $this->previousQualify->comment : '';
-        $this->visits = array_map(
-            function (array $visit) {
-                $has = true;
+        Ticket::current()->visits->each(function (TechnicalVisit $visit) {
+            foreach ($visit->services ?? [] as $service) {
+                $findTabulator = Tabulator::where('n', (string) $service)->first();
+                if ($findTabulator) {
+                    $previousService = $this->previousQualify ? $this->previousQualify->meta['services'] : [];
+                    $has = true;
 
-                if ($this->previousQualify && $this->previousQualify->meta['visits']) {
-                    $find = current(
-                        array_filter($this->previousQualify->meta['visits'], fn($item) => $item['visit_id'] == $visit['id']) ?? ['occurred' => false]
-                    );
-                    $has = $find['occurred'];
+                    if (isset($previousService[$findTabulator->n])) {
+                        $has = $previousService[$findTabulator->n];
+                    }
+
+                    $this->services[$findTabulator->n] = $findTabulator->toArray();
+                    $this->confirmed_services[$findTabulator->n] = $has;
                 }
-
-                return [
-                    'has' => $has,
-                    ...$visit,
-                ];
-            },
-            Ticket::current()->visits->toArray()
-        );
-
-        foreach ($this->visits as  $value) {
-            $this->visits_occurred[$value['id']] = $value['has'];
-        }
+            }
+        });
     }
 
     /**
@@ -89,12 +84,12 @@ class Qualify extends Component
     public function send()
     {
         $this->validate();
-        $visits_occurred = [];
+        $confirmed_services = [];
 
-        foreach ($this->visits_occurred as $key => $value) {
-            $visits_occurred[] = [
-                'visit_id' => $key,
-                'occurred' => $value
+        foreach ($this->confirmed_services as $key => $value) {
+            $confirmed_services[] = [
+                'service_n' => $key,
+                'confirmed' => $value
             ];
         }
 
@@ -103,7 +98,7 @@ class Qualify extends Component
             'comment' => $this->comment,
             'ticket_id' => Ticket::current()->getKey(),
             'meta' => [
-                'visits' => $visits_occurred
+                'confirmed_services' => $this->confirmed_services,
             ],
         ]);
 
