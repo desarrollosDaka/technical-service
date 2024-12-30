@@ -126,6 +126,7 @@ class TechnicalVisitController extends Controller
             'visita' => $technicalVisit,
             'now' => now(),
             'carbon' => $validated['new_date'],
+            'request_new_date' => $request->new_date,
         ]);
 
         return $this->success($technicalVisit);
