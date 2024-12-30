@@ -120,15 +120,6 @@ class TechnicalVisitController extends Controller
             'visit_date' => Carbon::parse($validated['new_date'], config('app.timezone'))->format('Y-m-d H:i:s'),
         ]);
 
-        Log::info('Reprogramming', [
-            'version' => '1',
-            'validated' => $validated,
-            'visita' => $technicalVisit,
-            'now' => now(),
-            'carbon' => Carbon::parse($validated['new_date'], config('app.timezone'))->format('Y-m-d H:i:s'),
-            'request_new_date' => $request->new_date,
-        ]);
-
         return $this->success($technicalVisit);
     }
 
