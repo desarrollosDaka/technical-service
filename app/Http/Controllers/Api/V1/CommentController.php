@@ -55,6 +55,7 @@ class CommentController extends Controller
                 ->where('commentable_id', $record->id)
                 ->where('commentable_type', get_class($record))
                 ->simplePaginate()
+                ->appends($request->query())
         );
     }
 
