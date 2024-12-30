@@ -87,9 +87,9 @@ class TechnicalVisitController extends Controller
     public function reprogramming(Request $request, TechnicalVisit $technicalVisit): Response
     {
         // Asegurarse de que la fecha se maneje en la zona horaria 'America/Caracas' sin convertirla
-        // $request->merge([
-        //     'new_date' => Carbon::parse($request->input('new_date'), config('app.timezone'))->format('Y-m-d H:i:s'),
-        // ]);
+        $request->merge([
+            'new_date' => Carbon::parse($request->input('new_date'), config('app.timezone'))->format('Y-m-d H:i:s'),
+        ]);
 
         $validated = $request->validate([
             'reason' => ['required', Rule::enum(Reason::class)],
@@ -117,7 +117,7 @@ class TechnicalVisitController extends Controller
 
         $technicalVisit->update([
             'reprogramming' => $previousReprogramming,
-            'visit_date' => $validated['new_date'],
+            'visit_date' => Carbon::parse($validated['new_date'], config('app.timezone'))->format('Y-m-d H:i:s'),
         ]);
 
         Log::info('Reprogramming', [
