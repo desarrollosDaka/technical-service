@@ -88,7 +88,7 @@ class TechnicalVisitController extends Controller
     {
         // Asegurarse de que la fecha se maneje en la zona horaria 'America/Caracas' sin convertirla
         $request->merge([
-            'new_date' => Carbon::parse($request->input('new_date'), 'America/Caracas')->format('Y-m-d H:i:s'),
+            'new_date' => Carbon::parse($request->input('new_date'), config('app.timezone'))->format('Y-m-d H:i:s'),
         ]);
 
         $validated = $request->validate([
@@ -100,9 +100,6 @@ class TechnicalVisitController extends Controller
         Gate::authorize('update', $technicalVisit);
 
         $previousReprogramming = $technicalVisit->reprogramming;
-
-        $validated['parse_new_date'] = Carbon::createFromFormat('Y-m-d H:i:s', $validated['new_date'], 'America/Caracas')
-            ->setTimezone(config('app.timezone'));
 
         $validated['old_date'] = $technicalVisit->visit_date;
 
@@ -120,15 +117,14 @@ class TechnicalVisitController extends Controller
 
         $technicalVisit->update([
             'reprogramming' => $previousReprogramming,
-            'visit_date' => $validated['parse_new_date']->toDateTimeString(),
+            'visit_date' => $validated['new_date'],
         ]);
 
         Log::info('Reprogramming', [
             'validated' => $validated,
             'visita' => $technicalVisit,
-            'timezone' => $validated['parse_new_date']->timezone,
             'now' => now(),
-            'carbon' => $validated['parse_new_date'],
+            'carbon' => $validated['new_date'],
         ]);
 
         return $this->success($technicalVisit);
