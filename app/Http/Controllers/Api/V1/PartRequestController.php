@@ -109,7 +109,7 @@ class PartRequestController extends Controller
                 ->map(function (PartRequest $partRequest) {
                     return [
                         ...$partRequest->toArray(),
-                        'callID' => $partRequest->ticket->serviceCall->callID
+                        'callID' => $partRequest?->ticket?->serviceCall?->callID
                     ];
                 }),
         ]);
