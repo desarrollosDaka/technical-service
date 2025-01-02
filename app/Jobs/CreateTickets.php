@@ -31,6 +31,17 @@ class CreateTickets implements ShouldQueue
     public function handle(): void
     {
         foreach ($this->inserts as $insert) {
+            try {
+                if (is_string($insert)) {
+                    $insert = explode(':', $insert)[1];
+                }
+            } catch (\Throwable $th) {
+                Log::info('No se pudo obtener el ID de la llamada de servicio', [
+                    'callID' => $insert,
+                ]);
+                continue;
+            }
+
             $serviceCall = ServiceCall::where('callID', $insert)->first();
 
             if (!$serviceCall) {
