@@ -88,7 +88,7 @@ abstract class Controller
                     'data' => 'created',
                     'success' => true,
                     'inserted' => [
-                        'key' => $getInsertedId,
+                        'key' => is_callable($getInsertedId) ? 'MULTIPLE_CALLABLE_KEY' : $getInsertedId,
                         'success_count' => $insertCount,
                         'failed_count' => $failedCount,
                         'update_count' => $updateCount,
