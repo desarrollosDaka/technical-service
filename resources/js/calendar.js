@@ -10,13 +10,14 @@ window.multiMonthPlugin = multiMonthPlugin;
 window.dayGridPlugin = dayGridPlugin;
 window.esLocale = esLocale;
 
-Alpine.data('calendar', ({ visits }) => ({
+Alpine.data('calendar', ({ visits, reprogrammingReasons }) => ({
     modal: {
         title: '',
         description: '',
     },
     init() {
         const calendarEl = this.$el.querySelector('#calendar-container-visits');
+        console.log({ reprogrammingReasons });
 
         // Encuentra la fecha de la última visita
         let initialDate;
@@ -51,12 +52,12 @@ Alpine.data('calendar', ({ visits }) => ({
                 let reprogramming = '';
                 _.each(info.event.extendedProps.reprogramming, (value, key) => {
                     let listReprogramming = '';
-
+                    const reprogrammingFor = key === 'client' ? 'el cliente' : '' + key === 'technical' ? 'el técnico' : '' + key === 'other' ? 'Otro motivo' : '';
                     _.each(value, (item) => {
                         /* html */
                         listReprogramming += `
                             <div class="flex justify-between mt-2 text-sm">
-                                <p><b>Motivo:</b> ${item.extend_reason}</p>
+                                <p><b>Motivo:</b> ${reprogrammingFor}</p>
                                 <div class="border-l pl-2">
                                     <p>Fecha previa: ${dayjs(item.old_date).format('DD/MM/YYYY HH:mm')}</p>
                                     <p>Fecha nueva: ${dayjs(item.new_date).format('DD/MM/YYYY HH:mm')}</p>
@@ -68,7 +69,7 @@ Alpine.data('calendar', ({ visits }) => ({
                     /* html */
                     reprogramming += `
                         <div class="border-t pt-2">
-                            <h5 class="font-semibold text-slate-700 text-sm">Reprogramaciones hecha por ${key === 'client' ? 'el cliente' : ''}${key === 'technical' ? 'el técnico' : ''}${key === 'other' ? 'Otro motivo' : ''}</h5>
+                            <h5 class="font-semibold text-slate-700 text-sm">Reprogramaciones hecha por ${reprogrammingFor}</h5>
                             ${listReprogramming}
                         </div>
                     `;

@@ -1,4 +1,4 @@
-<div x-show="displayCalendarMode === 'calendar'" x-data="calendar({ visits: {{ $visits->toJson() }} })">
+<div x-show="displayCalendarMode === 'calendar'" x-data="calendar({ visits: {{ $visits->toJson() }}, reprogrammingReasons: {{ json_encode(\App\Enums\Visit\Reason::getOptions()) }} })">
     <div id="calendar-container-visits" wire:ignore>
     </div>
     <x-modal name="simpleModal" blur="sm" width="large">

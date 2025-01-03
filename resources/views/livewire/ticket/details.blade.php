@@ -170,7 +170,7 @@
     </section>
     @script
         <script>
-            Echo.channel(`App.Models.Ticket.{{ ticket()->id }}`)
+            _.has(window, 'Echo') && Echo.channel(`App.Models.Ticket.{{ ticket()->id }}`)
                 .listen('NewComment', (e) => {
                     console.log('Recibiendo nuevo comentario', {
                         e

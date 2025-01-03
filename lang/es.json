@@ -10,5 +10,8 @@
     "part-request.status.2": "Aprobada",
     "part-request.status.3": "Rechazada",
     "part-request.status.4": "Entregada",
-    "part-request.status.5": "Comprado por el técnico"
+    "part-request.status.5": "Comprado por el técnico",
+    "visit.reprogramming-reason.1": "Reprogramado por el cliente",
+    "visit.reprogramming-reason.2": "Reprogramado por el técnico",
+    "visit.reprogramming-reason.3": "Reprogramado por otro motivo"
 }
