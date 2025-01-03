@@ -67,6 +67,12 @@ class PartRequestChangeStatusNotification implements ShouldQueue
             ],
         ];
 
-        OneSignalFacade::sendNotificationCustom($fields);
+        if (config('api.one_signal_notifications', true)) {
+            try {
+                OneSignalFacade::sendNotificationCustom($fields);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
     }
 }
