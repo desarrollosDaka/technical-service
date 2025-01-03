@@ -159,7 +159,7 @@ class TechnicalVisitController extends Controller
                     $request->has('ticket_id'),
                     fn(Builder $query) => $query->where('ticket_id', $request->ticket_id)
                 )
-                ->simplePaginate()
+                ->simplePaginate($request->get('perPage', 15))
                 ->appends($request->query())
         );
     }

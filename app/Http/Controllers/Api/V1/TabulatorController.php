@@ -27,7 +27,7 @@ class TabulatorController extends Controller
                     'familia',
                     'repuestos',
                 ])
-                ->simplePaginate()
+                ->simplePaginate($request->get('perPage', 15))
                 ->appends($request->query())
         );
     }

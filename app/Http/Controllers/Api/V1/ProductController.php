@@ -25,7 +25,7 @@ class ProductController extends Controller
                     'CodeBars',
                     'ItmsGrpNam',
                 ])
-                ->simplePaginate()
+                ->simplePaginate($request->get('perPage', 15))
                 ->appends($request->query())
         );
     }

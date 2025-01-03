@@ -44,7 +44,7 @@ class PartRequestController extends Controller
                     'ticket'
                 ])
                 ->where('technical_visit_id', $technicalVisit->getKey())
-                ->simplePaginate()
+                ->simplePaginate($request->get('perPage', 15))
                 ->appends($request->query())
         );
     }

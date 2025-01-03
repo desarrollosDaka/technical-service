@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Traits\ApiV1Responser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\StoreRequest as StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
@@ -107,11 +106,17 @@ class TicketController extends Controller
                 ])
                 ->defaultSort('-updated_at')
                 ->when($technical_id, fn(Builder $query) => $query->where('technical_id', $technical_id))
-                ->simplePaginate(50)
+                ->simplePaginate($request->get('perPage', 15))
                 ->appends($request->query())
         );
     }
 
+    /**
+     * Hacer búsqueda de 1 elementos
+     *
+     * @param Ticket $ticket
+     * @return Response
+     */
     public function externalFindGet(Ticket $ticket): Response
     {
         return $this->success(

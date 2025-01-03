@@ -54,7 +54,7 @@ class CommentController extends Controller
                 ])
                 ->where('commentable_id', $record->id)
                 ->where('commentable_type', get_class($record))
-                ->simplePaginate()
+                ->simplePaginate($request->get('perPage', 15))
                 ->appends($request->query())
         );
     }
