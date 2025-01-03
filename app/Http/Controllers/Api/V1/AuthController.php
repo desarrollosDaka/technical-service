@@ -50,7 +50,17 @@ class AuthController extends Controller
      */
     public function user(Request $request): HttpResponse
     {
-        return $this->success($request->user());
+        $response = $request->user()->toArray();
+
+        if ($request->has('ticketsCount')) {
+            $response['ticketsCount'] = $request->user()->tickets()->count();
+        }
+
+        if ($request->has('partRequestCount')) {
+            $response['partRequestCount'] = $request->user()->tickets()->count();
+        }
+
+        return $this->success($response);
     }
 
     /**
