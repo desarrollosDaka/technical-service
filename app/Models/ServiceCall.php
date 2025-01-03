@@ -51,9 +51,7 @@ class ServiceCall extends Model
             return self::$instance;
         }
 
-        $keyBy = 'service_call_for:' . request()->ip();
-
-        return self::$instance = Cache::get($keyBy, null);
+        return self::$instance = Cache::get(ServiceCall::idClientWeb(), null);
     }
 
     /**
@@ -94,5 +92,15 @@ class ServiceCall extends Model
     public function partRequest(): HasManyThrough
     {
         return $this->hasManyThrough(PartRequest::class, Ticket::class, 'service_call_id', 'id', 'id');
+    }
+
+    /**
+     * ID de la session del cliente web
+     *
+     * @return string
+     */
+    public static function idClientWeb(): string
+    {
+        return 'service_call_for:' . request()->ip() . ':' . request()->cookie('XSRF-TOKEN');
     }
 }

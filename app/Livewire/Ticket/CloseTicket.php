@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Ticket;
 
+use App\Models\ServiceCall;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
@@ -35,7 +36,7 @@ class CloseTicket extends Component
      */
     public function close(): void
     {
-        Cache::delete('service_call_for:' . request()->ip());
+        Cache::delete(ServiceCall::idClientWeb());
         redirect()->route('index');
     }
 

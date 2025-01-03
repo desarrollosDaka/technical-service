@@ -62,7 +62,7 @@ class CheckTicket extends Component
                 throw new \Exception(__('No existe la llamada de servicio'));
             }
 
-            Cache::put('service_call_for:' . request()->ip(), $serviceCall, 60 * 60 * 24);
+            Cache::put(ServiceCall::idClientWeb(), $serviceCall, 60 * 60 * 24);
             redirect()->route('ticket.show');
         } catch (\Throwable $th) {
             $this->errorsFeedback = [

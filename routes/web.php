@@ -17,6 +17,10 @@ Route::view('/', 'pages.index')
     ->name('index')
     ->middleware(WithoutServiceCall::class);
 
+Route::get('/test', function (Request $request) {
+    dd($request->cookie('XSRF-TOKEN'));
+});
+
 Route::get('/login', function (Request $request) {
     return response(
         ['message' => 'Unauthenticated.'],
