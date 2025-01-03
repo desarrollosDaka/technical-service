@@ -34,6 +34,8 @@ class CreateTickets implements ShouldQueue
             $key = 'callID';
 
             try {
+                // El controlador define que tipo de llamada de servicio sera, basado en el key.
+                // Por ejemplo, basado en el callID o el contractID.
                 if (is_string($insert)) {
                     [$explodeKey, $explodeInsert] = explode(':', $insert);
                     $key = $explodeKey;

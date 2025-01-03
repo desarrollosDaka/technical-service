@@ -22,7 +22,7 @@ return new class extends Migration
 
 
             $table->unsignedBigInteger('callID')->nullable();
-            $table->unsignedBigInteger('contractID')->nullable();
+            $table->unsignedBigInteger('callContractID')->nullable();
             $table->string('subject')->nullable();
             $table->string('customer')->nullable();
             $table->string('custmrName')->nullable();
