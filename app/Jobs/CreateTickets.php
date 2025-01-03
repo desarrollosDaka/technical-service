@@ -104,7 +104,11 @@ class CreateTickets implements ShouldQueue
                 ],
             ];
 
-            OneSignalFacade::sendNotificationCustom($fields);
+            try {
+                OneSignalFacade::sendNotificationCustom($fields);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         }
     }
 }
