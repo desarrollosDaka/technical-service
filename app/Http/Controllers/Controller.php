@@ -60,7 +60,7 @@ abstract class Controller
                     if ($getInsertedId) {
                         $failedInsert[] = is_callable($modifyResponseInsert)
                             ? $modifyResponseInsert($data, $th)
-                            : ($data[$getInsertedId] ?? '') . ':' . $th->getMessage();
+                            : ($data[$getInsertedId] ?? ('UNDEFINED_KEY_ID:' . $getInsertedId)) . ':' . substr($th->getMessage(), 0, 150);
                     }
                     $failedCount++;
                 }
