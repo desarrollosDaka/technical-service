@@ -27,15 +27,16 @@ abstract class Controller
         Model $model,
         callable $afterCreate = null,
         callable $beforeCreate = null,
-        string $getInsertedId = null,
-        callable $modifyResponseInsert = null,
+        string|callable $getInsertedId,
     ): Response {
         $elements = $request->get('elements', []);
 
         $failedInsert = [];
         $successInsert = [];
+        $successUpdate = [];
         $insertCount = 0;
         $failedCount = 0;
+        $updateCount = 0;
 
         try {
             foreach ($elements as $data) {
@@ -46,21 +47,33 @@ abstract class Controller
                     $data = $beforeCreate($data);
                 }
 
+                $key = is_callable($getInsertedId) ? $getInsertedId($data) : $getInsertedId;
+                $modificableIdData = is_callable($getInsertedId) ? ($key . ':' . $data[$key]) : $data[$key];
+
                 try {
-                    $model::insert($data);
+                    if (!$request->has('upgradable')) {
+                        $model::insert($data);
+                        $insertCount++;
+                        $successInsert[] = $modificableIdData;
+                    } else {
+                        $modifiedModel = $model::updateOrCreate(
+                            [$key => $data[$key]],
+                            $data
+                        );
 
-                    if ($getInsertedId) {
-                        $successInsert[] = is_callable($modifyResponseInsert)
-                            ? $modifyResponseInsert($data, null)
-                            : ($data[$getInsertedId] ?? '');
+                        // Elemento insertado
+                        if ($modifiedModel->wasRecentlyCreated) {
+                            $insertCount++;
+                            $successInsert[] = $modificableIdData;
+                        } else {
+                            // Elemento actualizado
+                            $updateCount++;
+                            $successUpdate[] = $modificableIdData;
+                        }
                     }
-
-                    $insertCount++;
                 } catch (\Throwable $th) {
                     if ($getInsertedId) {
-                        $failedInsert[] = is_callable($modifyResponseInsert)
-                            ? $modifyResponseInsert($data, $th)
-                            : ($data[$getInsertedId] ?? ('UNDEFINED_KEY_ID:' . $getInsertedId)) . ':' . substr($th->getMessage(), 0, 150);
+                        $failedInsert[] = $modificableIdData . ':' . substr($th->getMessage(), 0, 150);
                     }
                     $failedCount++;
                 }
@@ -78,8 +91,10 @@ abstract class Controller
                         'key' => $getInsertedId,
                         'success_count' => $insertCount,
                         'failed_count' => $failedCount,
+                        'update_count' => $updateCount,
                         'success' => $successInsert,
                         'failed' => $failedInsert,
+                        'updated' => $successUpdate
                     ],
                 ],
                 Response::HTTP_CREATED
