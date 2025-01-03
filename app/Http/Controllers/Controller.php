@@ -51,7 +51,7 @@ abstract class Controller
                 $modificableIdData = is_callable($getInsertedId) ? ($key . ':' . $data[$key]) : $data[$key];
 
                 try {
-                    if (!$request->has('upgradable')) {
+                    if (!$request->get('upgradable', false)) {
                         $model::insert($data);
                         $insertCount++;
                         $successInsert[] = $modificableIdData;
