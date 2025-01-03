@@ -29,6 +29,7 @@ class TechnicalController extends Controller
         return $this->insertMany(
             request: $request,
             model: new Technical,
+            getInsertedId: 'ID_user',
             beforeCreate: function ($element) {
                 $GeographicalCoordinates = json_encode($element['GeographicalCoordinates'] ?? []);
 
@@ -36,8 +37,7 @@ class TechnicalController extends Controller
                     'GeographicalCoordinates' => $GeographicalCoordinates,
                     'Password' => Hash::make(Arr::get($element, 'Phone', 'password')),
                 ]);
-            },
-            getInsertedId: 'ID_user'
+            }
         );
     }
 

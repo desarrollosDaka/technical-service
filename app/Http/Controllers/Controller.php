@@ -25,9 +25,9 @@ abstract class Controller
     public function insertMany(
         Request $request,
         Model $model,
+        string|callable $getInsertedId,
         callable $afterCreate = null,
         callable $beforeCreate = null,
-        string|callable $getInsertedId,
     ): Response {
         $elements = $request->get('elements', []);
 

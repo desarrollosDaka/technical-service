@@ -21,13 +21,13 @@ class ServiceCallController extends Controller
         return $this->insertMany(
             $request,
             new ServiceCall,
+            getInsertedId: fn($data) => isset($data['callContractID']) ? 'callContractID' : 'callID',
             beforeCreate: fn($element) => array_merge($element, [
                 'CLIENT_COORDINATE' => json_encode($element['CLIENT_COORDINATE'] ?? []),
             ]),
             afterCreate: function ($inserts): void {
                 CreateTickets::dispatch($inserts);
             },
-            getInsertedId: fn($data) => isset($data['callContractID']) ? 'callContractID' : 'callID',
         );
     }
 
