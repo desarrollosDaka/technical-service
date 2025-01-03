@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create((new Product)->getTable(), function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('ItemCode')->nullable();
+            $table->string('ItemCode')->unique();
             $table->string('ItemName')->nullable();
             $table->string('CodeBars')->nullable();
             $table->integer('U_DK_GARANTIA')->nullable();

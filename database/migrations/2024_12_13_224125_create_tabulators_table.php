@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create((new Tabulator)->getTable(), function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('n')->nullable();
+            $table->string('n')->unique();
             $table->string('linea')->nullable();
             $table->string('gama')->nullable();
             $table->string('producto')->nullable();
