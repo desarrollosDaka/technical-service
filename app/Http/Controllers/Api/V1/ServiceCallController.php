@@ -28,9 +28,16 @@ class ServiceCallController extends Controller
                 CreateTickets::dispatch($inserts);
             },
             getInsertedId: 'callID',
-            modifyResponseInsert: fn($data, $throwable = null) => (isset($data['callContractID']) ? 'callContractID:' : 'callID:') .
-                $data['callID'] .
-                ($throwable ? ':' . $throwable->getMessage() : '')
+            modifyResponseInsert: function ($data, $throwable = null) {
+                $getKey = isset($data['callContractID']) ? 'callContractID' : 'callID';
+                $sendThrowable = ($throwable ? ':' . $throwable->getMessage() : '');
+
+                try {
+                    return $getKey . ':' . $data[$getKey] . $sendThrowable;
+                } catch (\Throwable $th) {
+                    return $data['callID'] . ':' . $sendThrowable;
+                }
+            }
         );
     }
 
