@@ -114,19 +114,20 @@
                             @if ($visit->reprogramming && count($visit->reprogramming))
                                 @foreach ($visit->reprogramming as $key => $reprogrammingList)
                                     <h2 class="font-semibold my-3">
-                                        <span>{{ __('Reprogramaciones hechas por ') }}</span>
+                                        <span>{{ __('Reprogramaciones hechas por: ') }}</span>
                                         @php
-                                            echo match ($key) {
+                                            $reasonText = match ($key) {
                                                 'client' => 'el cliente',
                                                 'technical' => 'el técnico',
                                                 default => 'otro motivo',
                                             };
-                                        @endphp<span>:</span>
+                                            echo $reasonText;
+                                        @endphp
                                     </h2>
                                     <ul>
                                         @foreach ($reprogrammingList as $reprogramming)
                                             <li class="text-sm grid grid-cols-2 border-t pt-2">
-                                                <p><span class="font-semibold">Motivo: </span>{{ $reprogramming['extend_reason'] }}</p>
+                                                <p><span class="font-semibold">Motivo: </span>{{ $reasonText }}</p>
                                                 <div>
                                                     <p>Fecha previa: {{ now()->parse($reprogramming['old_date'])->format('d/m/Y') }}</p>
                                                     <p>Fecha nueva: {{ now()->parse($reprogramming['new_date'])->format('d/m/Y') }}</p>
